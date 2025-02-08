@@ -71,7 +71,7 @@ def display_game_state(game_state, current_player_name=None):
         print(f"It's your turn, {current_player_name}!")
 
 
-def get_player_input(prompt, valid_options=None, input_type="text", game_state=None, current_player=None):
+def get_player_input(prompt, valid_options=None, input_type="text", game_state=None, current_player=None, game_phase=None):
     """Gets validated player input from the console.
 
     Args:
@@ -80,6 +80,7 @@ def get_player_input(prompt, valid_options=None, input_type="text", game_state=N
         input_type: Optional type of input ('text' or 'int').
         game_state: Optional game state to display.
         current_player: Optional current player name for display.
+        game_phase: The current phase of the game (e.g., "Nomination", "Election").
 
     Returns:
         The validated player input (string or int).
@@ -88,6 +89,10 @@ def get_player_input(prompt, valid_options=None, input_type="text", game_state=N
         # Clear screen and show game state if provided
         if game_state:
             clear_and_display_state(game_state, current_player)
+
+        # Display the game phase if provided
+        if game_phase:
+            print(f"\n--- Current Phase: {game_phase} ---")
 
         user_input = input(prompt).strip()
         if input_type == "int":
@@ -142,7 +147,8 @@ def play_discussion_phase(game_state, phase_name):
         message = get_player_input(
             f"{current_speaker}, say something (or type 'pass' to skip turn): ",
             game_state=game_state,
-            current_player=current_speaker
+            current_player=current_speaker,
+            game_phase=phase_name
         )
 
         # Record the turn progression whether the player speaks or passes
@@ -159,7 +165,8 @@ def play_discussion_phase(game_state, phase_name):
                 f"\nPresident {game_state.get_president()}, as the president, you can review the discussion and decide to end it.\nDiscussion summary:\n{game_state.get_discussion_summary()}\nDo you want to end the discussion and call for vote? (YES/NO): ",
                 valid_options=["YES", "NO"],
                 game_state=game_state,
-                current_player=current_speaker
+                current_player=current_speaker,
+                game_phase=phase_name
             ).upper()
             if end_discussion_input == "YES":
                 print("The president has ended the discussion.")
@@ -238,7 +245,8 @@ def play_secret_hitler():
             nominee_name = get_player_input(
                 f"{president_name}, nominate a Chancellor: ",
                 game_state=game_state,
-                current_player=president_name
+                current_player=president_name,
+                game_phase="Nomination"
             )
             if nominee_name not in get_player_names(game_state):
                 print("Invalid nominee name.")
@@ -276,7 +284,8 @@ def play_secret_hitler():
                     f"{player}, vote YES or NO on the government ({president_name} as President, {nominee_name} as Chancellor): ",
                     valid_options=["YES", "NO"],
                     game_state=game_state,
-                    current_player=player
+                    current_player=player,
+                    game_phase="Election"
                 ).upper()
                 votes[player] = vote
                 # Log the vote privately for the player
@@ -331,7 +340,8 @@ def play_secret_hitler():
                     valid_options=[1, 2, 3],
                     input_type="int",
                     game_state=game_state,
-                    current_player=president_name
+                    current_player=president_name,
+                    game_phase="Legislative Session"
                 )
                 # Ensure discard1 is int before indexing
                 if 1 <= int(discard1) <= 3:
@@ -374,7 +384,9 @@ def play_secret_hitler():
                 veto_option = get_player_input(f"{nominee_name}, you received policies: {policy_cards} **LOOK AT THESE PRIVATELY** \n do you want to VETO? (YES/NO): ",
                                                valid_options=["YES", "NO"],
                                                game_state=game_state,
-                                               current_player=nominee_name).upper()
+                                               current_player=nominee_name,
+                                               game_phase="Legislative Session"
+                                               ).upper()
 
                 if veto_option == "YES":
                     clear_and_display_state(game_state, president_name)
@@ -383,7 +395,9 @@ def play_secret_hitler():
                         valid_options=["YES", "NO"],
                         game_state=game_state,  # Added game_state
                         # Added current_player
-                        current_player=president_name).upper()
+                        current_player=president_name,
+                        game_phase="Legislative Session"
+                    ).upper()
                     if veto_president_confirm == "YES":
                         print("Government VETOED!")
                         game_state.log_event(None, "Government vetoed.")
@@ -411,7 +425,9 @@ def play_secret_hitler():
                         f"{nominee_name}, you received policies: {policy_cards} **LOOK AT THESE PRIVATELY** \n enact Liberal or Fascist policy? (1 for Liberal, 2 for Fascist): ",
                         valid_options=[1, 2], input_type="int",
                         game_state=game_state,
-                        current_player=nominee_name).upper()
+                        current_player=nominee_name,
+                        game_phase="Legislative Session"
+                    )
                     if enact_policy_choice == 1:
                         policy_to_enact = "Liberal"
                         if "Liberal" in policy_cards:
@@ -441,9 +457,10 @@ def play_secret_hitler():
             # Executive Actions (Presidential Powers) - After Fascist Policies
             if game_state.fascist_policies_enacted == 3 and game_state.num_players >= 5:
                 target_player = get_player_input(
-                    f"nPresidential Power: Investigate Loyalty\n {president_name}, investigate loyalty of which player?: ",
+                    f"{president_name}, investigate loyalty of which player?: ",
                     game_state=game_state,
-                    current_player=president_name
+                    current_player=president_name,
+                    game_phase="Presidential Power: Investigate Loyalty"
                 )
                 if target_player in get_player_names(game_state):
                     # Added checks for valid investigation target
@@ -487,9 +504,10 @@ def play_secret_hitler():
 
             elif game_state.fascist_policies_enacted == 4 and game_state.num_players >= 7:
                 target_president = get_player_input(
-                    f"nPresidential Power: Special Election\n {president_name}, choose the next President (Special Election): ",
+                    f"{president_name}, choose the next President (Special Election): ",
                     game_state=game_state,
-                    current_player=president_name
+                    current_player=president_name,
+                    game_phase="Presidential Power: Special Election"
                 )
                 if target_president in get_player_names(game_state):
                     # Fixed variable name from target_player_execute to target_president
@@ -549,9 +567,10 @@ def play_secret_hitler():
                     or game_state.num_players >= 7
                 ):
                     target_player_execute = get_player_input(
-                        f"nPresidential Power: Execution\n {president_name}, execute which player?: ",
+                        f"{president_name}, execute which player?: ",
                         game_state=game_state,
-                        current_player=president_name
+                        current_player=president_name,
+                        game_phase="Presidential Power: Execution"
                     )
                     if target_player_execute in get_player_names(game_state):
                         # Use engine's kill_player function for execution
