@@ -1,15 +1,17 @@
-# llm_interface.py (SIMPLIFIED AND REFACTORED)
+# llm_interface.py (SIMPLIFIED AND REFACTORED - CHAOS POLICY CLARIFICATION)
 import time
 from openai import OpenAI
 
 llm_debug_enabled = False
 slowdown_timer = 0  # Default to no slowdown
 
+
 class LLMPlayerInterface:
     def __init__(self, player_name, model_name, api_key):
         self.player_name = player_name
         self.model_name = model_name
-        self.client = OpenAI(api_key=api_key, base_url="https://generativelanguage.googleapis.com/v1beta/openai/")
+        self.client = OpenAI(
+            api_key=api_key, base_url="https://generativelanguage.googleapis.com/v1beta/openai/")
         self.game_rules = """
         **Secret Hitler Game Rules (Enhanced for Human-like LLM Play):**
 
@@ -31,8 +33,8 @@ class LLMPlayerInterface:
 
         2.  **Election Phase:** Players vote YES or NO.
             *   **Human-like Strategy:**
-                *   **Liberals:** Vote YES on governments you *trust*.  Be *very suspicious*.  *Explain your vote*.
-                *   **Fascists/Hitler:**  Vote YES on governments that include other Fascists.  Sometimes vote YES on a Liberal government to *gain trust* or to *frame* them later.
+                *   **Liberals:** Vote YES on governments you *trust*.  Be *very suspicious*.  *Explain your vote*. **Crucially, Liberals must avoid letting the Election Tracker reach 3!** Three failed elections automatically enact a policy at random from the deck. **This "chaos policy" is very likely to be a Fascist policy, pushing the Fascists closer to victory.  Therefore, Liberals should often vote YES on governments, even if uncertain, to prevent chaos and ensure policies are enacted through the government, where they have some control.**
+                *   **Fascists/Hitler:**  Vote YES on governments that include other Fascists.  Sometimes vote YES on a Liberal government to *gain trust* or to *frame* them later. Fascists can also strategically cause failed elections to trigger chaos policies if it benefits them, but be aware this is risky and can also enact a Liberal policy.
 
         3.  **Legislative Session:**
             *   President draws 3 policies, discards 1, passes 2 to Chancellor.
@@ -63,13 +65,14 @@ class LLMPlayerInterface:
         *   **Blame:** If things go wrong, *blame* other players.
         *   **Lie (If Fascist):** *lie convincingly*.
         *  **If playing with 7-10 players, the Fascist team knows who Hitler is.**
-        """ # Keeping original rules for now
+        """  # Keeping original rules for now
 
     def get_llm_response(self, game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info=None):
         """Constructs prompt, calls LLM, extracts and returns action."""
         global llm_debug_enabled, slowdown_timer
 
-        full_prompt = self._construct_prompt(game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info)
+        full_prompt = self._construct_prompt(
+            game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info)
 
         if slowdown_timer > 0:
             time.sleep(slowdown_timer)
@@ -86,7 +89,8 @@ class LLMPlayerInterface:
             )
             llm_response = response.choices[0].message.content.strip()
 
-            print("\n===== START LLM RESPONSE =====\n" + llm_response + "\n===== END LLM RESPONSE =====\n") # Clear LLM response output
+            print("\n===== START LLM RESPONSE =====\n" + llm_response +
+                  "\n===== END LLM RESPONSE =====\n")  # Clear LLM response output
 
             action = self._extract_action(llm_response)
 
@@ -105,17 +109,24 @@ class LLMPlayerInterface:
         prompt = f"**Secret Hitler Game**\n\nYou are {self.player_name}. Your role is {player_role}.\n\n{self.game_rules}\n\n"
 
         if player_role in ("Fascist", "Hitler"):
-            fascists = [name for name, r in game_state.roles.items() if r in ("Fascist", "Hitler") and name != self.player_name]
+            fascists = [name for name, r in game_state.roles.items() if r in (
+                "Fascist", "Hitler") and name != self.player_name]
             prompt += f"Known fascists: {', '.join(fascists)}. "
             if player_role == "Fascist" and game_state.num_players >= 7:
-                hitler = [name for name, r in game_state.roles.items() if r == "Hitler"][0]
+                hitler = [name for name, r in game_state.roles.items()
+                          if r == "Hitler"][0]
                 prompt += f"Hitler is: {hitler}. "
 
-        prompt += "\n===== GAME STATE =====\n" + game_state.get_state_string() + "\n===== END GAME STATE =====\n"
-        prompt += "\n===== PUBLIC LOG =====\n" + game_state.get_public_log_string() + "\n===== END PUBLIC LOG =====\n"
-        prompt += "\n===== PRIVATE LOG =====\n" + game_state.get_private_log_string(self.player_name) + "\n===== END PRIVATE LOG =====\n"
+        prompt += "\n===== GAME STATE =====\n" + \
+            game_state.get_state_string() + "\n===== END GAME STATE =====\n"
+        prompt += "\n===== PUBLIC LOG =====\n" + game_state.get_public_log_string() + \
+            "\n===== END PUBLIC LOG =====\n"
+        prompt += "\n===== PRIVATE LOG =====\n" + \
+            game_state.get_private_log_string(
+                self.player_name) + "\n===== END PRIVATE LOG =====\n"
         if game_state.discussion_history:
-            prompt += "\n===== CURRENT DISCUSSION =====\n" + game_state.get_discussion_string() + "\n===== END CURRENT DISCUSSION =====\n"
+            prompt += "\n===== CURRENT DISCUSSION =====\n" + \
+                game_state.get_discussion_string() + "\n===== END CURRENT DISCUSSION =====\n"
         if additional_prompt_info:
             prompt += f"\n===== ADDITIONAL INFO =====\n{additional_prompt_info}\n===== END ADDITIONAL INFO =====\n"
         if game_phase:
@@ -139,4 +150,5 @@ class LLMPlayerInterface:
         return ""
 
     def add_thought_to_log(self, game_state, thought):
-        game_state.log_event(self.player_name, f"Thought: {thought}", private_only=True)
+        game_state.log_event(
+            self.player_name, f"Thought: {thought}", private_only=True)
