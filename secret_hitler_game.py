@@ -1,4 +1,3 @@
-# secret_hitler_game.py (REFACTORED - Using Classes, No Globals)
 import argparse
 import os
 import sys
@@ -15,7 +14,8 @@ class GameConfig:
         self.press_enter_mode = args.press_enter
         self.debug_llm_enabled = args.debug_llm
         self.log_to_file_enabled = args.log_to_file
-        self.player_models = self._parse_player_models(args.player_models, args.num_players)
+        self.player_models = self._parse_player_models(
+            args.player_models, args.num_players)
 
     def _parse_player_models(self, player_models_arg, num_players):
         player_models = {}
@@ -25,7 +25,7 @@ class GameConfig:
                 player_models[name] = model
         else:
             for i in range(num_players):
-                player_models[f"Player{i+1}"] = "gemini-2.0-flash" # Default model
+                player_models[f"Player{i+1}"] = "gemini-2.0-flash"
         return player_models
 
 
@@ -52,9 +52,8 @@ class GameRunner:
         if len(player_names) != self.config.num_players:
             raise ValueError(
                 f"Player config mismatch: {len(player_names)} vs {self.config.num_players}")
-        self.game_state = GameState(player_names, self.logger) # Pass GameLogger to GameState
+        self.game_state = GameState(player_names, self.logger)
 
-        self.game_state.log_event(None, "Roles assigned.")
         for player in player_names:
             role = self.game_state.get_player_role(player)
             private_info = {player: f"Your role is: {role}"}
@@ -67,13 +66,11 @@ class GameRunner:
                               if r == "Hitler"][0]
                     private_info[player] += f"\nHitler: {hitler}"
             self.game_state.log_event(None, "Roles assigned.",
-                                 private_info=private_info)
+                                      private_info=private_info)
         if self.config.log_to_file_enabled:
-            self.logger.setup_logging(self.game_state.get_player_names()) # Use GameLogger to setup logging
-
+            self.logger.setup_logging(self.game_state.get_player_names())
 
     def display_state_terminal(self,  message: str | None = None, error_message: str | None = None, debug_message: str | None = None, current_player_name: str | None = None):
-        """Displays the current game state in the terminal."""
         if error_message:
             print(f"ERROR: {error_message}")
         if debug_message and self.config.debug_llm_enabled:
@@ -106,29 +103,41 @@ class GameRunner:
 
         print("\n===== END STATE =====")
 
-
     def get_player_input(self, prompt, allowed_responses, current_player, game_phase, llm_interface, additional_prompt_info=None):
-        """Gets player input from LLM and handles terminal output."""
-
         llm_response_full, llm_response_action = llm_interface.get_llm_response(
             self.game_state, prompt, allowed_responses, game_phase, additional_prompt_info
         )
 
-        self.game_state.log_event(current_player, f"Action: {llm_response_action}",
-                             private_info={current_player: f"Full response:\n{llm_response_full}"})
+        thought = llm_interface.extract_thought(llm_response_full)
+        if thought:
+            llm_interface.add_thought_to_log(self.game_state, thought)
+
+        public_statement = llm_interface.extract_public_statement(
+            llm_response_full)
+
+        if public_statement:
+            log_message = f"{current_player} says: {public_statement}"
+            self.game_state.record_discussion_message(
+                current_player, public_statement)
+        else:
+            log_message = f"{current_player} remains silent."
+
+        private_info_log = {
+            current_player: f"Full response:\n{llm_response_full}"}
+        self.game_state.log_event(
+            current_player, log_message, private_info=private_info_log)
 
         self.display_state_terminal(
             message=f"\n===== TURN: {current_player} ({self.game_state.get_player_role(current_player)}) - PHASE: {game_phase} =====", current_player_name=current_player)
 
-        if self.config.slowdown_timer <= 0 and not self.config.press_enter_mode: # Timer or press enter
-            pass # No automatic pause, rely on timer in LLM interface
+        if self.config.slowdown_timer <= 0 and not self.config.press_enter_mode:
+            pass
         elif self.config.press_enter_mode:
-             input("\nPress Enter to Continue...")
+            input("\nPress Enter to Continue...")
         elif self.config.slowdown_timer > 0:
-            time.sleep(self.config.slowdown_timer) # Fallback timer here, but ideally handled in LLM interface
+            time.sleep(self.config.slowdown_timer)
 
         return llm_response_action
-
 
     def election_phase(self):
         """Runs election phase."""
@@ -137,97 +146,111 @@ class GameRunner:
 
         valid_nominees = [name for name in self.game_state.get_player_names(
         ) if is_valid_chancellor_nominee(self.game_state, president_name, name)]
+        allowed_nominees_actions = [
+            f"nominate {nominee}" for nominee in valid_nominees] + ["pass"]
 
         while True:
             nominee_prompt = f"{president_name}, nominate Chancellor from: {', '.join(valid_nominees)}"
-            nominee_name = self.get_player_input(
-                nominee_prompt, valid_nominees, president_name, "Nomination", llm_interface_president)
+            nominee_action = self.get_player_input(
+                nominee_prompt, allowed_nominees_actions, president_name, "Nomination", llm_interface_president)
 
-            if nominee_name in valid_nominees:
+            if nominee_action.startswith("nominate "):
+                nominee_name = nominee_action[len("nominate "):]
+                if nominee_name in valid_nominees:
+                    break
+            elif nominee_action == "pass":
                 break
             self.display_state_terminal(
-                error_message=f"Invalid nominee: {nominee_name}. Please choose from: {', '.join(valid_nominees)}")
+                error_message=f"Invalid nominee action: {nominee_action}. Please choose from: {', '.join(allowed_nominees_actions)}")
 
-        self.game_state.set_government(president_name, nominee_name)
-        self.game_state.log_event(
-            None, f"{president_name} nominated {nominee_name} Chancellor.")
-        self.display_state_terminal(
-            message=f"\n{president_name} nominated {nominee_name} Chancellor.")
+        if nominee_action.startswith("nominate "):
+            nominee_name = nominee_action[len("nominate "):]
+            self.game_state.set_government(president_name, nominee_name)
+            self.display_state_terminal(
+                message=f"\n{president_name} nominated {nominee_name} Chancellor.")
+        else:
+            self.game_state.reset_government()
+            self.display_state_terminal(
+                message=f"\nPresident {president_name} passed on nomination.")
+            return False
 
         self.discussion_phase("Election")
+
         votes = self.voting_phase()
         yes_votes = list(votes.values()).count("YES")
         vote_results_msg = f"Vote Results: Yes={yes_votes}, No={len(votes) - yes_votes}"
         self.display_state_terminal(message=f"\n{vote_results_msg}")
-        self.game_state.log_event(None, vote_results_msg)
+        election_result = "Government approved" if yes_votes > len(
+            votes) / 2 else "Government failed"
+        full_election_log_msg = f"{president_name} nominated {nominee_name if nominee_action.startswith('nominate ') else 'No Chancellor'} as Chancellor. {vote_results_msg}. Election outcome: {election_result}."
+        self.game_state.log_event(None, full_election_log_msg)
         return yes_votes > len(votes) / 2
 
-
     def discussion_phase(self, phase_name):
-        """Runs discussion phase."""
         self.display_state_terminal(
             message=f"\n--- {phase_name} Discussion ---")
         self.game_state.start_discussion(phase_name)
 
-        players_passed = set()
+        players_spoken_in_round = set()
         discussion_rounds = 0
-        max_rounds = 3
+        max_rounds = 10
+        round_speaker_count = 0
+        last_round_someone_spoke = True
 
-        while discussion_rounds < max_rounds:
-            current_speaker = self.game_state.get_current_discussion_speaker()
-            if not current_speaker or current_speaker in players_passed:
+        while discussion_rounds < max_rounds and last_round_someone_spoke:
+            last_round_someone_spoke = False
+            players_spoken_in_round = set()
+
+            for _ in self.game_state.get_player_names():
+                current_speaker = self.game_state.get_current_discussion_speaker()
+                if not current_speaker or self.game_state.player_status[current_speaker] == DEAD:
+                    self.game_state.next_discussion_speaker()
+                    continue
+
+                llm_interface = self.player_llm_configs[current_speaker]
+                prompt = f"{current_speaker}, Discuss {phase_name}."
+                public_statement = self.get_player_input(
+                    prompt, ["pass"], current_speaker, f"{phase_name} Discussion", llm_interface)
+
+                if public_statement != "pass":
+                    last_round_someone_spoke = True
+                    players_spoken_in_round.add(current_speaker)
+                    self.display_state_terminal(
+                        message=f"{current_speaker} says: {public_statement}")
+                else:
+                    self.display_state_terminal(
+                        message=f"{current_speaker} remains silent.")
+
                 self.game_state.next_discussion_speaker()
-                if not self.game_state.get_current_discussion_speaker():
-                    break
-                continue
 
-            llm_interface = self.player_llm_configs[current_speaker]
-            prompt = f"{current_speaker}, Discuss {phase_name}. (You can say 'pass')"
-            message = self.get_player_input(prompt, [
-                                       "pass"], current_speaker, f"{phase_name} Discussion", llm_interface)
+            discussion_rounds += 1
 
-            if message.lower() == "pass":
-                self.game_state.log_event(current_speaker, "passed discussion turn.")
-                players_passed.add(current_speaker)
+            if not last_round_someone_spoke:
                 self.display_state_terminal(
-                    message=f"{current_speaker} passes.")
-            else:
-                self.game_state.record_discussion_message(
-                    current_speaker, message)
-
-            self.game_state.next_discussion_speaker()
-            if len(players_passed) < len([p for p in self.game_state.get_player_names() if self.game_state.player_status[p] == ALIVE]):
-                self.display_state_terminal()
-
-            if len(players_passed) == len([p for p in self.game_state.get_player_names() if self.game_state.player_status[p] == ALIVE]):
-                self.display_state_terminal(
-                    message="All players passed discussion.")
+                    message="--- Discussion ends as no one spoke in the last round ---")
                 break
-            if self.game_state.get_current_discussion_speaker() == self.game_state.get_first_discussion_speaker():
-                discussion_rounds += 1
+
         self.display_state_terminal(
             message=f"--- {phase_name} Discussion End ---")
 
-
     def voting_phase(self):
-        """Runs voting phase."""
         self.display_state_terminal(message="\n--- Voting Phase ---")
         votes = {}
+        vote_log_messages = []
+        allowed_vote_actions = ["YES", "NO"]
         for player in self.game_state.get_player_names():
             if self.game_state.player_status[player] == ALIVE:
                 vote_prompt = f"{player}, vote YES/NO on government."
                 llm_interface_voter = self.player_llm_configs[player]
-                vote = self.get_player_input(vote_prompt, [
-                                        "YES", "NO"], player, "Voting", llm_interface_voter).upper()
+                vote = self.get_player_input(
+                    vote_prompt, allowed_vote_actions, player, "Voting", llm_interface_voter).upper()
                 votes[player] = vote
-                self.game_state.log_event(player, f"Voted {vote}.", private_info={
-                                     player: f"You voted {vote}"})
+                vote_log_messages.append(f"{player} voted {vote}.")
                 self.display_state_terminal(message=f"{player} voted.")
+        self.game_state.log_event(None, " ".join(vote_log_messages))
         return votes
 
-
     def legislative_session(self):
-        """Runs legislative session."""
         president_name = self.game_state.get_president()
         chancellor_name = self.game_state.gov["chancellor"]
         llm_interface_president = self.player_llm_configs[president_name]
@@ -236,56 +259,63 @@ class GameRunner:
         policies = self.game_state.draw_policies(3)
         if not policies:
             return None
-        self.game_state.log_event(president_name, f"Drew policies: {policies}", private_info={
-                             president_name: f"Drew policies: {policies}"})
 
+        policy_choices_president = [f"discard {i+1}" for i in range(3)]
         discard_prompt = f"{president_name}, discard one policy (1, 2, 3): {policies}"
         while True:
-            discard_choice = self.get_player_input(discard_prompt, [str(i+1) for i in range(
-                3)], president_name, "President Discard", llm_interface_president, additional_prompt_info=str(policies))
-            try:
-                discard_index = int(discard_choice) - 1
-                if 0 <= discard_index < len(policies):
-                    break
-            except ValueError:
-                self.display_state_terminal(
-                    error_message=f"Invalid choice from President: {discard_choice}. Retrying...")
-                continue
+            discard_choice_action = self.get_player_input(
+                discard_prompt, policy_choices_president, president_name, "President Discard", llm_interface_president, additional_prompt_info=str(policies))
+
+            if discard_choice_action.startswith("discard "):
+                try:
+                    discard_index = int(
+                        discard_choice_action[len("discard "):]) - 1
+                    if 0 <= discard_index < len(policies):
+                        break
+                except ValueError:
+                    pass
+
+            self.display_state_terminal(
+                error_message=f"Invalid choice from President: {discard_choice_action}. Please choose from: {', '.join(policy_choices_president)}")
 
         discarded_policy = policies.pop(discard_index)
         self.game_state.discard_policy(discarded_policy)
-        self.game_state.log_event(None, f"{president_name} discarded a policy.")
         self.display_state_terminal(
             message=f"\n{president_name} discarded a policy.")
 
+        policy_choices_chancellor = [f"enact {i+1}" for i in range(2)]
         enact_prompt = f"{chancellor_name}, enact one policy (1, 2): {policies}"
         while True:
-            enact_choice = self.get_player_input(enact_prompt, [str(i+1) for i in range(2)], chancellor_name,
-                                            "Chancellor Enact", llm_interface_chancellor, additional_prompt_info=str(policies))
-            try:
-                enact_index = int(enact_choice) - 1
-                if 0 <= enact_index < len(policies):
-                    break
-            except ValueError:
-                self.display_state_terminal(
-                    error_message=f"Invalid choice from Chancellor: {enact_choice}. Retrying...")
-                continue
+            enact_choice_action = self.get_player_input(enact_prompt, policy_choices_chancellor, chancellor_name,
+                                                        "Chancellor Enact", llm_interface_chancellor, additional_prompt_info=str(policies))
+            if enact_choice_action.startswith("enact "):
+                try:
+                    enact_index = int(enact_choice_action[len("enact "):]) - 1
+                    if 0 <= enact_index < len(policies):
+                        break
+                except ValueError:
+                    pass
+
+            self.display_state_terminal(
+                error_message=f"Invalid choice from Chancellor: {enact_choice_action}. Please choose from: {', '.join(policy_choices_chancellor)}")
 
         enacted_policy = policies.pop(enact_index)
-        self.game_state.enact_policy(enacted_policy)
-        self.game_state.log_event(
-            None, f"{chancellor_name} enacted a {enacted_policy} policy.")
+        policy_type = self.game_state.enact_policy(enacted_policy)
+        legislative_log_msg = f"President {president_name} discarded a policy. Chancellor {chancellor_name} enacted a {policy_type} policy."
+        self.game_state.log_event(None, legislative_log_msg, private_info={
+            president_name: f"Drew policies: {policies + [discarded_policy]}.",
+            chancellor_name: f"Received policies: {[enacted_policy, policies[0]]}"})
         self.display_state_terminal(
             message=f"\n{chancellor_name} enacted a {enacted_policy} policy.")
         return enacted_policy
 
-
     def executive_action(self):
-        """Runs executive action based on fascist policies enacted."""
         president_name = self.game_state.get_president()
         llm_interface_president = self.player_llm_configs[president_name]
-
         power_used = None
+        log_message = None
+        allowed_targets = None
+
         if self.game_state.fasc_policies == 3 and self.config.num_players >= 5:
             power_used = "Investigate"
             action_func = self.game_state.investigate_player
@@ -302,7 +332,7 @@ class GameRunner:
             power_used = "Policy Peek"
             action_func = self.game_state.policy_peek
             prompt_text = f"{president_name} uses Policy Peek."
-            allowed_targets = None
+            allowed_targets = ["continue"]
         elif self.game_state.fasc_policies >= 4 and (self.config.num_players == 5 or self.config.num_players == 6 or self.config.num_players >= 9):
             power_used = "Execution"
             action_func = self.game_state.kill_player
@@ -317,46 +347,54 @@ class GameRunner:
             message=f"\n--- Executive Action: {power_used} ---")
 
         if power_used == "Policy Peek":
-            self.game_state.policy_peek(president_name)
-            self.game_state.log_event(None, f"{president_name} used Policy Peek.")
+            policies_peeked = self.game_state.policy_peek(president_name)
+            log_message = f"{president_name} used Policy Peek and saw: {policies_peeked}."
             self.display_state_terminal(
                 message=f"{president_name} used Policy Peek.")
+            self.get_player_input(prompt_text, allowed_targets, president_name,
+                                  f"Executive Action: {power_used}", llm_interface_president)
+
         elif allowed_targets:
-            target_player = self.get_player_input(prompt_text, allowed_targets, president_name,
-                                             f"Executive Action: {power_used}", llm_interface_president)
+            target_player_action = self.get_player_input(prompt_text, allowed_targets, president_name,
+                                                         f"Executive Action: {power_used}", llm_interface_president)
+            target_player = target_player_action
+
             if action_func == self.game_state.investigate_player:
                 membership = self.game_state.investigate_player(
                     president_name, target_player)
-                investigate_result_msg = f"{president_name} investigated {target_player}. Result: {membership}"
+                log_message = f"{president_name} investigated {target_player}. Result: {membership} membership."
                 self.display_state_terminal(
-                    message=f"\n{investigate_result_msg}")
-                self.game_state.log_event(None, investigate_result_msg)
+                    message=f"\n{log_message}")
                 self.display_state_terminal(
                     message=f"\n{president_name} investigated {target_player}. Result: {membership}")
             elif action_func == self.game_state.call_special_election:
-                self.game_state.call_special_election(president_name, target_player)
-                special_election_msg = f"{president_name} called special election for {target_player}."
+                self.game_state.call_special_election(
+                    president_name, target_player)
+                log_message = f"{president_name} called special election for {target_player}."
                 self.display_state_terminal(
-                    message=f"\n{special_election_msg}")
-                self.game_state.log_event(None, special_election_msg)
+                    message=f"\n{log_message}")
                 self.display_state_terminal(
                     message=f"\n{president_name} called special election for {target_player}.")
             elif action_func == self.game_state.kill_player:
-                self.game_state.kill_player(target_player)
-                execution_msg = f"{president_name} executed {target_player}."
-                self.display_state_terminal(message=f"\n{execution_msg}")
-                self.game_state.log_event(None, execution_msg)
+                kill_successful = self.game_state.kill_player(target_player)
+                if kill_successful:
+                    log_message = f"{president_name} executed {target_player}."
+                else:
+                    log_message = f"{president_name} attempted to execute {target_player} but failed (already dead)."
+
+                self.display_state_terminal(message=f"\n{log_message}")
                 self.display_state_terminal(
                     message=f"\n{president_name} executed {target_player}.")
+        if log_message:
+            self.game_state.log_event(None, log_message)
 
         self.display_state_terminal(
             message=f"--- Executive Action: {power_used} Completed ---")
 
-
     def game_over_screen(self):
-        """Displays game over screen."""
         self.display_state_terminal(message="\n======== GAME OVER ========")
-        self.display_state_terminal(message=f"Winner: {self.game_state.winner}!")
+        self.display_state_terminal(
+            message=f"Winner: {self.game_state.winner}!")
         self.display_state_terminal(message="\n--- Roles ---")
         for name, role in self.game_state.roles.items():
             self.display_state_terminal(message=f"{name}: {role}")
@@ -364,11 +402,9 @@ class GameRunner:
         for event in self.game_state.public_log:
             self.display_state_terminal(message=f"- {event}")
         if self.config.log_to_file_enabled:
-            self.logger.close_log_files() # Use GameLogger to close files
-
+            self.logger.close_log_files()
 
     def run_game(self):
-        """Plays Secret Hitler game with LLMs."""
         self.setup_game()
 
         while not self.game_state.game_over:
@@ -406,7 +442,6 @@ class GameRunner:
         self.game_over_screen()
 
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Play Secret Hitler with LLM players.")
@@ -429,8 +464,8 @@ if __name__ == "__main__":
     if args.slowdown < 0:
         sys.exit("Slowdown must be non-negative")
 
-    game_config = GameConfig(args) # Create GameConfig instance
-    game_runner = GameRunner(game_config) # Create GameRunner instance
+    game_config = GameConfig(args)
+    game_runner = GameRunner(game_config)
 
     start_game_msg = "Running Secret Hitler LLM Game."
     if game_config.slowdown_timer > 0:
@@ -443,4 +478,4 @@ if __name__ == "__main__":
         start_game_msg += " File logging enabled (logs/ directory)."
     game_runner.display_state_terminal(message=start_game_msg)
 
-    game_runner.run_game() # Run the game using GameRunner
+    game_runner.run_game()

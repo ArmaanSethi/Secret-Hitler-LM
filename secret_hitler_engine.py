@@ -1,8 +1,7 @@
-# secret_hitler_engine.py (REFACTORED)
 import random
 
 LIBERAL = "Liberal"
-FASCIST = "Fascist"
+FASCIST = "FASCIST"
 ALIVE = "alive"
 DEAD = "dead"
 
@@ -39,7 +38,7 @@ class GameState:
         self.discussion_speaker_index = 0
         self.max_discussion_turns = 2
         self.discussion_turn_counts = {p: 0 for p in players}
-        self.game_logger = game_logger # Store GameLogger instance
+        self.game_logger = game_logger
 
     def _assign_roles(self):
         role_dist = {
@@ -55,7 +54,6 @@ class GameState:
         return dict(zip(self.players, roles))
 
     def _assign_membership(self):
-        # Everyone fascist membership for now
         return {p: FASCIST for p in self.players}
 
     def _create_deck(self):
@@ -79,21 +77,18 @@ class GameState:
 
     def discard_policy(self, policy):
         self.discard.append(policy)
-        self.log_event(self.get_president(), "Discarded policy.", private_info={
-                       self.get_president(): f"Discarded {policy} policy."})
 
     def enact_policy(self, policy):
         if policy == LIBERAL:
             self.lib_policies += 1
-            self.log_event(None, f"Liberal policy enacted. Liberal policies: {self.lib_policies}", private_info={
-                           self.gov['chancellor']: "You enacted a Liberal policy."})
+            policy_type = "Liberal"
         elif policy == FASCIST:
             self.fasc_policies += 1
-            self.log_event(None, f"Fascist policy enacted. Fascist policies: {self.fasc_policies}", private_info={
-                           self.gov['chancellor']: "You enacted a Fascist policy."})
+            policy_type = "Fascist"
             if self.fasc_policies >= 5:
                 self.veto_power = True
         self._check_game_over()
+        return policy_type
 
     def _check_game_over(self):
         if self.lib_policies >= 5:
@@ -126,8 +121,6 @@ class GameState:
     def set_government(self, president, chancellor):
         self.gov["president"] = president
         self.gov["chancellor"] = chancellor
-        self.log_event(
-            None, f"Government: President {president}, Chancellor {chancellor}")
 
     def reset_government(self):
         if self.gov["president"] and self.gov["chancellor"]:
@@ -144,18 +137,19 @@ class GameState:
     def enact_chaos_policy(self):
         self.log_event(None, "Chaos policy enacted!")
         policy = self.draw_policies(1)[0]
-        self.enact_policy(policy)
+        policy_type = self.enact_policy(policy)
         self.election_tracker = 0
         self.term_limit_chancellor = None
         self.term_limit_president = None
-        self.log_event(None, f"Chaos policy was {policy}.")
+        self.log_event(None, f"Chaos policy was {policy_type}.")
+        return policy_type  # ADDED return policy_type for _check_game_over()
 
     def increment_election_tracker(self):
         if self.failed_elections < 3:
             self.election_tracker += 1
             if self.election_tracker >= 3:
                 policy = self.draw_policies(1)[0]
-                self.enact_policy(policy)
+                policy_type = self.enact_policy(policy)
                 self.election_tracker = 0
                 self.log_event(None, "Election Tracker maxed! Policy enacted.")
             else:
@@ -177,9 +171,9 @@ class GameState:
             if private_info and p in private_info:
                 private_log_entry += f" (Private: {private_info[p]})"
             self.private_logs[p].append(private_log_entry)
-        if self.game_logger: # Use GameLogger instance for debug logging
-            self.game_logger.log_to_debug_file(player, f"Game Event: {log_entry}")
-
+        if self.game_logger:
+            self.game_logger.log_to_debug_file(
+                player, f"Game Event: {log_entry}")
 
     def get_player_role(self, player):
         return self.roles[player]
@@ -217,8 +211,6 @@ class GameState:
             return False
 
         self.special_president = target_player
-        self.log_event(
-            president, f"Special election called. {target_player} next president.")
         return True
 
     def policy_peek(self, president):
@@ -226,11 +218,6 @@ class GameState:
         if not policies:
             return []
         self.deck = policies + self.deck
-
-        for p in self.players:
-            if p != president:
-                self.log_event(None, "President used Policy Peek.", private_info={
-                               p: "President peeked at policies."})
         return policies
 
     def start_discussion(self, phase_name):
@@ -260,12 +247,8 @@ class GameState:
     def record_discussion_message(self, player_name, message_text):
         message = f"{player_name}: {message_text}"
         self.discussion_history.append(message)
-        self.log_event(None, f"Discussion: {message}")
-        self.discussion_turn_counts[player_name] += 1
 
-    # --- String representation methods for simplified output ---
     def get_state_string(self):
-        """Returns a string representation of the core game state."""
         return f"""
         Liberal Policies Enacted: {self.lib_policies}
         Fascist Policies Enacted: {self.fasc_policies}
@@ -279,15 +262,12 @@ class GameState:
         """
 
     def get_public_log_string(self):
-        """Returns a string of the public game log."""
         return "\n".join([f"- {event}" for event in self.public_log])
 
     def get_private_log_string(self, player_name):
-        """Returns a string of the private game log for a player."""
         return "\n".join([f"- {event}" for event in self.private_logs[player_name]])
 
     def get_discussion_string(self):
-        """Returns a string of the discussion history."""
         return "\n".join([f"- {message}" for message in self.discussion_history])
 
 
