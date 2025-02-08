@@ -1,13 +1,55 @@
-# llm_interface.py (SIMPLIFIED AND REFACTORED - CHAOS POLICY CLARIFICATION)
+# llm_interface.py (REFACTORED - NO GLOBALS, USING GameLogger CLASS)
 import time
 from openai import OpenAI
+import logging
+import os
+import json
+import random  # Import for jitter
 
-llm_debug_enabled = False
-slowdown_timer = 0  # Default to no slowdown
+
+class GameLogger:
+    def __init__(self, log_to_file_enabled=False):
+        self.log_to_file_enabled = log_to_file_enabled
+        self.player_log_files = {}
+        self.game_log_file = None
+
+    def setup_logging(self, player_names):
+        """Sets up file logging if enabled."""
+        if self.log_to_file_enabled:
+            log_dir = "logs"  # Directory to store logs
+            os.makedirs(log_dir, exist_ok=True)  # Create directory if needed
+
+            game_log_filepath = os.path.join(log_dir, "game.log")
+            self.game_log_file = open(game_log_filepath, "w")  # Write mode to clear logs
+
+            for player_name in player_names:
+                player_log_filepath = os.path.join(log_dir, f"{player_name}.log")
+                self.player_log_files[player_name] = open(player_log_filepath, "w")  # Write mode
+            print(
+                f"File logging enabled. Logs will be saved in '{log_dir}' directory.")
+
+    def close_log_files(self):
+        """Closes all open log files."""
+        if self.game_log_file:
+            self.game_log_file.close()
+        for log_file in self.player_log_files.values():
+            log_file.close()
+
+    def log_to_debug_file(self, player_name, message):
+        """Logs debug messages to the appropriate file if file logging is enabled."""
+        if self.log_to_file_enabled:
+            if self.game_log_file:
+                timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+                self.game_log_file.write(f"[{timestamp}] {message}\n")
+                self.game_log_file.flush()
+
+            if player_name and player_name in self.player_log_files:
+                self.player_log_files[player_name].write(f"{message}\n")
+                self.player_log_files[player_name].flush()
 
 
 class LLMPlayerInterface:
-    def __init__(self, player_name, model_name, api_key):
+    def __init__(self, player_name, model_name, api_key, game_logger, llm_debug_enabled=False, slowdown_timer=0):
         self.player_name = player_name
         self.model_name = model_name
         self.client = OpenAI(
@@ -65,43 +107,83 @@ class LLMPlayerInterface:
         *   **Blame:** If things go wrong, *blame* other players.
         *   **Lie (If Fascist):** *lie convincingly*.
         *  **If playing with 7-10 players, the Fascist team knows who Hitler is.**
-        """  # Keeping original rules for now
+        """
+        self.game_logger = game_logger # Store GameLogger instance
+        self.llm_debug_enabled = llm_debug_enabled
+        self.slowdown_timer = slowdown_timer
+
 
     def get_llm_response(self, game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info=None):
-        """Constructs prompt, calls LLM, extracts and returns action."""
-        global llm_debug_enabled, slowdown_timer
+        """Constructs prompt, calls LLM, extracts and returns action with robust retry and logging."""
 
-        full_prompt = self._construct_prompt(
-            game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info)
+        max_retries = 5
+        initial_delay = 2
+        retry_delay = initial_delay
 
-        if slowdown_timer > 0:
-            time.sleep(slowdown_timer)
+        for attempt in range(max_retries):
+            try:
+                start_time = time.time()
 
-        # print("\n===== START LLM PROMPT =====\n" + full_prompt + "\n===== END LLM PROMPT =====\n") # Clear prompt output
+                full_prompt = self._construct_prompt(
+                    game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info)
 
-        try:
-            response = self.client.chat.completions.create(
-                model=self.model_name,
-                messages=[{"role": "user", "content": full_prompt}],
-                n=1,
-                temperature=0.7,
-                max_tokens=500
-            )
-            llm_response = response.choices[0].message.content.strip()
+                # Log the constructed prompt
+                self.game_logger.log_to_debug_file(
+                    self.player_name, f"\n=== NEW REQUEST ===\nPhase: {game_phase}\n")
+                # self.game_logger.log_to_debug_file(
+                #     self.player_name, f"\n--- FULL PROMPT ---\n{full_prompt}\n--- END PROMPT ---")
 
-            print("\n===== START LLM RESPONSE =====\n" + llm_response +
-                  "\n===== END LLM RESPONSE =====\n")  # Clear LLM response output
+                response = self.client.chat.completions.create(
+                    model=self.model_name,
+                    messages=[{"role": "user", "content": full_prompt}],
+                    n=1,
+                    temperature=0.7,
+                    max_tokens=500
+                )
+                llm_response = response.choices[0].message.content.strip()
 
-            action = self._extract_action(llm_response)
+                # Log the LLM's response
+                self.game_logger.log_to_debug_file(
+                    self.player_name, f"\n--- LLM RESPONSE ---\n{llm_response}\n--- END RESPONSE ---")
 
-            if llm_debug_enabled:
-                print(f"DEBUG (LLM Interface): Extracted Action: '{action}'")
+                action = self._extract_action(llm_response)
+                elapsed_time = time.time() - start_time
+                remaining_time = max(0, self.slowdown_timer - elapsed_time)
 
-            return action
+                # Log timing information
+                self.game_logger.log_to_debug_file(self.player_name,
+                                  f"\n--- TIMING INFO ---\nElapsed: {elapsed_time:.2f}s\nSlowdown: {self.slowdown_timer}s\n"
+                                  f"Remaining: {remaining_time:.2f}s\nExtracted Action: {action}")
 
-        except Exception as e:
-            print(f"Error calling LLM for {self.player_name}: {e}")
-            return "pass"
+                if remaining_time > 0:
+                    time.sleep(remaining_time)
+
+                return llm_response, action
+
+            except Exception as e:
+                is_retryable_error = False
+                error_message = str(e)
+
+                if "rate limit" in error_message.lower() or "timeout" in error_message.lower() or "APIError" in error_message:
+                    is_retryable_error = True
+
+                error_log_msg = f"Error calling LLM for {self.player_name} (attempt {attempt + 1}/{max_retries}): {e}"
+                print(f"ERROR: {error_log_msg}")
+                self.game_logger.log_to_debug_file(self.player_name, error_log_msg)
+
+                if attempt < max_retries - 1 and is_retryable_error:
+                    jitter = random.uniform(-0.5, 0.5)
+                    delay = max(0, retry_delay + jitter)
+                    print(
+                        f"Retryable error detected. Retrying in {delay:.2f} seconds...")
+                    time.sleep(delay)
+                    retry_delay *= 2
+                else:
+                    print(
+                        f"Max retries reached or non-retryable error. Using default response for {self.player_name}.")
+                    default_response_msg = f"LLM failed after {max_retries} attempts. Using default 'pass' action."
+                    self.game_logger.log_to_debug_file(self.player_name, default_response_msg)
+                    return default_response_msg, "pass"
 
     def _construct_prompt(self, game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info):
         """Constructs the full prompt for the LLM."""
@@ -140,14 +222,23 @@ class LLMPlayerInterface:
         return prompt
 
     def _extract_action(self, llm_response):
-        """Extracts action from LLM response."""
+        """Extracts action from LLM response, handling potential errors."""
         start_tag = "<ACTION>"
         end_tag = "</ACTION>"
         start_index = llm_response.find(start_tag)
         end_index = llm_response.find(end_tag)
         if start_index != -1 and end_index != -1:
-            return llm_response[start_index + len(start_tag): end_index].strip()
-        return ""
+            action_text = llm_response[start_index +
+                                       len(start_tag): end_index].strip()
+            if not action_text:
+                self.game_logger.log_to_debug_file(
+                    self.player_name, f"WARNING: Extracted action is empty from LLM response: '{llm_response}'")
+                return "pass"
+            return action_text
+        else:
+            self.game_logger.log_to_debug_file(
+                self.player_name, f"WARNING: Action tags not found in LLM response: '{llm_response}'")
+            return "pass"
 
     def add_thought_to_log(self, game_state, thought):
         game_state.log_event(

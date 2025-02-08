@@ -1,4 +1,4 @@
-# secret_hitler_engine.py (SIMPLIFIED AND REFACTORED)
+# secret_hitler_engine.py (REFACTORED)
 import random
 
 LIBERAL = "Liberal"
@@ -8,7 +8,7 @@ DEAD = "dead"
 
 
 class GameState:
-    def __init__(self, players):
+    def __init__(self, players, game_logger):
         self.players = players
         self.num_players = len(players)
         self.roles = self._assign_roles()
@@ -39,6 +39,7 @@ class GameState:
         self.discussion_speaker_index = 0
         self.max_discussion_turns = 2
         self.discussion_turn_counts = {p: 0 for p in players}
+        self.game_logger = game_logger # Store GameLogger instance
 
     def _assign_roles(self):
         role_dist = {
@@ -176,6 +177,9 @@ class GameState:
             if private_info and p in private_info:
                 private_log_entry += f" (Private: {private_info[p]})"
             self.private_logs[p].append(private_log_entry)
+        if self.game_logger: # Use GameLogger instance for debug logging
+            self.game_logger.log_to_debug_file(player, f"Game Event: {log_entry}")
+
 
     def get_player_role(self, player):
         return self.roles[player]
