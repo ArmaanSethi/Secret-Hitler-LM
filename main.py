@@ -1,4 +1,3 @@
-# main.py
 """Main script to run the text-based Secret Hitler game."""
 
 from secret_hitler_engine import (
@@ -11,15 +10,19 @@ from secret_hitler_engine import (
     investigate_player,
     call_special_election,
     policy_peek,
+    LIBERAL,
+    FASCIST,
+    ALIVE,
+    DEAD,
 )
 
 
-def display_game_state(game_state, current_player_name=None):
+def display_game_state(game_state: GameState, current_player_name: str | None = None):
     """Displays the current game state to the console.
 
     Args:
         game_state: The current game state object.
-        current_player_name: Optional name of the current player for display.
+        current_player_name: Optional name of the current player.
     """
     print("\n================ Game State ================")
     print(f"Liberal Policies Enacted: {game_state.liberal_policies_enacted}")
@@ -70,20 +73,21 @@ def display_game_state(game_state, current_player_name=None):
     if current_player_name:
         print(f"It's your turn, {current_player_name}!")
 
-
-def get_player_input(prompt, valid_options=None, input_type="text", game_state=None, current_player=None, game_phase=None):
+def get_player_input(prompt: str, allowed_responses: list[str] | None = None, input_type: str = "text",
+                     game_state: GameState | None = None, current_player: str | None = None, game_phase: str | None = None) -> str:
     """Gets validated player input from the console.
 
     Args:
         prompt: The prompt to display to the player.
-        valid_options: Optional list of valid input options.
-        input_type: Optional type of input ('text' or 'int').
+        allowed_responses: Optional list of valid input options (case-insensitive).
+        input_type: 'text' or 'int'.  If 'int', the *first* allowed response
+            is returned as an integer (index 0).
         game_state: Optional game state to display.
         current_player: Optional current player name for display.
         game_phase: The current phase of the game (e.g., "Nomination", "Election").
 
     Returns:
-        The validated player input (string or int).
+        The validated player input (string or int, based on input_type).
     """
     while True:
         # Clear screen and show game state if provided
@@ -95,15 +99,24 @@ def get_player_input(prompt, valid_options=None, input_type="text", game_state=N
             print(f"\n--- Current Phase: {game_phase} ---")
 
         user_input = input(prompt).strip()
+
         if input_type == "int":
             try:
-                user_input = int(user_input)
+                user_input_int = int(user_input)  # Try converting to int
+                if allowed_responses:  # Only check against allowed_responses if they exist
+                    if 1 <= user_input_int <= len(allowed_responses):
+                        return allowed_responses[user_input_int - 1]  # Return string
+                    else:
+                        print(f"Invalid input. Please enter a number between 1 and {len(allowed_responses)}.")
+                        continue
+                else:
+                    return user_input_int  # Return the integer directly if no allowed_responses
             except ValueError:
                 print("Invalid input. Please enter a number.")
                 continue
 
         # Handle yes/no inputs more flexibly
-        if valid_options and set(valid_options) == {"YES", "NO"}:
+        if allowed_responses and {r.upper() for r in allowed_responses} == {"YES", "NO"}:
             if user_input.upper() in ["YES", "Y"]:
                 return "YES"
             elif user_input.upper() in ["NO", "N"]:
@@ -112,23 +125,21 @@ def get_player_input(prompt, valid_options=None, input_type="text", game_state=N
                 print("Invalid input. Please enter Yes or No.")
                 continue
 
-        if valid_options is None or (
-            valid_options
-            and str(user_input) in [str(opt) for opt in valid_options]
-        ) or (not valid_options and input_type == "text"):
+
+        if allowed_responses is None or user_input.upper() in [r.upper() for r in allowed_responses]:
             return user_input
         else:
-            print(
-                f"Invalid input. Please choose from: {', '.join(map(str, valid_options))}")
+            print(f"Invalid input. Please choose from: {', '.join(allowed_responses)}")
 
 
-def clear_and_display_state(game_state, current_player_name):
+
+def clear_and_display_state(game_state: GameState, current_player_name: str | None):
     """Clears screen and displays game state with logs."""
     print("\n" * 50)  # Clear screen
     display_game_state(game_state, current_player_name)
 
 
-def play_discussion_phase(game_state, phase_name):
+def play_discussion_phase(game_state: GameState, phase_name: str):
     """Plays a discussion phase, allowing players to exchange messages.
 
     Args:
@@ -163,7 +174,7 @@ def play_discussion_phase(game_state, phase_name):
         ) and current_speaker == game_state.get_president():
             end_discussion_input = get_player_input(
                 f"\nPresident {game_state.get_president()}, as the president, you can review the discussion and decide to end it.\nDiscussion summary:\n{game_state.get_discussion_summary()}\nDo you want to end the discussion and call for vote? (YES/NO): ",
-                valid_options=["YES", "NO"],
+                allowed_responses=["YES", "NO"],
                 game_state=game_state,
                 current_player=current_speaker,
                 game_phase=phase_name
@@ -179,7 +190,7 @@ def play_discussion_phase(game_state, phase_name):
             game_state.discussion_turn_counts.get(name, 0)
             >= game_state.max_discussion_turns_per_player
             for name in game_state.player_names
-            if game_state.player_status[name] == "alive"
+            if game_state.player_status[name] == ALIVE
         ):
             print("Maximum discussion turns reached.")
             break
@@ -188,9 +199,12 @@ def play_discussion_phase(game_state, phase_name):
             # End discussion if game is over
             break
 
+def setup_game() -> GameState:
+    """Sets up the game: gets player names, initializes GameState, and assigns roles.
 
-def play_secret_hitler():
-    """Plays a game of Secret Hitler in text-based mode."""
+    Returns:
+        The initialized GameState object.
+    """
     player_names = []
     num_players = 0
     while num_players < 5 or num_players > 10:
@@ -201,7 +215,7 @@ def play_secret_hitler():
         if not (5 <= num_players <= 10):
             print("Invalid number of players. Must be between 5 and 10.")
     for i in range(num_players):
-        name = get_player_input(f"Enter name for Player {i+1}: ")
+        name = get_player_input(f"Enter name for Player {i + 1}: ")
         player_names.append(name)
 
     game_state = GameState(player_names)
@@ -214,11 +228,11 @@ def play_secret_hitler():
 
         # Log role information to player's private log
         private_info = {player: f"Your role is: {role}"}
-        if role == "Fascist" or role == "Hitler":
+        if role == FASCIST or role == "Hitler":
             fascists = [name for name, r in game_state.roles.items()
-                        if r in ("Fascist", "Hitler")]
+                        if r in (FASCIST, "Hitler")]
             private_info[player] += f"\nThe Fascists are: {', '.join(fascists)}"
-            if role == "Fascist" and game_state.num_players >= 7:
+            if role == FASCIST and game_state.num_players >= 7:
                 hitler = [name for name, r in game_state.roles.items()
                           if r == "Hitler"][0]
                 private_info[player] += f"\nHitler is: {hitler}"
@@ -227,422 +241,288 @@ def play_secret_hitler():
             None, "Roles have been assigned.", private_info=private_info)
 
         print(f"Your role is: {role}")
-        if role == "Fascist" or role == "Hitler":
+        if role == FASCIST or role == "Hitler":
             print(f"The Fascists are: {', '.join(fascists)}")
-            if role == "Fascist" and game_state.num_players >= 7:
+            if role == FASCIST and game_state.num_players >= 7:
                 print(
                     f"Hitler is: {[name for name, r in game_state.roles.items() if r == 'Hitler'][0]}")
-
         input("Press Enter to continue...")
         print("\n" * 50)  # Clear screen
 
-    while not game_state.game_over:
-        president_name = game_state.get_president()
-        # Remove this clear_and_display_state
+    return game_state
 
-        # Nomination Phase
+def run_election_phase(game_state: GameState) -> bool:
+    """Runs the election phase: nomination, discussion, and voting.
+
+    Args:
+        game_state: The current GameState object.
+
+    Returns:
+        True if the government is approved, False otherwise.
+    """
+    president_name = game_state.get_president()
+
+    # Nomination Phase
+    while True:
+        nominee_name = get_player_input(
+            f"{president_name}, nominate a Chancellor: ",
+            game_state=game_state,
+            current_player=president_name,
+            game_phase="Nomination"
+        )
+        if nominee_name not in get_player_names(game_state):
+            print("Invalid nominee name.  Must be an existing player.")
+            input("Press Enter to try again...")
+        elif not is_valid_chancellor_nominee(game_state, president_name, nominee_name):
+            print("Invalid nomination.  Check for term limits or other restrictions.")
+            input("Press Enter to try again...")
+        else:
+            break
+
+    game_state.set_government(president_name, nominee_name)
+    print(f"{president_name} has nominated {nominee_name} as Chancellor.")
+
+    # Election Phase
+    print("\n--- Election Phase ---")
+    # Discussion before voting
+    play_discussion_phase(game_state, "Election")
+
+    votes = {}
+    for player in get_player_names(game_state):
+        if game_state.player_status[player] == ALIVE:
+            vote = get_player_input(
+                f"{player}, vote YES or NO on the government "
+                f"({president_name} as President, {nominee_name} as Chancellor): ",
+                allowed_responses=["YES", "NO"],
+                game_state=game_state,
+                current_player=player,
+                game_phase="Election"
+            ).upper()
+            votes[player] = vote
+            private_info = {player: f"You voted {vote}"}
+            game_state.log_event(
+                player, "Cast vote for government", private_info=private_info)
+            print("\n" * 50)  # Clear screen
+
+    yes_votes = list(votes.values()).count("YES")
+    no_votes = list(votes.values()).count("NO")
+    game_state.log_event(
+        None, f"Vote Results - Yes: {yes_votes}, No: {no_votes}")
+    for player, vote in votes.items():
+        game_state.log_event(None, f"{player} voted {vote}")
+
+    clear_and_display_state(game_state, None)
+    print("\n--- Vote Results ---")
+    for player, vote in votes.items():
+        print(f"{player} voted {vote}")
+
+    return yes_votes > no_votes
+
+
+def run_legislative_session(game_state: GameState) -> str | None:
+    """Runs the legislative session: policy drawing, discarding, and enactment.
+
+    Args:
+        game_state: The current GameState object.
+
+    Returns:
+        The enacted policy (LIBERAL or FASCIST), or None if vetoed.
+    """
+    president_name = game_state.get_president()
+    chancellor_name = game_state.government["chancellor"]
+
+    print("\n--- Legislative Session ---")
+    policy_cards = game_state.draw_policies(3)
+    private_info_pres = {president_name: f"Drew policies: {policy_cards}"}
+    game_state.log_event(president_name, "Drew 3 policies.", private_info=private_info_pres)
+    clear_and_display_state(game_state, president_name)
+
+    print(f"{president_name}, you drew policies:")
+    for i, policy in enumerate(policy_cards):  # Show order
+        print(f"{i + 1}. {policy}")
+
+    discard_choice = get_player_input(
+        f"Discard one policy (enter 1, 2, or 3): ",
+        allowed_responses=[str(i + 1) for i in range(len(policy_cards))],
+        input_type = "int",
+        game_state=game_state,
+        current_player=president_name,
+        game_phase="Legislative Session"
+    )
+    discard_index = int(discard_choice) - 1
+    discarded_policy = policy_cards.pop(discard_index)
+    game_state.discard_policy(discarded_policy)
+    private_info_pres_discard = {
+    president_name: f"Discarded policy at index {discard_index + 1} (which was: {discarded_policy}). Remaining policies passed to Chancellor: {policy_cards}"
+    }
+    game_state.log_event(
+    president_name,
+    f"Discarded a policy. Passed 2 to Chancellor.",
+    private_info=private_info_pres_discard,
+    )
+
+    print(f"{president_name} discarded a policy. Passing remaining policies to {chancellor_name} (Chancellor).")
+    input(f"Pass the remaining policies to {chancellor_name}. Press Enter...")
+
+    private_info_chan = {chancellor_name: f"Received policies: {policy_cards}"}
+    game_state.log_event(chancellor_name, "Received 2 policies.", private_info=private_info_chan)
+
+    # Veto Power check (moved here for clarity)
+    if game_state.veto_power_available:
+        clear_and_display_state(game_state, chancellor_name)
+        veto_option = get_player_input(
+            f"{chancellor_name}, you received policies: {policy_cards}\nDo you want to VETO? (YES/NO): ",
+            allowed_responses=["YES", "NO"],
+            game_state=game_state,
+            current_player=chancellor_name,
+            game_phase="Legislative Session"
+        ).upper()
+
+        if veto_option == "YES":
+            clear_and_display_state(game_state, game_state.get_president())
+            veto_president_confirm = get_player_input(
+                f"{game_state.get_president()}, Chancellor wants to VETO. Confirm VETO? (YES/NO): ",
+                allowed_responses=["YES", "NO"],
+                game_state=game_state,
+                current_player=game_state.get_president(),
+                game_phase="Legislative Session"
+            ).upper()
+            if veto_president_confirm == "YES":
+                print("Government VETOED!")
+                game_state.log_event(None, "Government vetoed.")
+                game_state.reset_government()
+                game_state.increment_election_tracker()
+                return None  # Indicate veto occurred
+
+            else:
+                print("President rejected VETO. Chancellor must enact policy.")
+
+     # Enact policy (handles both veto and non-veto cases)
+    while True:
+        clear_and_display_state(game_state, chancellor_name)
+        print(f"{chancellor_name}, you received policies:")
+        for i, policy in enumerate(policy_cards):
+            print(f"{i + 1}. {policy}")
+        enact_choice = get_player_input(
+            "Choose a policy to enact (enter 1 or 2): ",
+            allowed_responses=[str(i+1) for i in range(len(policy_cards))],
+            input_type = "int",
+            game_state=game_state,
+            current_player=chancellor_name,
+            game_phase="Legislative Session"
+        )
+
+        enact_index = int(enact_choice) -1
+        enacted_policy = policy_cards[enact_index]
+        game_state.enact_policy(enacted_policy)
+        game_state.discard_policy(policy_cards[1 - enact_index]) # Discard the other
+        return enacted_policy
+
+
+def run_executive_action(game_state: GameState):
+    """Runs the executive action phase (presidential powers).
+
+    Args:
+        game_state: The current GameState object.
+    """
+    president_name = game_state.get_president()
+
+    if game_state.fascist_policies_enacted == 3 and game_state.num_players >= 5:
+        # Investigate Loyalty
         while True:
-            nominee_name = get_player_input(
-                f"{president_name}, nominate a Chancellor: ",
+            target_player = get_player_input(
+                f"{president_name}, investigate loyalty of which player?: ",
                 game_state=game_state,
                 current_player=president_name,
-                game_phase="Nomination"
+                game_phase="Presidential Power: Investigate Loyalty"
             )
-            if nominee_name not in get_player_names(game_state):
-                print("Invalid nominee name.")
-                input("Press Enter to try again...")
-            elif game_state.player_status[nominee_name] == "dead":
-                print("Cannot nominate a dead player.")
-                input("Press Enter to try again...")
-            elif nominee_name == president_name:
-                print("Cannot nominate yourself as Chancellor.")
-                input("Press Enter to try again...")
-            elif game_state.previous_governments and nominee_name == game_state.previous_governments[-1][1]:
-                print("Cannot nominate the previous Chancellor.")
-                input("Press Enter to try again...")
-            elif (game_state.num_players >= 7 and game_state.previous_governments
-                  and nominee_name == game_state.previous_governments[-1][0]):
-                print(
-                    "Cannot nominate the previous President (rule applies in 7+ player games).")
-                input("Press Enter to try again...")
-            else:
+            if target_player not in get_player_names(game_state):
+                print("Invalid player name.")
+                continue
+
+            membership = investigate_player(game_state, president_name, target_player)
+            if membership:
+                private_info_investigate = {
+                    president_name: f"Investigated {target_player}. Membership Card: {membership}"
+                }
+                game_state.log_event(
+                    president_name,
+                    f"Investigated loyalty of {target_player}.",
+                    private_info=private_info_investigate,
+                )
+                print(f"{target_player}'s Membership Card is revealed to **YOU PRIVATELY** as: {membership}")
+                input("Press Enter to continue...")
                 break
-
-        game_state.set_government(president_name, nominee_name)
-        print(f"{president_name} has nominated {nominee_name} as Chancellor.")
-
-        # Election Phase
-        print("\n--- Election Phase ---")
-        # Discussion before voting
-        play_discussion_phase(game_state, "Election")
-
-        votes = {}
-        for player in get_player_names(game_state):
-            # Only living players vote
-            if game_state.player_status[player] == "alive":
-                vote = get_player_input(
-                    f"{player}, vote YES or NO on the government ({president_name} as President, {nominee_name} as Chancellor): ",
-                    valid_options=["YES", "NO"],
-                    game_state=game_state,
-                    current_player=player,
-                    game_phase="Election"
-                ).upper()
-                votes[player] = vote
-                # Log the vote privately for the player
-                private_info = {player: f"You voted {vote}"}
-                game_state.log_event(
-                    player, f"Cast vote for government", private_info=private_info)
-                print("\n" * 50)  # Clear screen after vote
-
-        # After all votes are in, log the results publicly
-        yes_votes = list(votes.values()).count("YES")
-        no_votes = list(votes.values()).count("NO")
-        game_state.log_event(
-            None, f"Vote Results - Yes: {yes_votes}, No: {no_votes}")
-        for player, vote in votes.items():
-            game_state.log_event(None, f"{player} voted {vote}")
-
-        # Show final vote results
-        clear_and_display_state(game_state, None)
-        print("\n--- Vote Results ---")
-        for player, vote in votes.items():
-            print(f"{player} voted {vote}")
-
-        # Majority yes votes
-        government_approved = yes_votes > no_votes
-
-        print("\n--- Vote Results ---")
-        for player, vote in votes.items():
-            print(f"{player} voted {vote}")
-
-        if government_approved:
-            print("Government approved!")
-            # Reset election tracker
-            game_state.election_tracker = 0
-            # Reset consecutive failed elections
-            game_state.consecutive_failed_elections = 0
-
-            # Legislative Session - President draws, President discards, Chancellor enacts
-            print("\n--- Legislative Session ---")
-            policy_cards = game_state.draw_policies(3)
-            # Private information for President about drawn policies
-            private_info_pres = {
-                president_name: f"Drew policies: {policy_cards}"}
-            game_state.log_event(
-                president_name, f"Drew 3 policies.", private_info=private_info_pres
-            )
-
-            clear_and_display_state(
-                game_state, president_name)
-            while True:
-                discard1 = get_player_input(
-                    f"{president_name}, you drew policies: {policy_cards} **LOOK AT THESE PRIVATELY** \n discard one policy (enter 1, 2, or 3): ",
-                    valid_options=[1, 2, 3],
-                    input_type="int",
-                    game_state=game_state,
-                    current_player=president_name,
-                    game_phase="Legislative Session"
-                )
-                # Ensure discard1 is int before indexing
-                if 1 <= int(discard1) <= 3:
-                    discard_index = int(discard1) - 1
-                    discarded_policy_pres = policy_cards.pop(discard_index)
-                    game_state.discard_policy(discarded_policy_pres)
-                    # Private information for President about discarded policy
-                    private_info_pres_discard = {
-                        president_name: f"Discarded policy at index {discard_index+1} (which was: {discarded_policy_pres}). Remaining policies passed to Chancellor: {policy_cards}"
-                    }
-                    game_state.log_event(
-                        president_name,
-                        f"Discarded a policy. Passed 2 to Chancellor.",
-                        private_info=private_info_pres_discard,
-                    )
-                    break
-                else:
-                    print("Invalid choice.")
-
-            print(
-                f"{president_name} discarded a policy. Remaining policies: {policy_cards} **PASS THESE TO CHANCELLOR PRIVATELY (SYMBOLICALLY)**"
-            )
-            input(
-                f"Pass the remaining policies to {nominee_name} (Chancellor). Press Enter..."
-            )
-
-            # Private information for Chancellor about received policies
-            private_info_chan = {
-                nominee_name: f"Received policies: {policy_cards}"}
-            game_state.log_event(
-                nominee_name, f"Received 2 policies.", private_info=private_info_chan
-            )
-            clear_and_display_state(game_state, nominee_name)  # Added here
-            print(
-                f"\n{nominee_name}, you received policies: {policy_cards} **LOOK AT THESE PRIVATELY**")
-
-            # Veto power check
-            if game_state.veto_power_available:
-                clear_and_display_state(game_state, nominee_name)
-                veto_option = get_player_input(f"{nominee_name}, you received policies: {policy_cards} **LOOK AT THESE PRIVATELY** \n do you want to VETO? (YES/NO): ",
-                                               valid_options=["YES", "NO"],
-                                               game_state=game_state,
-                                               current_player=nominee_name,
-                                               game_phase="Legislative Session"
-                                               ).upper()
-
-                if veto_option == "YES":
-                    clear_and_display_state(game_state, president_name)
-                    veto_president_confirm = get_player_input(
-                        f"{president_name}, Chancellor wants to VETO. Confirm VETO? (YES/NO): ",
-                        valid_options=["YES", "NO"],
-                        game_state=game_state,  # Added game_state
-                        # Added current_player
-                        current_player=president_name,
-                        game_phase="Legislative Session"
-                    ).upper()
-                    if veto_president_confirm == "YES":
-                        print("Government VETOED!")
-                        game_state.log_event(None, "Government vetoed.")
-                        # Reset government on veto
-                        game_state.reset_government()
-                        # Election tracker +1
-                        game_state.increment_election_tracker()
-                        # Skip to next president nomination
-                        game_state.next_president()
-                        continue
-                    else:
-                        # Fall through to policy enactment if veto rejected
-                        print(
-                            "President rejected VETO. Chancellor must enact policy.")
-                else:
-                    # Fall through to policy enactment
-                    print("Veto power used.")
-
-            # Enact policy if no veto or veto failed
-            if (not game_state.veto_power_available or veto_option.upper() != "YES"
-                    or veto_president_confirm.upper() != "YES"):
-                while True:
-                    clear_and_display_state(game_state, nominee_name)
-                    enact_policy_choice = get_player_input(
-                        f"{nominee_name}, you received policies: {policy_cards} **LOOK AT THESE PRIVATELY** \n enact Liberal or Fascist policy? (1 for Liberal, 2 for Fascist): ",
-                        valid_options=[1, 2], input_type="int",
-                        game_state=game_state,
-                        current_player=nominee_name,
-                        game_phase="Legislative Session"
-                    )
-                    if enact_policy_choice == 1:
-                        policy_to_enact = "Liberal"
-                        if "Liberal" in policy_cards:
-                            policy_cards.remove("Liberal")
-                            game_state.discard_policy(policy_cards[0])
-                            break
-                        else:
-                            print(
-                                "Invalid choice. No Liberal policy available in hand.")
-                    elif enact_policy_choice == 2:
-                        policy_to_enact = "Fascist"
-                        if "Fascist" in policy_cards:
-                            policy_cards.remove("Fascist")
-                            game_state.discard_policy(policy_cards[0])
-                            break
-                        else:
-                            print(
-                                "Invalid choice. No Fascist policy available in hand.")
-                    else:
-                        print("Invalid choice.")
-
-                enacted_policy = policy_to_enact
-                game_state.enact_policy(enacted_policy)
-                # Reset government after policy enactment
-                game_state.reset_government()
-
-            # Executive Actions (Presidential Powers) - After Fascist Policies
-            if game_state.fascist_policies_enacted == 3 and game_state.num_players >= 5:
-                target_player = get_player_input(
-                    f"{president_name}, investigate loyalty of which player?: ",
-                    game_state=game_state,
-                    current_player=president_name,
-                    game_phase="Presidential Power: Investigate Loyalty"
-                )
-                if target_player in get_player_names(game_state):
-                    # Added checks for valid investigation target
-                    if (
-                        target_player not in game_state.investigated_players
-                        and game_state.player_status[target_player] == "alive"
-                        and target_player != president_name
-                    ):
-                        # Use engine function to investigate player
-                        membership = investigate_player(
-                            game_state, president_name, target_player
-                        )
-                        # Ensure investigation was successful
-                        if membership:
-                            # Private information for President about investigation result
-                            private_info_investigate = {
-                                president_name: f"Investigated {target_player}. Membership Card: {membership}"
-                            }
-                            game_state.log_event(
-                                president_name,
-                                f"Investigated loyalty of {target_player}.",
-                                private_info=private_info_investigate,
-                            )
-                            # Clarification of membership card reveal
-                            print(
-                                f"{target_player}'s Membership Card is revealed to **YOU PRIVATELY** as: {membership} (Note: In Secret Hitler all membership cards are Fascist)"
-                            )
-                            input("Press Enter to continue...")
-                        else:
-                            # Feedback for invalid investigation target
-                            print(
-                                "Invalid investigation target (already investigated, dead, or self). No action taken."
-                            )
-                    else:
-                        # More descriptive message for invalid target
-                        print(
-                            "Invalid investigation target (already investigated, dead, or self). No action taken."
-                        )
-                else:
-                    print("Invalid player name.")
-
-            elif game_state.fascist_policies_enacted == 4 and game_state.num_players >= 7:
-                target_president = get_player_input(
-                    f"{president_name}, choose the next President (Special Election): ",
-                    game_state=game_state,
-                    current_player=president_name,
-                    game_phase="Presidential Power: Special Election"
-                )
-                if target_president in get_player_names(game_state):
-                    # Fixed variable name from target_player_execute to target_president
-                    if (
-                        target_president != president_name
-                        and game_state.player_status[target_president] == "alive"
-                    ):
-                        # Use engine function to call special election
-                        if call_special_election(
-                            game_state, president_name, target_president
-                        ):
-                            print(
-                                f"Next President will be {target_president} after your term.")
-                            input("Press Enter to continue...")
-                        else:
-                            print(
-                                "Special Election call failed (invalid target). No action taken."
-                            )
-                    else:
-                        print(
-                            "Invalid special election target (self or dead). No action taken."
-                        )
-                else:
-                    print("Invalid player name.")
-
-            elif game_state.fascist_policies_enacted == 5 and game_state.num_players >= 9:
-                clear_and_display_state(
-                    game_state, president_name)
-                print("\nPresidential Power: Policy Peek")
-                # Use engine function for policy peek
-                peeked_policies = policy_peek(
-                    game_state, president_name
-                )
-                # Ensure peek was successful
-                if peeked_policies:
-                    # Private information for President about peeked policies
-                    private_info_peek = {
-                        president_name: f"Peeked at top 3 policies: {peeked_policies}"
-                    }
-                    game_state.log_event(
-                        president_name, "Used Policy Peek power.", private_info=private_info_peek
-                    )
-                    print(
-                        f"{president_name}, you peek at the top 3 policies **PRIVATELY**: {peeked_policies}"
-                    )
-                    input("Press Enter to continue...")
-                else:
-                    # Feedback for failed policy peek
-                    print(
-                        "Policy peek failed (no policies in deck to peek at). No action taken."
-                    )
-
-            elif game_state.fascist_policies_enacted >= 4 and game_state.num_players >= 5:
-                # Execute power at 6 policies for 5-6 players, else from 4
-                if (
-                    game_state.fascist_policies_enacted >= 6
-                    or game_state.num_players >= 7
-                ):
-                    target_player_execute = get_player_input(
-                        f"{president_name}, execute which player?: ",
-                        game_state=game_state,
-                        current_player=president_name,
-                        game_phase="Presidential Power: Execution"
-                    )
-                    if target_player_execute in get_player_names(game_state):
-                        # Use engine's kill_player function for execution
-                        if kill_player(
-                            game_state, target_player_execute
-                        ):
-                            game_state.log_event(
-                                president_name, f"Executed player {target_player_execute}."
-                            )
-                        else:
-                            # Feedback for failed execution
-                            print(
-                                "Execution failed (player already dead). No action taken."
-                            )
-                    else:
-                        print("Invalid player name.")
-
-            # Check if Hitler was elected Chancellor after 3 Fascist policies
-            if (
-                game_state.government["chancellor"]
-                and game_state.fascist_policies_enacted >= 3
-                and game_state.roles[game_state.government["chancellor"]] == "Hitler"
-                and not game_state.hitler_revealed
-            ):
-                print("\nHitler elected as Chancellor after 3 Fascist policies!")
-                reveal_hitler(game_state)
-                # Check game end conditions after Hitler reveal
-                game_state.check_game_end_conditions()
-
-        else:
-            # Government not approved
-            print("Government failed!")
-            # Reset government on failed vote
-            game_state.reset_government()
-            # Election tracker +1
-            game_state.increment_election_tracker()
-
-            # Check for three consecutive failed elections
-            if game_state.election_tracker >= 3:
-                print("\nCHAOS! Three governments rejected in a row!")
-                # Draw and enact top policy
-                chaos_policy = game_state.draw_policies(1)[0]
-                print(f"Top policy card is: {chaos_policy}")
-                game_state.enact_policy(chaos_policy)
-                print(f"Chaos policy enacted: {chaos_policy}")
-
-                # Reset election tracker and term limits
-                game_state.election_tracker = 0
-                game_state.previous_governments = []  # Reset term limits
-                game_state.log_event(
-                    None, f"Chaos: {chaos_policy} policy automatically enacted due to three failed elections.")
-
-        if not game_state.game_over:
-            # Special election president becomes the next president
-            if game_state.special_election_president:
-                # Set president index to special election president
-                game_state.current_president_index = game_state.player_names.index(
-                    game_state.special_election_president
-                )
-                # Reset special election president
-                game_state.special_election_president = None
-                print(
-                    f"\nSpecial Election! {game_state.get_president()} is the new President.")
             else:
-                # Move to next president in rotation
-                game_state.next_president()
+                print("Invalid investigation target (already investigated, dead, or self).")
 
-            # Clear screen for next round
-            input("\nPress Enter to start the next round...")
-            print("\n" * 50)
 
-    # Game Over sequence
+    elif game_state.fascist_policies_enacted == 4 and game_state.num_players >= 7:
+        # Special Election
+        while True:
+            target_president = get_player_input(
+                f"{president_name}, choose the next President (Special Election): ",
+                game_state=game_state,
+                current_player=president_name,
+                game_phase="Presidential Power: Special Election"
+            )
+            if target_president not in get_player_names(game_state):
+                print("Invalid player name.")
+                continue
+
+            if call_special_election(game_state, president_name, target_president):
+                print(f"Next President will be {target_president} after your term.")
+                input("Press Enter to continue...")
+                break
+            else:
+                print("Invalid special election target (self or dead).")
+
+    elif game_state.fascist_policies_enacted == 5 and game_state.num_players >= 9:
+        # Policy Peek
+        clear_and_display_state(game_state, president_name)
+        print("\nPresidential Power: Policy Peek")
+        peeked_policies = policy_peek(game_state, president_name)
+        if peeked_policies:
+            private_info_peek = {
+                president_name: f"Peeked at top 3 policies: {peeked_policies}"
+            }
+            game_state.log_event(
+                president_name, "Used Policy Peek power.", private_info=private_info_peek
+            )
+            print(f"{president_name}, you peek at the top 3 policies **PRIVATELY**:")
+            for i, policy in enumerate(peeked_policies):
+                print(f"{i + 1}. {policy}")  # Display in order
+            input("Press Enter to continue...")
+        else:
+            print("Policy peek failed (no policies in deck).")
+
+    elif game_state.fascist_policies_enacted >= 4 and game_state.num_players >= 5:
+        # Execution (6 policies for 5-6 players, 4+ otherwise)
+        if (
+            game_state.fascist_policies_enacted >= 6
+            or game_state.num_players >= 7
+        ):
+            while True:
+                target_player_execute = get_player_input(
+                    f"{president_name}, execute which player?: ",
+                    game_state=game_state,
+                    current_player=president_name,
+                    game_phase="Presidential Power: Execution"
+                )
+                if target_player_execute not in get_player_names(game_state):
+                    print("Invalid player name.")
+                    continue
+                if kill_player(game_state, target_player_execute):
+                    game_state.log_event(
+                        president_name, f"Executed player {target_player_execute}."
+                    )
+                    break #exit loop
+                else:
+                    print("Execution failed (player already dead).")
+
+
+def display_game_over(game_state: GameState):
+    """Displays the game over screen and results."""
     clear_and_display_state(game_state, None)
     print("\n================ Game Over! ================")
     print(f"Winner: {game_state.winner}!")
@@ -653,12 +533,86 @@ def play_secret_hitler():
     for event in game_state.public_game_log:
         print(f"- {event}")
 
-    # Display private logs at the end of the game
+    # Display private logs
     print("\n--- Private Game Logs ---")
     for player_name in game_state.player_names:
         print(f"\n** {player_name}'s Private Log **")
         for event in game_state.private_game_logs[player_name]:
             print(f"- {event}")
+
+def display_turn_summary(game_state: GameState):
+    """Displays a summary of the current turn information.
+    Args:
+        game_state (GameState): The current game state.
+    """
+    president_name = game_state.get_president()
+    print("\n===== Turn Summary =====")
+    print(f"Current President: {president_name} ({game_state.roles[president_name]})")
+    print(f"Liberal Policies: {game_state.liberal_policies_enacted}, Fascist Policies: {game_state.fascist_policies_enacted}")
+    print(f"Election Tracker: {game_state.election_tracker}")
+    print("=========================")
+
+
+def play_secret_hitler():
+    """Plays a game of Secret Hitler in text-based mode."""
+    game_state = setup_game()
+
+    while not game_state.game_over:
+        display_turn_summary(game_state)  # Display turn information
+        president_name = game_state.get_president()
+
+        # Election Phase
+        government_approved = run_election_phase(game_state)
+
+        if government_approved:
+            game_state.election_tracker = 0
+            game_state.consecutive_failed_elections = 0
+
+            # Check for Hitler as Chancellor win condition
+            if (
+                game_state.government["chancellor"]
+                and game_state.fascist_policies_enacted >= 3
+                and game_state.roles[game_state.government["chancellor"]] == "Hitler"
+                and not game_state.hitler_revealed
+            ):
+                print("\nHitler elected as Chancellor after 3 Fascist policies!")
+                reveal_hitler(game_state)
+                game_state.check_game_end_conditions()
+                if game_state.game_over:
+                    break # End the game.
+
+
+            # Legislative Session
+            enacted_policy = run_legislative_session(game_state)
+            if enacted_policy is None:  # Veto occurred
+                continue  # Skip to the next round
+
+            # Executive Action
+            run_executive_action(game_state)
+
+
+        else:
+            # Government failed
+            print("Government failed!")
+            game_state.reset_government()
+            game_state.increment_election_tracker()
+
+        if not game_state.game_over:
+            if game_state.special_election_president:
+                game_state.current_president_index = game_state.player_names.index(
+                    game_state.special_election_president
+                )
+                game_state.special_election_president = None
+                print(f"\nSpecial Election! {game_state.get_president()} is the new President.")
+            else:
+                game_state.next_president()
+
+            input("\nPress Enter to start the next round...")
+            print("\n" * 50) # Clear screen
+
+    display_game_over(game_state)
+
+
 
 
 if __name__ == "__main__":
