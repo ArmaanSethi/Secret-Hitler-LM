@@ -481,16 +481,11 @@ class GameState:
         return alive_players[speaker_index_in_alive_players]
 
     def record_discussion_message(self, player_name, message_text):
-        """Records a discussion message, updates history, and logs the event.
-
-        Args:
-            player_name: Name of the player sending the message.
-            message_text: The text of the message.
-        """
+        """Records a discussion message, updates history, and logs the event."""
         message = f"{player_name}: {message_text}"
         self.discussion_history.append(message)
-        # Log discussion message publicly
-        self.log_event(player_name, f"Discussion: {message_text}")
+        # Log publicly and to all private logs
+        self.log_event(None, f"Discussion: {message}")
         self.discussion_turn_order_index += 1
         self.discussion_turn_counts[player_name] += 1
 
