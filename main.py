@@ -1,4 +1,6 @@
 # main.py
+"""Main script to run the text-based Secret Hitler game."""
+
 from secret_hitler_engine import (
     GameState,
     is_valid_chancellor_nominee,
@@ -16,7 +18,7 @@ def display_game_state(game_state, current_player_name=None):
     """Displays the current game state to the console.
 
     Args:
-        game_state: The current game state.
+        game_state: The current game state object.
         current_player_name: Optional name of the current player for display.
     """
     print("\n================ Game State ================")
@@ -103,7 +105,7 @@ def play_discussion_phase(game_state, phase_name):
     """Plays a discussion phase, allowing players to exchange messages.
 
     Args:
-        game_state: The current game state.
+        game_state: The current game state object.
         phase_name: The name of the discussion phase (e.g., "Nomination").
     """
     print(f"\n--- {phase_name} Discussion Phase ---")
@@ -202,7 +204,6 @@ def play_secret_hitler():
         president_name = game_state.get_president()
         print(f"\n--- Nomination Phase ---")
         # Discussion before nomination
-
         play_discussion_phase(game_state, "Nomination")
 
         while True:
@@ -244,7 +245,6 @@ def play_secret_hitler():
         # Majority yes votes
         government_approved = (
             list(votes.values()).count("YES") > list(
-
                 votes.values()).count("NO")
         )
 
@@ -262,7 +262,9 @@ def play_secret_hitler():
             # Legislative Session - President draws, President discards, Chancellor enacts
             print("\n--- Legislative Session ---")
             policy_cards = game_state.draw_policies(3)
-            private_info_pres = {"President": f"Drew policies: {policy_cards}"}
+            # Private information for President about drawn policies
+            private_info_pres = {
+                president_name: f"Drew policies: {policy_cards}"}
             game_state.log_event(
                 president_name, f"Drew 3 policies.", private_info=private_info_pres
             )
@@ -280,8 +282,9 @@ def play_secret_hitler():
                     discard_index = int(discard1) - 1
                     discarded_policy_pres = policy_cards.pop(discard_index)
                     game_state.discard_policy(discarded_policy_pres)
+                    # Private information for President about discarded policy
                     private_info_pres_discard = {
-                        "President": f"Discarded policy at index {discard_index+1} (which was: {discarded_policy_pres}). Remaining policies passed to Chancellor: {policy_cards}"
+                        president_name: f"Discarded policy at index {discard_index+1} (which was: {discarded_policy_pres}). Remaining policies passed to Chancellor: {policy_cards}"
                     }
                     game_state.log_event(
                         president_name,
@@ -299,8 +302,9 @@ def play_secret_hitler():
                 f"Pass the remaining policies to {nominee_name} (Chancellor). Press Enter..."
             )
 
+            # Private information for Chancellor about received policies
             private_info_chan = {
-                "Chancellor": f"Received policies: {policy_cards}"}
+                nominee_name: f"Received policies: {policy_cards}"}
             game_state.log_event(
                 nominee_name, f"Received 2 policies.", private_info=private_info_chan
             )
@@ -316,7 +320,7 @@ def play_secret_hitler():
                     valid_options=["YES", "NO"],
                 ).upper()
                 if veto_option == "YES":
-                    # Double check
+                    # Double check with President for veto confirmation
                     if game_state.veto_power_available:
                         veto_president_confirm = get_player_input(
                             f"{president_name}, Chancellor wants to VETO. Confirm VETO? (YES/NO): ",
@@ -367,7 +371,6 @@ def play_secret_hitler():
                         policy_to_enact = "Fascist"
                         if "Fascist" in policy_cards:
                             policy_cards.remove("Fascist")
-                            game_state.discard_policy(policy_cards[0])
                             break
                         else:
                             print(
@@ -377,7 +380,7 @@ def play_secret_hitler():
 
                 enacted_policy = policy_to_enact
                 game_state.enact_policy(enacted_policy)
-                # Reset government after policy
+                # Reset government after policy enactment
                 game_state.reset_government()
 
             # Executive Actions (Presidential Powers) - After Fascist Policies
@@ -387,19 +390,19 @@ def play_secret_hitler():
                     f"{president_name}, investigate loyalty of which player?: "
                 )
                 if target_player in get_player_names(game_state):
-                    # Added checks
+                    # Added checks for valid investigation target
                     if (
                         target_player not in game_state.investigated_players
                         and game_state.player_status[target_player] == "alive"
                         and target_player != president_name
                     ):
-                        # Use engine function
+                        # Use engine function to investigate player
                         membership = investigate_player(
                             game_state, president_name, target_player
                         )
                         # Ensure investigation was successful
                         if membership:
-                            # Membership not role
+                            # Private information for President about investigation result
                             private_info_investigate = {
                                 president_name: f"Investigated {target_player}. Membership Card: {membership}"
                             }
@@ -408,18 +411,18 @@ def play_secret_hitler():
                                 f"Investigated loyalty of {target_player}.",
                                 private_info=private_info_investigate,
                             )
-                            # Clarification
+                            # Clarification of membership card reveal
                             print(
                                 f"{target_player}'s Membership Card is revealed to **YOU PRIVATELY** as: {membership} (Note: In Secret Hitler all membership cards are Fascist)"
                             )
                             input("Press Enter to continue...")
                         else:
-                            # Feedback
+                            # Feedback for invalid investigation target
                             print(
                                 "Invalid investigation target (already investigated, dead, or self). No action taken."
                             )
                     else:
-                        # More descriptive message
+                        # More descriptive message for invalid target
                         print(
                             "Invalid investigation target (already investigated, dead, or self). No action taken."
                         )
@@ -437,7 +440,7 @@ def play_secret_hitler():
                         target_president != president_name
                         and game_state.player_status[target_president] == "alive"
                     ):
-                        # Use engine function
+                        # Use engine function to call special election
                         if call_special_election(
                             game_state, president_name, target_president
                         ):
@@ -457,12 +460,13 @@ def play_secret_hitler():
 
             elif game_state.fascist_policies_enacted == 5 and game_state.num_players >= 9:
                 print("\nPresidential Power: Policy Peek")
-                # Use engine function
+                # Use engine function for policy peek
                 peeked_policies = policy_peek(
                     game_state, president_name
                 )
                 # Ensure peek was successful
                 if peeked_policies:
+                    # Private information for President about peeked policies
                     private_info_peek = {
                         president_name: f"Peeked at top 3 policies: {peeked_policies}"
                     }
@@ -474,7 +478,7 @@ def play_secret_hitler():
                     )
                     input("Press Enter to continue...")
                 else:
-                    # Feedback
+                    # Feedback for failed policy peek
                     print(
                         "Policy peek failed (no policies in deck to peek at). No action taken."
                     )
@@ -490,7 +494,7 @@ def play_secret_hitler():
                         f"{president_name}, execute which player?: "
                     )
                     if target_player_execute in get_player_names(game_state):
-                        # Use engine's kill_player function
+                        # Use engine's kill_player function for execution
                         if kill_player(
                             game_state, target_player_execute
                         ):
@@ -498,13 +502,14 @@ def play_secret_hitler():
                                 president_name, f"Executed player {target_player_execute}."
                             )
                         else:
-                            # Feedback
+                            # Feedback for failed execution
                             print(
                                 "Execution failed (player already dead). No action taken."
                             )
                     else:
                         print("Invalid player name.")
 
+            # Check if Hitler was elected Chancellor after 3 Fascist policies
             if (
                 game_state.government["chancellor"]
                 and game_state.fascist_policies_enacted >= 3
@@ -513,7 +518,7 @@ def play_secret_hitler():
             ):
                 print("\nHitler elected as Chancellor after 3 Fascist policies!")
                 reveal_hitler(game_state)
-                # Check game end
+                # Check game end conditions after Hitler reveal
                 game_state.check_game_end_conditions()
 
         else:
@@ -525,25 +530,25 @@ def play_secret_hitler():
             game_state.increment_election_tracker()
 
         if not game_state.game_over:
-            # Special election president
+            # Special election president becomes the next president
             if game_state.special_election_president:
-                # Set president index
+                # Set president index to special election president
                 game_state.current_president_index = game_state.player_names.index(
                     game_state.special_election_president
                 )
-                # Reset special election
+                # Reset special election president
                 game_state.special_election_president = None
                 print(
                     f"\nSpecial Election! {game_state.get_president()} is the new President.")
             else:
-                # Move to next president
+                # Move to next president in rotation
                 game_state.next_president()
 
-            # Clear screen
+            # Clear screen for next round
             input("\nPress Enter to start the next round...")
             print("\n" * 50)
 
-    # Game Over
+    # Game Over sequence
     display_game_state(game_state)
     print("\n================ Game Over! ================")
     print(f"Winner: {game_state.winner}!")
@@ -554,7 +559,7 @@ def play_secret_hitler():
     for event in game_state.public_game_log:
         print(f"- {event}")
 
-    # Display private logs at the end
+    # Display private logs at the end of the game
     print("\n--- Private Game Logs ---")
     for player_name in game_state.player_names:
         print(f"\n** {player_name}'s Private Log **")

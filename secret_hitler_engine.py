@@ -1,4 +1,6 @@
 # secret_hitler_engine.py
+"""Engine for the Secret Hitler game, managing game state and logic."""
+
 import random
 
 
@@ -14,84 +16,105 @@ class GameState:
         """
         self.player_names = player_names
         self.num_players = len(player_names)
-        # Flag for AI players
+        # Flag to indicate if AI players are used (currently unused)
         self.use_ai_players = use_ai_players
+        # Assign roles to players
         self.roles = self.assign_roles()
+        # Create the policy deck
         self.policy_deck = self.create_policy_deck()
+        # Initialize the policy discard pile
         self.policy_discard_pile = []
+        # Track number of enacted liberal policies
         self.liberal_policies_enacted = 0
+        # Track number of enacted fascist policies
         self.fascist_policies_enacted = 0
+        # Initialize the election tracker
         self.election_tracker = 0
+        # Initialize the government (President and Chancellor)
         self.government = {"president": None, "chancellor": None}
-        # List of tuples (President, Chancellor)
+        # List of previous governments (President, Chancellor tuples)
         self.previous_governments = []
-        # Initial president order
+        # Order of presidents in the game
         self.president_order = player_names[:]
+        # Index of the current president in president_order
         self.current_president_index = 0
-        # Track term-limited chancellor
+        # Track term-limited chancellor (ineligible for next chancellorship)
         self.term_limited_chancellor = None
-        # Track term-limited president
+        # Track term-limited president (ineligible for next chancellorship in 7+ player games)
         self.term_limited_president = None
+        # Flag to indicate if Hitler's identity has been revealed
         self.hitler_revealed = False
+        # Flag to indicate if the game is over
         self.game_over = False
+        # Stores the winner of the game ("Liberals" or "Fascists")
         self.winner = None
-        # 'alive' or 'dead'
+        # Dictionary to track player status ('alive' or 'dead')
         self.player_status = {name: "alive" for name in player_names}
-        # For investigation power
+        # Assign party membership cards (all 'Fascist' in this version)
         self.player_membership_cards = self.assign_party_membership()
-        # Track players who have been investigated.
+        # Set to track players who have been investigated
         self.investigated_players = set()
-        # Track president chosen by special election.
+        # Name of the president chosen by special election (for next round)
         self.special_election_president = None
-        # Veto becomes available after 5 fascist policies
+        # Flag to indicate if veto power is available (after 5 fascist policies)
         self.veto_power_available = False
         # Counter for consecutive failed elections
         self.consecutive_failed_elections = 0
-        # Game log visible to all
+        # List to store public game log events
         self.public_game_log = []
-        # Private log for each player
+        # Dictionary to store private game logs for each player
         self.private_game_logs = {name: [] for name in player_names}
-        # Track game phase for discussion triggers
+        # Track the current game phase (e.g., "Nomination", "Election") for discussions
         self.current_phase = "Nomination"
-        # Store discussion messages in the current phase
+        # List to store discussion messages in the current phase
         self.discussion_history = []
-        # Track whose turn it is in discussion
+        # Index to track whose turn it is in discussion
         self.discussion_turn_order_index = 0
-        # Limit discussion turns per player
+        # Maximum discussion turns per player before discussion can be ended
         self.max_discussion_turns_per_player = 2
-        # Track turns per player
+        # Dictionary to track discussion turns per player
         self.discussion_turn_counts = {
             name: 0 for name in player_names if name in self.player_names
         }
 
     def assign_roles(self):
-        """Assigns roles to players based on the number of players."""
+        """Assigns roles to players based on the number of players.
+
+        Roles are distributed according to the Secret Hitler game rules.
+
+        Returns:
+            A dictionary mapping player names to their roles.
+        """
         roles_distribution = {
-            5: ["Liberal"] * 3 + ["Fascist"] * 1 + ["Hitler"],
-            # 1 Fascist + Hitler
-            6: ["Liberal"] * 4 + ["Fascist"] * 1 + ["Hitler"],
-            # 1 Fascist + Hitler
-            7: ["Liberal"] * 4 + ["Fascist"] * 2 + ["Hitler"],
-            # 2 Fascists + Hitler
-            8: ["Liberal"] * 5 + ["Fascist"] * 2 + ["Hitler"],
-            # 2 Fascists + Hitler
-            9: ["Liberal"] * 5 + ["Fascist"] * 3 + ["Hitler"],
-            # 3 Fascists + Hitler
-            10: ["Liberal"] * 6 + ["Fascist"] * 3 + ["Hitler"],
-            # 3 Fascists + Hitler
+            5: 1 * ["Fascist"] + ["Hitler"] + 3 * ["Liberal"],
+            6: 1 * ["Fascist"] + ["Hitler"] + 4 * ["Liberal"],
+            7: 2 * ["Fascist"] + ["Hitler"] + 4 * ["Liberal"],
+            8: 2 * ["Fascist"] + ["Hitler"] + 5 * ["Liberal"],
+            9: 3 * ["Fascist"] + ["Hitler"] + 5 * ["Liberal"],
+            10: 3 * ["Fascist"] + ["Hitler"] + 6 * ["Liberal"],
         }
-        # Create a copy
+        # Create a copy to avoid modifying the original distribution
         roles = roles_distribution[self.num_players][:]
         random.shuffle(roles)
         return dict(zip(self.player_names, roles))
 
     def assign_party_membership(self):
-        """Assigns party membership cards (all 'Fascist' in this version)."""
-        # In game all membership cards are fascist. Only roles differ
+        """Assigns party membership cards (all 'Fascist' in this version).
+
+        In the Secret Hitler game, all membership cards are visually 'Fascist'.
+        Only the secret role cards differentiate between Liberals, Fascists, and Hitler.
+
+        Returns:
+            A dictionary mapping player names to 'Fascist' membership.
+        """
         return {name: "Fascist" for name in self.player_names}
 
     def create_policy_deck(self):
-        """Creates the policy deck with 6 Liberal and 11 Fascist policies."""
+        """Creates the policy deck with 6 Liberal and 11 Fascist policies.
+
+        Returns:
+            A list representing the shuffled policy deck.
+        """
         # Correct policy card counts: 6 Liberal, 11 Fascist
         deck = ["Liberal"] * 6 + ["Fascist"] * 11
         random.shuffle(deck)
@@ -111,11 +134,11 @@ class GameState:
         drawn_policies = []
         for _ in range(num):
             if not self.policy_deck:
-                # Reshuffle if deck is empty
+                # Reshuffle discard pile if deck is empty
                 self.policy_deck = self.policy_discard_pile[:]
                 self.policy_discard_pile = []
                 random.shuffle(self.policy_deck)
-                # System event
+                # Log reshuffle event
                 self.log_event(None, "Policy deck reshuffled.")
             if self.policy_deck:
                 # Make sure deck isn't empty after reshuffle
@@ -126,8 +149,13 @@ class GameState:
         return drawn_policies
 
     def discard_policy(self, policy):
-        """Discards a policy card."""
+        """Discards a policy card to the discard pile.
+
+        Args:
+            policy: The policy card ('Liberal' or 'Fascist') to discard.
+        """
         self.policy_discard_pile.append(policy)
+        # Log policy discard event (private to president)
         self.log_event(None, f"Policy discarded.", private_info={
                        self.get_president(): f"You discarded a {policy} policy."})
 
@@ -141,38 +169,44 @@ class GameState:
         """
         if policy == "Liberal":
             self.liberal_policies_enacted += 1
+            # Log liberal policy enacted
             self.log_event(
                 None,
                 f"Liberal policy enacted. Liberal policies: {self.liberal_policies_enacted}",
+                # Example of chancellor private log
                 private_info={
                     self.government['chancellor']: "You enacted a Liberal policy."}
             )
         elif policy == "Fascist":
             self.fascist_policies_enacted += 1
+            # Log fascist policy enacted
             self.log_event(
                 None,
                 f"Fascist policy enacted. Fascist policies: {self.fascist_policies_enacted}",
+                # Example of chancellor private log
                 private_info={
                     self.government['chancellor']: "You enacted a Fascist policy."}
             )
-            # Veto power after 5 fascist policies
+            # Veto power becomes available after 5 fascist policies
             if self.fascist_policies_enacted >= 5:
                 self.veto_power_available = True
         self.check_game_end_conditions()
 
     def check_game_end_conditions(self):
-        """Checks if any game end conditions are met."""
-        # Liberals win with 5 liberal policies
+        """Checks if any game end conditions are met and sets game_over and winner."""
+        # Liberals win if 5 liberal policies are enacted
         if self.liberal_policies_enacted >= 5:
             self.game_over = True
             self.winner = "Liberals"
             self.log_event(
                 None, "Liberals win by enacting 5 Liberal policies.")
+        # Fascists win if 6 fascist policies are enacted
         if self.fascist_policies_enacted >= 6:
             self.game_over = True
             self.winner = "Fascists"
             self.log_event(
                 None, "Fascists win by enacting 6 Fascist policies.")
+        # Fascists win if Hitler is elected Chancellor after 3 fascist policies
         if (
             self.fascist_policies_enacted >= 3
             and self.government["chancellor"]
@@ -184,20 +218,24 @@ class GameState:
                 None,
                 "Fascists win by electing Hitler as Chancellor after 3 Fascist policies.",
             )
-        # Fascists win after 3 failed elections
+        # Fascists win if 3 consecutive governments fail (chaos win)
         if self.consecutive_failed_elections >= 3:
             self.game_over = True
             self.winner = "Fascists"
             self.log_event(None, "Fascists win due to 3 failed elections.")
 
     def get_president(self):
-        """Returns the name of the current president."""
+        """Returns the name of the current president.
+
+        Returns:
+            The name of the current president (string).
+        """
         return self.president_order[self.current_president_index % self.num_players]
 
     def next_president(self):
         """Moves to the next president in the president order."""
         self.current_president_index += 1
-        # Reset special election president
+        # Reset special election president after presidency changes
         self.special_election_president = None
 
     def set_government(self, president_name, chancellor_name):
@@ -209,6 +247,7 @@ class GameState:
         """
         self.government["president"] = president_name
         self.government["chancellor"] = chancellor_name
+        # Log government nomination event
         self.log_event(
             None,
             f"Government nominated: President {president_name}, Chancellor {chancellor_name}",
@@ -220,16 +259,16 @@ class GameState:
             self.previous_governments.append(
                 (self.government["president"], self.government["chancellor"])
             )
-            # Set term limits
+            # Set term limits for previous president and chancellor
             self.term_limited_president = self.government["president"]
             self.term_limited_chancellor = self.government["chancellor"]
         self.government = {"president": None, "chancellor": None}
-        # Increment failed election count
+        # Increment consecutive failed elections counter
         self.consecutive_failed_elections += 1
-        # Check for chaos policy
+        # Check if chaos policy should be enacted due to failed elections
         if self.consecutive_failed_elections >= 3:
             self.enact_chaos_policy()
-            # Reset counter after chaos
+            # Reset failed election counter after chaos policy
             self.consecutive_failed_elections = 0
 
     def enact_chaos_policy(self):
@@ -238,12 +277,13 @@ class GameState:
         # Draw one policy from top of deck
         top_policy = self.draw_policies(1)[0]
         self.enact_policy(top_policy)
-        # Reset election tracker after chaos policy
+        # Reset election tracker after chaos policy enacted
         self.election_tracker = 0
-        # Term limits are forgotten
+        # Term limits are forgotten after chaos policy
         self.term_limited_chancellor = None
-        # Term limits are forgotten
+        # Term limits are forgotten after chaos policy
         self.term_limited_president = None
+        # Log chaos policy type
         self.log_event(None, f"Chaos policy enacted was {top_policy}.")
 
     def increment_election_tracker(self):
@@ -251,19 +291,21 @@ class GameState:
 
         If tracker reaches 3, enacts top policy and resets tracker.
         """
-        # Only if chaos policy not enacted
+        # Only increment if chaos policy not already enacted
         if self.consecutive_failed_elections < 3:
             self.election_tracker += 1
-            # Tracker maxes at 3, then resets
-            if self.election_tracker > 3:
+            # If tracker reaches 3, enact top policy and reset
+            if self.election_tracker >= 3:  # Changed from > to >= to enact at 3
                 # Draw one policy from top of deck
                 top_policy = self.draw_policies(1)[0]
                 self.enact_policy(top_policy)
-                # Reset after policy enacted
+                # Reset election tracker after policy enacted
                 self.election_tracker = 0
+                # Log election tracker maxed event
                 self.log_event(
                     None, f"Election Tracker reached 3! Top policy enacted.")
             else:
+                # Log election tracker increment event
                 self.log_event(
                     None,
                     f"Government failed. Election tracker is now {self.election_tracker}.",
@@ -274,11 +316,12 @@ class GameState:
         """Logs an event to public and private logs.
 
         Args:
-            player_name: Name of the player initiating the event (or None).
+            player_name: Name of the player initiating the event (or None for system events).
             event_description: Public description of the event.
-            private_info: Optional dict of player names to private information.
+            private_info: Optional dictionary of player names to private information.
+                          Keys should be player names, values are private messages.
         """
-        # Basic round counter
+        # Basic round counter for log entry prefix
         log_entry = (
             f"Round {len(self.public_game_log) + 1 if not self.game_over else 'End'} - "
         )
@@ -287,15 +330,20 @@ class GameState:
         log_entry += event_description
         self.public_game_log.append(log_entry)
 
+        # Add to private logs if private_info is provided
         for name in self.player_names:
-            # Start with the public log
+            # Start with the public log entry
             private_log_entry = log_entry
             if private_info and name in private_info:
+                # Append private information if it exists for this player
                 private_log_entry += f" (Private: {private_info[name]})"
             self.private_game_logs[name].append(private_log_entry)
 
     def get_game_state_for_player(self, player_name):
         """Returns a simplified game state view for a specific player.
+
+        Used to provide AI players with necessary game information without revealing
+        hidden roles to other players.
 
         Args:
             player_name: The name of the player requesting the game state.
@@ -319,9 +367,10 @@ class GameState:
             "discussion_history": self.discussion_history,
             "current_phase": self.current_phase,
             "veto_power_available": self.veto_power_available,
-            # Convert set to list
+            # Convert set to list for JSON serializability if needed
             "investigated_players": list(self.investigated_players),
         }
+        # Reveal fascist player list and hitler name to fascists and hitler
         if (
             self.roles[player_name] == "Fascist"
             or self.roles[player_name] == "Hitler"
@@ -335,12 +384,14 @@ class GameState:
                 visible_state["hitler_name"] = [
                     name for name, role in self.roles.items() if role == "Hitler"
                 ][0]
-        # Add player's own role
+        # Add player's own role to their visible state
         visible_state["my_role"] = self.roles[player_name]
         return visible_state
 
     def get_full_game_state(self):
         """Returns the full game state for debugging or replay purposes.
+
+        Includes all hidden information like roles and policy deck.
 
         Returns:
             A dictionary representing the complete game state.
@@ -349,7 +400,7 @@ class GameState:
             "player_names": self.player_names,
             "num_players": self.num_players,
             "roles": self.roles,
-            # Just show deck size
+            # Just show deck size for brevity, can show full deck for deeper debug
             "policy_deck": len(self.policy_deck),
             "policy_discard_pile": len(self.policy_discard_pile),
             "liberal_policies": self.liberal_policies_enacted,
@@ -377,7 +428,9 @@ class GameState:
         return full_state
 
     def start_discussion(self, phase):
-        """Starts a discussion phase.
+        """Starts a discussion phase for a given game phase.
+
+        Resets discussion history and turn tracking for the new phase.
 
         Args:
             phase: The name of the discussion phase (e.g., "Nomination").
@@ -386,7 +439,7 @@ class GameState:
         # Clear discussion history for new phase
         self.discussion_history = []
         self.discussion_turn_order_index = 0
-        # Reset turn counts
+        # Reset turn counts for new discussion phase
         self.discussion_turn_counts = {
             name: 0
             for name in self.player_names
@@ -396,14 +449,16 @@ class GameState:
     def get_current_discussion_speaker(self):
         """Gets the name of the player whose turn it is to speak in discussion.
 
+        Determines the speaker based on president order and discussion turn index.
+
         Returns:
             The name of the current speaker (string) or None if no alive players.
         """
-        # Get alive players only for discussion turn order
+        # Get only alive players for discussion turn order
         alive_players = [
             player for player in self.player_names if self.player_status[player] == "alive"
         ]
-        # No alive players to speak
+        # No alive players left to speak
         if not alive_players:
             return None
 
@@ -413,7 +468,7 @@ class GameState:
                 current_president_alive_index = i
                 break
 
-        # President is dead, find next alive president
+        # President is dead, find index of next alive player as starting point
         if current_president_alive_index == -1:
             # Default to first alive player if president is dead
             current_president_alive_index = 0
@@ -434,7 +489,7 @@ class GameState:
         """
         message = f"{player_name}: {message_text}"
         self.discussion_history.append(message)
-        # Log publicly
+        # Log discussion message publicly
         self.log_event(player_name, f"Discussion: {message_text}")
         self.discussion_turn_order_index += 1
         self.discussion_turn_counts[player_name] += 1
@@ -442,8 +497,7 @@ class GameState:
     def can_end_discussion(self, by_president=False):
         """Checks if the discussion phase can be ended.
 
-        Discussion can be ended by the president after at least one message,
-        or after all alive players have spoken once (optional condition).
+        Discussion can be ended by the president or after all alive players have spoken.
 
         Args:
             by_president: True if the president is trying to end discussion.
@@ -451,25 +505,25 @@ class GameState:
         Returns:
             True if discussion can be ended, False otherwise.
         """
-        # Need at least one message
+        # Need at least one message in discussion to end it
         if not self.discussion_history:
             return False
-        # President can end after anyone speaks once
+        # President can end discussion at any point after at least one message
         if by_president:
             return True
-        # Check if everyone alive has had at least one turn (optional)
+        # Check if all alive players have had at least one turn to speak
         alive_players = [
             name for name in self.player_names if self.player_status[name] == "alive"
         ]
-        # Use get with default 0
+        # Use get with default 0 to handle players who haven't spoken yet
         all_alive_players_spoke_once = all(
             self.discussion_turn_counts.get(player, 0) >= 1 for player in alive_players
         )
-        # Only require if > 1 alive
+        # Only require all alive players to speak if more than one alive player
         if all_alive_players_spoke_once and len(alive_players) > 1:
             return True
 
-        # Check for max turns reached by all alive players (optional)
+        # Check if max turns reached by all alive players (optional condition)
         max_turns_reached = all(
             self.discussion_turn_counts.get(player, 0)
             >= self.max_discussion_turns_per_player
@@ -481,7 +535,11 @@ class GameState:
         return False
 
     def get_discussion_summary(self):
-        """Returns a summary of the discussion history as a single string."""
+        """Returns a summary of the discussion history as a single string.
+
+        Returns:
+            A string containing all discussion messages, each on a new line.
+        """
         return "\n".join(self.discussion_history)
 
 
@@ -492,36 +550,35 @@ def is_valid_chancellor_nominee(game_state, president_name, nominee_name):
     the term-limited chancellor, or the term-limited president (in 7+ player games).
 
     Args:
-        game_state: The current game state.
+        game_state: The current game state object.
         president_name: Name of the current president.
         nominee_name: Name of the proposed chancellor nominee.
 
     Returns:
         True if the nominee is valid, False otherwise.
     """
-    # President cannot nominate themselves
+    # President cannot nominate themselves as chancellor
     if nominee_name == president_name:
         return False
-    # Cannot nominate a dead player.
+    # Cannot nominate a dead player as chancellor
     if game_state.player_status[nominee_name] == "dead":
         return False
-    # Cannot nominate term-limited chancellor
+    # Cannot nominate the term-limited chancellor
     if nominee_name == game_state.term_limited_chancellor:
         return False
-    # Term limit for president only in 7+ player games
+    # In 7+ player games, cannot nominate the term-limited president as chancellor
     if (
-        game_state.num_players > 5 and nominee_name == game_state.term_limited_president
+        game_state.num_players >= 7 and nominee_name == game_state.term_limited_president
     ):
         return False
-        # Cannot nominate term-limited president
     return True
 
 
 def get_player_role(game_state, player_name):
-    """Returns the role of a player.
+    """Returns the secret role of a player.
 
     Args:
-        game_state: The current game state.
+        game_state: The current game state object.
         player_name: Name of the player.
 
     Returns:
@@ -534,7 +591,7 @@ def get_player_names(game_state):
     """Returns a list of all player names in the game.
 
     Args:
-        game_state: The current game state.
+        game_state: The current game state object.
 
     Returns:
         A list of player names (strings).
@@ -548,31 +605,38 @@ def kill_player(game_state, player_name):
     Checks if the killed player is Hitler, and updates game state accordingly.
 
     Args:
-        game_state: The current game state.
+        game_state: The current game state object.
         player_name: Name of the player to kill.
 
     Returns:
         True if the player was successfully killed, False if player was already dead.
     """
-    # Prevent killing dead players
+    # Prevent killing a player who is already dead
     if game_state.player_status[player_name] == "dead":
         return False
-        # Indicate invalid action
     game_state.player_status[player_name] = "dead"
+    # Log player execution event
     game_state.log_event(None, f"{player_name} has been executed.")
     if game_state.roles[player_name] == "Hitler":
         game_state.game_over = True
         game_state.winner = "Liberals"
+        # Log hitler execution win event
         game_state.log_event(None, "Liberals win! Hitler has been executed.")
-        # Double check win conditions
+        # Double check game end conditions after killing player
         game_state.check_game_end_conditions()
-    # Indicate successful kill
     return True
 
 
 def reveal_hitler(game_state):
-    """Reveals Hitler's identity to all players."""
+    """Reveals Hitler's identity to all players.
+
+    Sets the hitler_revealed flag and logs the event.
+
+    Args:
+        game_state: The current game state object.
+    """
     game_state.hitler_revealed = True
+    # Log hitler reveal event
     game_state.log_event(None, "Hitler's identity is now revealed.")
 
 
@@ -582,28 +646,27 @@ def investigate_player(game_state, president_name, target_player_name):
     Only usable once per player per game.
 
     Args:
-        game_state: The current game state.
+        game_state: The current game state object.
         president_name: Name of the president using the power.
         target_player_name: Name of the player to investigate.
 
     Returns:
         The membership card of the investigated player ('Fascist' in this version),
-        or None if the investigation is invalid.
+        or None if the investigation is invalid (player already investigated, dead, etc.).
     """
-    # Already investigated
+    # Cannot investigate a player who has already been investigated
     if target_player_name in game_state.investigated_players:
         return None
-        # No player may be investigated twice
-    # Cannot investigate dead
+    # Cannot investigate a dead player
     if game_state.player_status[target_player_name] == "dead":
         return None
-    # Cannot investigate self.
+    # President cannot investigate themselves
     if president_name == target_player_name:
         return None
 
-    # Mark as investigated
+    # Mark player as investigated
     game_state.investigated_players.add(target_player_name)
-    # Return membership card
+    # Return membership card of the investigated player
     return game_state.player_membership_cards[target_player_name]
 
 
@@ -611,24 +674,23 @@ def call_special_election(game_state, president_name, target_player_name):
     """Calls a special election, setting the next president.
 
     Args:
-        game_state: The current game state.
+        game_state: The current game state object.
         president_name: Name of the president using the power.
         target_player_name: Name of the player to be the next president.
 
     Returns:
         True if special election was successful, False if target is invalid.
     """
-    # Cannot choose dead
+    # Cannot choose a dead player for special election
     if game_state.player_status[target_player_name] == "dead":
         return False
-        # Cannot choose dead player
-    # Cannot choose self
+    # President cannot choose themselves for special election
     if president_name == target_player_name:
         return False
-        # Cannot choose self
 
-    # Set next president
+    # Set the special election president for the next round
     game_state.special_election_president = target_player_name
+    # Log special election call event
     game_state.log_event(
         president_name, f"Called special election. {target_player_name} will be next president."
     )
@@ -639,20 +701,19 @@ def policy_peek(game_state, president_name):
     """Allows the president to peek at the top 3 policies in the deck.
 
     Args:
-        game_state: The current game state.
+        game_state: The current game state object.
         president_name: Name of the president using the power.
 
     Returns:
         A list of the top 3 policy cards (strings), or an empty list if deck is empty.
     """
     top_policies = game_state.draw_policies(3)
-    # Handle case where deck is empty
+    # Handle case where deck is empty and no policies can be peeked
     if not top_policies:
         return []
-        # No policies to peek at
-    # Put back on top
+    # Put the peeked policies back on top of the deck in the same order
     game_state.policy_deck = top_policies + game_state.policy_deck
-    # Return peeked policies
+    # Return the list of peeked policies
     return top_policies
 
 
@@ -660,16 +721,15 @@ def enact_top_policy_chaos(game_state):
     """Enacts the top policy from the deck due to chaos (election tracker).
 
     Args:
-        game_state: The current game state.
+        game_state: The current game state object.
 
     Returns:
         The enacted policy card (string), or None if no policy was enacted.
     """
     top_policy = game_state.draw_policies(1)
-    # Only enact if there's a policy to draw
+    # Only enact if there's a policy to draw from the deck
     if top_policy:
         game_state.enact_policy(top_policy[0])
-        # Return enacted policy
+        # Return the enacted policy card
         return top_policy[0]
-    # No policy enacted if deck is empty
     return None
