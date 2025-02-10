@@ -7,30 +7,37 @@ import random
 
 
 class GameLogger:
-    def __init__(self, log_to_file_enabled=False):
+    def __init__(self, log_to_file_enabled):
         self.log_to_file_enabled = log_to_file_enabled
-        self.player_log_files = {}
         self.game_log_file = None
+        self.player_log_files = {}
+        self.public_log_file = None  # New file for public log
 
     def setup_logging(self, player_names):
-        if self.log_to_file_enabled:
-            log_dir = "logs"
-            os.makedirs(log_dir, exist_ok=True)
+        if not self.log_to_file_enabled:
+            return
 
-            game_log_filepath = os.path.join(log_dir, "game.log")
-            self.game_log_file = open(game_log_filepath, "w")
+        log_dir = "logs"
+        os.makedirs(log_dir, exist_ok=True)
 
-            for player_name in player_names:
-                player_log_filepath = os.path.join(
-                    log_dir, f"{player_name}.log")
-                self.player_log_files[player_name] = open(
-                    player_log_filepath, "w")
-            print(
-                f"File logging enabled. Logs will be saved in '{log_dir}' directory.")
+        self.game_log_file = open(os.path.join(log_dir, "game.log"), "w")
+        self.public_log_file = open(os.path.join(log_dir, "public.log"), "w")  # Create public log file
+
+        for player_name in player_names:
+            player_log_filepath = os.path.join(log_dir, f"{player_name}.log")
+            self.player_log_files[player_name] = open(player_log_filepath, "w")
+
+    def log_public_event(self, event):
+        if self.log_to_file_enabled and self.public_log_file:
+            timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+            self.public_log_file.write(f"[{timestamp}] {event}\n")
+            self.public_log_file.flush()
 
     def close_log_files(self):
         if self.game_log_file:
             self.game_log_file.close()
+        if self.public_log_file:
+            self.public_log_file.close()
         for log_file in self.player_log_files.values():
             log_file.close()
 

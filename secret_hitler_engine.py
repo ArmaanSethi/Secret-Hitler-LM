@@ -165,6 +165,8 @@ class GameState:
 
         if not private_only:
             self.public_log.append(log_entry)
+            if self.game_logger:
+                self.game_logger.log_public_event(log_entry)  # Add this line to log public events
 
         for p in self.players:
             private_log_entry = log_entry
