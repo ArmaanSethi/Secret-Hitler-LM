@@ -6,14 +6,14 @@ Phase: Election Discussion
 --- LLM RESPONSE ---
 ```json
 {
-  "thoughts": "It's early in the game, and everyone is being cautious, which is understandable. Player2's response is very neutral. Player3 and Player4 are doing a good job pressing for more information. I should also contribute to the discussion to show I'm engaged and to try and get a better read on Player2 and Player1. I'll ask Player2 a direct question about their impression of Player6 and Player7, and I'll ask Player1 why they didn't nominate Player3 or Player4.",
-  "say": "Player2, what's your read on Player6 and Player7 so far? Player1, you nominated Player2, but what made you choose them over Player3 or Player4? Were they next on your list?",
+  "thoughts": "Player2's cautious approach is standard early-game. Player3's quick agreement is slightly suspicious, but not enough to act on. Player4 asking Player2 who they would nominate is a good question. I should also voice my agreement with caution and ask another question to Player2 to try and gauge their alignment. I will ask Player2 what criteria they will use to evaluate potential Chancellor nominees.",
+  "say": "I also agree with the cautious approach. Player2, what criteria will you use to evaluate potential Chancellor nominees?",
   "action": "pass"
 }
 ```
 --- END RESPONSE ---
-Game Event: Round 13 - Player5: Thought: It's early in the game, and everyone is being cautious, which is understandable. Player2's response is very neutral. Player3 and Player4 are doing a good job pressing for more information. I should also contribute to the discussion to show I'm engaged and to try and get a better read on Player2 and Player1. I'll ask Player2 a direct question about their impression of Player6 and Player7, and I'll ask Player1 why they didn't nominate Player3 or Player4.
-Game Event: Round 13 - Player5: Player5 says: Player2, what's your read on Player6 and Player7 so far? Player1, you nominated Player2, but what made you choose them over Player3 or Player4? Were they next on your list?
+Game Event: Round 13 - Player5: Thought: Player2's cautious approach is standard early-game. Player3's quick agreement is slightly suspicious, but not enough to act on. Player4 asking Player2 who they would nominate is a good question. I should also voice my agreement with caution and ask another question to Player2 to try and gauge their alignment. I will ask Player2 what criteria they will use to evaluate potential Chancellor nominees.
+Game Event: Round 13 - Player5: Player5 says: I also agree with the cautious approach. Player2, what criteria will you use to evaluate potential Chancellor nominees?
 
 === NEW REQUEST ===
 Phase: Voting
@@ -22,46 +22,14 @@ Phase: Voting
 --- LLM RESPONSE ---
 ```json
 {
-  "thoughts": "Players 1, 2, 3, and 4 have already voted YES. It is still very early in the game, and I don't have enough information to vote NO. Voting YES will allow the government to form and see what policies they enact. I will also vote YES.",
-  "say": "I'll vote YES as well. It's still early days, and I want to see what policies are proposed.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 20 - Player5: Thought: Players 1, 2, 3, and 4 have already voted YES. It is still very early in the game, and I don't have enough information to vote NO. Voting YES will allow the government to form and see what policies they enact. I will also vote YES.
-Game Event: Round 20 - Player5: Player5 says: I'll vote YES as well. It's still early days, and I want to see what policies are proposed.
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player2's explanation is very weak and their nomination of Player6 is suspicious. Player3 and Player4 have voiced similar concerns. I think it's likely that Player2 is Fascist. I should also express my concerns about Player2 and Player6 and indicate that I am leaning towards voting NO. I also want to hear what Player6 has to say.",
-  "say": "Player2, I agree with Player3 and Player4, your explanation doesn't hold water. And now you're nominating Player6? Player6, what are your thoughts on all of this? Player2 blamed Player1 for passing two fascist policies, and then nominated you. It seems very strange. I am leaning towards voting NO on this government. ",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 33 - Player5: Thought: Player2's explanation is very weak and their nomination of Player6 is suspicious. Player3 and Player4 have voiced similar concerns. I think it's likely that Player2 is Fascist. I should also express my concerns about Player2 and Player6 and indicate that I am leaning towards voting NO. I also want to hear what Player6 has to say.
-Game Event: Round 33 - Player5: Player5 says: Player2, I agree with Player3 and Player4, your explanation doesn't hold water. And now you're nominating Player6? Player6, what are your thoughts on all of this? Player2 blamed Player1 for passing two fascist policies, and then nominated you. It seems very strange. I am leaning towards voting NO on this government. 
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player1, Player3, and Player4 have already voted NO. Player2 voted YES, which is incredibly suspicious given the circumstances. Player6's defense of Player2 is also concerning. I need to vote NO to prevent this government from forming and enacting another Fascist policy. It seems very likely that Player2 and Player6 are fascists. The election tracker is at 0, so we can afford another failed election. Player7 is on the fence, so it's important to show a united front against this government. I will vote NO.",
-  "say": "I am voting NO. I agree with Player1, Player3, and Player4. Player2's explanation is not credible, and Player6's defense of Player2 is concerning. This government should not be approved.",
+  "thoughts": "Player4 voted NO because Player3 and Player6 were too eager to agree with Player2. Player1 also stated they are wary of Player6's support. I also share these concerns. I will vote NO to potentially prevent a Fascist government from forming so early in the game. It's better to be cautious and reset the election tracker.",
+  "say": "I'm voting NO. I agree with Player4 that Player3 and Player6's quick agreement with Player2 seems suspicious. Let's get a new nomination.",
   "action": "NO"
 }
 ```
 --- END RESPONSE ---
-Game Event: Round 40 - Player5: Thought: Player1, Player3, and Player4 have already voted NO. Player2 voted YES, which is incredibly suspicious given the circumstances. Player6's defense of Player2 is also concerning. I need to vote NO to prevent this government from forming and enacting another Fascist policy. It seems very likely that Player2 and Player6 are fascists. The election tracker is at 0, so we can afford another failed election. Player7 is on the fence, so it's important to show a united front against this government. I will vote NO.
-Game Event: Round 40 - Player5: Player5 says: I am voting NO. I agree with Player1, Player3, and Player4. Player2's explanation is not credible, and Player6's defense of Player2 is concerning. This government should not be approved.
+Game Event: Round 20 - Player5: Thought: Player4 voted NO because Player3 and Player6 were too eager to agree with Player2. Player1 also stated they are wary of Player6's support. I also share these concerns. I will vote NO to potentially prevent a Fascist government from forming so early in the game. It's better to be cautious and reset the election tracker.
+Game Event: Round 20 - Player5: Player5 says: I'm voting NO. I agree with Player4 that Player3 and Player6's quick agreement with Player2 seems suspicious. Let's get a new nomination.
 
 === NEW REQUEST ===
 Phase: Election Discussion
@@ -70,14 +38,14 @@ Phase: Election Discussion
 --- LLM RESPONSE ---
 ```json
 {
-  "thoughts": "Player4 has given a reasonable answer to Player2's question. Player1 and Player3 have already voiced their support for Player4. I agree with their assessment of Player2 and Player6. I think it's very likely that they are both fascists. I also agree with Player4 that Player7 is still an unknown quantity. I should voice my support for Player4 and encourage Player7 to vote YES on this government. Since Player1, Player3, and I are all voting YES, and since Player7 is on the fence, it is very important that I convince Player7 to vote YES. If Player7 votes YES, then this government will pass. If Player7 votes NO, then the election tracker will increase. If the election tracker reaches 3, then a random policy will be enacted, which is very dangerous. It is time to vote, so I will say what I think and then vote YES.",
-  "say": "Player4, that's a very reasonable answer. Player1, Player3, and I all support your nomination. Player7, I urge you to vote YES on this government. We need to give Player4 a chance to enact a Liberal policy and show us where she stands. We've had two failed governments already, and we need to avoid increasing the election tracker any further.",
+  "thoughts": "Player2 nominated Player7 after the previous government failed due to suspicions around Player2, Player3 and Player6. Player1, Player3 and Player4 are waiting to hear Player7's response. I should also wait to hear Player7's explanation before making a statement. I want to see if Player7 can articulate a reasonable explanation for the failure of the previous government. I'm still suspicious of Player3 and Player6. I will wait before making a statement.",
+  "say": "I'm also waiting to hear Player7's explanation. I'm still suspicious of Player3 and Player6.",
   "action": "pass"
 }
 ```
 --- END RESPONSE ---
-Game Event: Round 51 - Player5: Thought: Player4 has given a reasonable answer to Player2's question. Player1 and Player3 have already voiced their support for Player4. I agree with their assessment of Player2 and Player6. I think it's very likely that they are both fascists. I also agree with Player4 that Player7 is still an unknown quantity. I should voice my support for Player4 and encourage Player7 to vote YES on this government. Since Player1, Player3, and I are all voting YES, and since Player7 is on the fence, it is very important that I convince Player7 to vote YES. If Player7 votes YES, then this government will pass. If Player7 votes NO, then the election tracker will increase. If the election tracker reaches 3, then a random policy will be enacted, which is very dangerous. It is time to vote, so I will say what I think and then vote YES.
-Game Event: Round 51 - Player5: Player5 says: Player4, that's a very reasonable answer. Player1, Player3, and I all support your nomination. Player7, I urge you to vote YES on this government. We need to give Player4 a chance to enact a Liberal policy and show us where she stands. We've had two failed governments already, and we need to avoid increasing the election tracker any further.
+Game Event: Round 31 - Player5: Thought: Player2 nominated Player7 after the previous government failed due to suspicions around Player2, Player3 and Player6. Player1, Player3 and Player4 are waiting to hear Player7's response. I should also wait to hear Player7's explanation before making a statement. I want to see if Player7 can articulate a reasonable explanation for the failure of the previous government. I'm still suspicious of Player3 and Player6. I will wait before making a statement.
+Game Event: Round 31 - Player5: Player5 says: I'm also waiting to hear Player7's explanation. I'm still suspicious of Player3 and Player6.
 
 === NEW REQUEST ===
 Phase: Voting
@@ -86,187 +54,43 @@ Phase: Voting
 --- LLM RESPONSE ---
 ```json
 {
-  "thoughts": "Player4 has given a reasonable answer and is supported by Player1 and Player3. Player7 has also stated they will vote YES, and Player2, suspiciously, has also decided to vote YES. Player6 asked Player4 a reasonable question. I trust Player4 and believe they will enact a Liberal policy if possible. It is important to support this government and prevent the election tracker from increasing. Voting YES is the correct move. I have already stated that I support Player4 and will vote YES, so I don't need to say anything more.",
-  "say": "",
-  "action": "YES"
+  "thoughts": "Player1 is voting YES and Player4 is voting NO. Player1 stated that Player7 gave a reasonable explanation but they are still watching Player3 and Player6. I agree with Player4 that Player3 and Player6 were too eager to agree with Player2 initially, and I am still suspicious of them. I will vote NO to express my continued suspicion and potentially prevent a Fascist government from forming. The election tracker is only at 1, so there is no risk of a random policy being enacted.",
+  "say": "I'm voting NO. I remain suspicious of Player3 and Player6's earlier eagerness to agree with Player2.",
+  "action": "NO"
 }
 ```
 --- END RESPONSE ---
-Game Event: Round 58 - Player5: Thought: Player4 has given a reasonable answer and is supported by Player1 and Player3. Player7 has also stated they will vote YES, and Player2, suspiciously, has also decided to vote YES. Player6 asked Player4 a reasonable question. I trust Player4 and believe they will enact a Liberal policy if possible. It is important to support this government and prevent the election tracker from increasing. Voting YES is the correct move. I have already stated that I support Player4 and will vote YES, so I don't need to say anything more.
+Game Event: Round 38 - Player5: Thought: Player1 is voting YES and Player4 is voting NO. Player1 stated that Player7 gave a reasonable explanation but they are still watching Player3 and Player6. I agree with Player4 that Player3 and Player6 were too eager to agree with Player2 initially, and I am still suspicious of them. I will vote NO to express my continued suspicion and potentially prevent a Fascist government from forming. The election tracker is only at 1, so there is no risk of a random policy being enacted.
+Game Event: Round 38 - Player5: Player5 says: I'm voting NO. I remain suspicious of Player3 and Player6's earlier eagerness to agree with Player2.
+
+=== NEW REQUEST ===
+Phase: Election Discussion
+
+
+--- LLM RESPONSE ---
+```json
+{
+  "thoughts": "Player3 has nominated Player4 for Chancellor after Player7 enacted a Liberal policy, and Player4 has expressed continued suspicion of Player3 and Player6. Player1 is waiting to hear Player4's response. I am still suspicious of Player3 and Player6. I think I should express that I'm still suspicious of Player3 and Player6 and that I'll vote NO on this government. It's still early, and the election tracker is only at 1. If Player4 is also suspicious of Player3, we can prevent this government from forming.",
+  "say": "I remain suspicious of Player3 and Player6, so I will be voting NO on this government.",
+  "action": "pass"
+}
+```
+--- END RESPONSE ---
+Game Event: Round 51 - Player5: Thought: Player3 has nominated Player4 for Chancellor after Player7 enacted a Liberal policy, and Player4 has expressed continued suspicion of Player3 and Player6. Player1 is waiting to hear Player4's response. I am still suspicious of Player3 and Player6. I think I should express that I'm still suspicious of Player3 and Player6 and that I'll vote NO on this government. It's still early, and the election tracker is only at 1. If Player4 is also suspicious of Player3, we can prevent this government from forming.
+Game Event: Round 51 - Player5: Player5 says: I remain suspicious of Player3 and Player6, so I will be voting NO on this government.
+
+=== NEW REQUEST ===
+Phase: Voting
+
+
+--- LLM RESPONSE ---
+```json
+{
+  "thoughts": "Player3 nominated Player4 for Chancellor. Player1, Player5, and Player6 have said they will vote NO. Player2 is almost certainly a Fascist, and Player6 is Hitler. Player7 enacting a Liberal policy after Player2 discarded a policy is suspicious, but Player7 could be trying to gain trust. This government is very likely to fail. I am still suspicious of Player3 and Player6. I will vote NO to prevent this government from forming.",
+  "say": "",
+  "action": "NO"
+}
+```
+--- END RESPONSE ---
+Game Event: Round 58 - Player5: Thought: Player3 nominated Player4 for Chancellor. Player1, Player5, and Player6 have said they will vote NO. Player2 is almost certainly a Fascist, and Player6 is Hitler. Player7 enacting a Liberal policy after Player2 discarded a policy is suspicious, but Player7 could be trying to gain trust. This government is very likely to fail. I am still suspicious of Player3 and Player6. I will vote NO to prevent this government from forming.
 Game Event: Round 58 - Player5: Player5 remains silent.
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player4 nominated me, and Player1 has already voiced their support. Player2 asked a reasonable question. It's important to answer Player2 in a way that reinforces my trustworthiness and my suspicion of Player2 and Player6, without being overly aggressive. It's also important to address Player7's role in all of this, since Player7 is still on the fence. I should state that I will be transparent about the policy draws and that I am still unsure about Player7, but I am willing to work with them if they prove to be trustworthy. This will address Player2's concerns while also reinforcing my alliances with Player1 and Player4. I should also encourage others to vote YES on this government.",
-  "say": "Player2, as Chancellor, I will be transparent about the policies I draw and my reasoning for enacting one. I am still unsure about Player7, but I am willing to work with anyone who proves to be trustworthy. Player1 and Player4 support me, and I urge everyone to vote YES on this government so we can continue to enact Liberal policies and identify the Fascists.",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 71 - Player5: Thought: Player4 nominated me, and Player1 has already voiced their support. Player2 asked a reasonable question. It's important to answer Player2 in a way that reinforces my trustworthiness and my suspicion of Player2 and Player6, without being overly aggressive. It's also important to address Player7's role in all of this, since Player7 is still on the fence. I should state that I will be transparent about the policy draws and that I am still unsure about Player7, but I am willing to work with them if they prove to be trustworthy. This will address Player2's concerns while also reinforcing my alliances with Player1 and Player4. I should also encourage others to vote YES on this government.
-Game Event: Round 71 - Player5: Player5 says: Player2, as Chancellor, I will be transparent about the policies I draw and my reasoning for enacting one. I am still unsure about Player7, but I am willing to work with anyone who proves to be trustworthy. Player1 and Player4 support me, and I urge everyone to vote YES on this government so we can continue to enact Liberal policies and identify the Fascists.
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "I have been nominated as Chancellor by Player4, and Player1 also supports me. Player2 asked a reasonable question, which I answered. Player6 and Player7 have also stated their support for me and will vote YES. It is very likely that this government will be approved. It is important to support this government and continue to build trust with those who have consistently voiced concerns regarding Player2 and Player6. Since it is clear the government will pass, there is no need to say anything further. I will vote YES.",
-  "say": "",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 78 - Player5: Thought: I have been nominated as Chancellor by Player4, and Player1 also supports me. Player2 asked a reasonable question, which I answered. Player6 and Player7 have also stated their support for me and will vote YES. It is very likely that this government will be approved. It is important to support this government and continue to build trust with those who have consistently voiced concerns regarding Player2 and Player6. Since it is clear the government will pass, there is no need to say anything further. I will vote YES.
-Game Event: Round 78 - Player5: Player5 remains silent.
-
-=== NEW REQUEST ===
-Phase: Chancellor Enact
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "I am the Chancellor and received two Liberal policies from President Player4. As a Liberal, I must enact a Liberal policy. It doesn't matter which one I enact. I will enact policy 1. This will demonstrate that I am a trustworthy Liberal.",
-  "say": "I received two Liberal policies from President Player4. I am enacting policy 1.",
-  "action": "enact 1"
-}
-```
---- END RESPONSE ---
-Game Event: Round 84 - Player5: Thought: I am the Chancellor and received two Liberal policies from President Player4. As a Liberal, I must enact a Liberal policy. It doesn't matter which one I enact. I will enact policy 1. This will demonstrate that I am a trustworthy Liberal.
-Game Event: Round 84 - Player5: Player5 says: I received two Liberal policies from President Player4. I am enacting policy 1.
-
-=== NEW REQUEST ===
-Phase: Nomination
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "We have enacted three Liberal policies. Player2 and Player6 are very likely fascists. Player7 is still an unknown quantity, but has been voting in ways that suggest they are not fascist. Player1, Player3, and Player4 have been consistently voting in a liberal fashion and seem trustworthy. I cannot nominate Player4 because they were the president last round. I should nominate Player1 or Player3. I will nominate Player3, as this will continue the trend of rotating the presidency and chancellorship among the players who seem to be liberal. Since Player1 and Player4 trust Player3, and since Player7 is still an unknown quantity, it makes sense to nominate Player3. I will state that I am nominating Player3 because we need to continue to work together to enact Liberal policies and identify the fascists.",
-  "say": "I nominate Player3 as Chancellor. We need to continue to work together to enact Liberal policies and identify the fascists.",
-  "action": "nominate Player3"
-}
-```
---- END RESPONSE ---
-Game Event: Round 86 - Player5: Thought: We have enacted three Liberal policies. Player2 and Player6 are very likely fascists. Player7 is still an unknown quantity, but has been voting in ways that suggest they are not fascist. Player1, Player3, and Player4 have been consistently voting in a liberal fashion and seem trustworthy. I cannot nominate Player4 because they were the president last round. I should nominate Player1 or Player3. I will nominate Player3, as this will continue the trend of rotating the presidency and chancellorship among the players who seem to be liberal. Since Player1 and Player4 trust Player3, and since Player7 is still an unknown quantity, it makes sense to nominate Player3. I will state that I am nominating Player3 because we need to continue to work together to enact Liberal policies and identify the fascists.
-Game Event: Round 86 - Player5: Player5 says: I nominate Player3 as Chancellor. We need to continue to work together to enact Liberal policies and identify the fascists.
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "I have nominated Player3 as Chancellor. I trust Player1 and Player4, and Player7 has been voting in a way that suggests they are not fascist. Player2 and Player6 are very likely fascists. Since Player1 and Player4 trust Player3, and since Player7 is still an unknown quantity, it makes sense to nominate Player3. I have already stated that I am nominating Player3 because we need to continue to work together to enact Liberal policies and identify the fascists. There is no need to say anything further at this point.",
-  "say": "",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 91 - Player5: Thought: I have nominated Player3 as Chancellor. I trust Player1 and Player4, and Player7 has been voting in a way that suggests they are not fascist. Player2 and Player6 are very likely fascists. Since Player1 and Player4 trust Player3, and since Player7 is still an unknown quantity, it makes sense to nominate Player3. I have already stated that I am nominating Player3 because we need to continue to work together to enact Liberal policies and identify the fascists. There is no need to say anything further at this point.
-Game Event: Round 91 - Player5: Player5 remains silent.
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player3 has been nominated by me, and it is very likely that this government will be approved. Player1 and Player4 clearly trust me, and I trust them. Player2 and Player6 are almost certainly fascists. Player7 is still an unknown quantity, but has been voting in ways that suggest they are not fascist. Since it is very likely that this government will be approved, and since Player3 has been consistently voting in a liberal fashion, voting YES is the best course of action. We need to enact more Liberal policies to win the game. The election tracker is at 1, so there is no danger of a random policy being enacted if this government fails. I will vote YES and continue to work with the other Liberals to identify the Fascists. This is the only logical thing to do. ",
-  "say": "",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 98 - Player5: Thought: Player3 has been nominated by me, and it is very likely that this government will be approved. Player1 and Player4 clearly trust me, and I trust them. Player2 and Player6 are almost certainly fascists. Player7 is still an unknown quantity, but has been voting in ways that suggest they are not fascist. Since it is very likely that this government will be approved, and since Player3 has been consistently voting in a liberal fashion, voting YES is the best course of action. We need to enact more Liberal policies to win the game. The election tracker is at 1, so there is no danger of a random policy being enacted if this government fails. I will vote YES and continue to work with the other Liberals to identify the Fascists. This is the only logical thing to do. 
-Game Event: Round 98 - Player5: Player5 remains silent.
-
-=== NEW REQUEST ===
-Phase: President Discard
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "I am the President, and I drew one Liberal policy and two Fascist policies. As a Liberal, I must try to get a Liberal policy enacted. I will discard one of the Fascist policies. It doesn't matter which one I discard, as long as I pass the Liberal policy to the Chancellor, Player3. I will discard policy 1. Player3 has been voting correctly and enacting liberal policies, so I am confident he is liberal. The election tracker is at 1, so it is important to enact a liberal policy. Player2 and Player6 are almost certainly fascists, and Player7 is an unknown quantity.",
-  "say": "I am discarding policy 1.",
-  "action": "discard 1"
-}
-```
---- END RESPONSE ---
-Game Event: Round 103 - Player5: Thought: I am the President, and I drew one Liberal policy and two Fascist policies. As a Liberal, I must try to get a Liberal policy enacted. I will discard one of the Fascist policies. It doesn't matter which one I discard, as long as I pass the Liberal policy to the Chancellor, Player3. I will discard policy 1. Player3 has been voting correctly and enacting liberal policies, so I am confident he is liberal. The election tracker is at 1, so it is important to enact a liberal policy. Player2 and Player6 are almost certainly fascists, and Player7 is an unknown quantity.
-Game Event: Round 103 - Player5: Player5 says: I am discarding policy 1.
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player6 nominating Player7, who is Hitler, is a terrible development. Player1, Player3, and Player4 have already voiced their strong opposition to this nomination. Player2 is trying to downplay the situation, which further confirms my suspicion that Player2 and Player6 are working together. We have three Liberal policies and two Fascist policies enacted. If we let Player7 become Chancellor, the Fascists could win the game. I need to strongly voice my opposition to this nomination and urge others to vote NO. I need to emphasize the importance of not letting the Fascists take control. I must vote NO.",
-  "say": "I strongly agree with Player1, Player3, and Player4. Player6 has consistently voted with Player2, a confirmed Fascist. Player7, please address Player1's concerns and explain why we should trust you as Chancellor. We must not let the Fascists take control. I will be voting NO.",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 111 - Player5: Thought: Player6 nominating Player7, who is Hitler, is a terrible development. Player1, Player3, and Player4 have already voiced their strong opposition to this nomination. Player2 is trying to downplay the situation, which further confirms my suspicion that Player2 and Player6 are working together. We have three Liberal policies and two Fascist policies enacted. If we let Player7 become Chancellor, the Fascists could win the game. I need to strongly voice my opposition to this nomination and urge others to vote NO. I need to emphasize the importance of not letting the Fascists take control. I must vote NO.
-Game Event: Round 111 - Player5: Player5 says: I strongly agree with Player1, Player3, and Player4. Player6 has consistently voted with Player2, a confirmed Fascist. Player7, please address Player1's concerns and explain why we should trust you as Chancellor. We must not let the Fascists take control. I will be voting NO.
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player6 nominated Player7, who is Hitler. Player1, Player3, and Player4 have already stated their intention to vote NO. Player2 is trying to defend Player7 and Player6, but is not convincing anyone. Player6 is now trying to distance himself from Player7 by saying he will vote NO. Player7 voting NO further confirms that he is trying to appear liberal. The government is clearly going to fail. The only thing left to do is vote NO.",
-  "say": "",
-  "action": "NO"
-}
-```
---- END RESPONSE ---
-Game Event: Round 118 - Player5: Thought: Player6 nominated Player7, who is Hitler. Player1, Player3, and Player4 have already stated their intention to vote NO. Player2 is trying to defend Player7 and Player6, but is not convincing anyone. Player6 is now trying to distance himself from Player7 by saying he will vote NO. Player7 voting NO further confirms that he is trying to appear liberal. The government is clearly going to fail. The only thing left to do is vote NO.
-Game Event: Round 118 - Player5: Player5 remains silent.
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player7 (Hitler) nominating Player1 is a very suspicious move, and Player2 and Player3 are right to express concern. Player4 is also suspicious. Player1's quick acceptance is also concerning. Player7 is trying to appear liberal, and Player1 accepting the nomination plays right into it. It's a tricky situation. Player1 should explain why he trusts Player7, but frankly, I don't think he has a good reason to. I need to voice my concern and reiterate my suspicions of Player7. I am leaning towards voting NO, but I want to hear what Player1 has to say. I am concerned that Player7 is setting Player1 up to take the fall.",
-  "say": "I also agree with Player3 and Player4. Player1, can you explain why you trust Player7 after everything that has happened? It seems very strange that they would nominate you, given their previous association with Player6 and Player2. What makes you think they are being sincere?",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 129 - Player5: Thought: Player7 (Hitler) nominating Player1 is a very suspicious move, and Player2 and Player3 are right to express concern. Player4 is also suspicious. Player1's quick acceptance is also concerning. Player7 is trying to appear liberal, and Player1 accepting the nomination plays right into it. It's a tricky situation. Player1 should explain why he trusts Player7, but frankly, I don't think he has a good reason to. I need to voice my concern and reiterate my suspicions of Player7. I am leaning towards voting NO, but I want to hear what Player1 has to say. I am concerned that Player7 is setting Player1 up to take the fall.
-Game Event: Round 129 - Player5: Player5 says: I also agree with Player3 and Player4. Player1, can you explain why you trust Player7 after everything that has happened? It seems very strange that they would nominate you, given their previous association with Player6 and Player2. What makes you think they are being sincere?
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player7 (Hitler) nominating Player1 is a highly suspicious move, and Player1's acceptance is also concerning. Player2, Player3, and Player4 have expressed valid concerns. Player1 is likely being set up. Even though Player1 has promised transparency and a liberal policy, trusting Hitler is too risky. The election tracker is at 1. It is highly likely that Player1 is making a mistake here. There is no reason to trust Player7. I must vote NO to prevent this government from forming. The risk of a chaos policy is less concerning than allowing Hitler to gain any influence. I will vote NO.",
-  "say": "I remain deeply concerned about Player7's nomination and Player1's acceptance. I will vote NO.",
-  "action": "NO"
-}
-```
---- END RESPONSE ---
-Game Event: Round 136 - Player5: Thought: Player7 (Hitler) nominating Player1 is a highly suspicious move, and Player1's acceptance is also concerning. Player2, Player3, and Player4 have expressed valid concerns. Player1 is likely being set up. Even though Player1 has promised transparency and a liberal policy, trusting Hitler is too risky. The election tracker is at 1. It is highly likely that Player1 is making a mistake here. There is no reason to trust Player7. I must vote NO to prevent this government from forming. The risk of a chaos policy is less concerning than allowing Hitler to gain any influence. I will vote NO.
-Game Event: Round 136 - Player5: Player5 says: I remain deeply concerned about Player7's nomination and Player1's acceptance. I will vote NO.
