@@ -392,15 +392,33 @@ class GameRunner:
             message=f"--- Executive Action: {power_used} Completed ---")
 
     def game_over_screen(self):
-        self.display_state_terminal(message="\n======== GAME OVER ========")
-        self.display_state_terminal(
-            message=f"Winner: {self.game_state.winner}!")
-        self.display_state_terminal(message="\n--- Roles ---")
+        # Display and log game over header
+        game_over_msg = "\n======== GAME OVER ========"
+        self.display_state_terminal(message=game_over_msg)
+        self.game_state.log_event(None, game_over_msg)
+
+        # Display and log winner
+        winner_msg = f"Winner: {self.game_state.winner}!"
+        self.display_state_terminal(message=winner_msg)
+        self.game_state.log_event(None, winner_msg)
+
+        # Display and log roles
+        roles_header = "\n--- Roles ---"
+        self.display_state_terminal(message=roles_header)
+        self.game_state.log_event(None, roles_header)
         for name, role in self.game_state.roles.items():
-            self.display_state_terminal(message=f"{name}: {role}")
-        self.display_state_terminal(message="\n--- Public Log ---")
+            role_msg = f"{name}: {role}"
+            self.display_state_terminal(message=role_msg)
+            self.game_state.log_event(None, role_msg)
+
+        # Display and log public log
+        log_header = "\n--- Public Log ---"
+        self.display_state_terminal(message=log_header)
+        self.game_state.log_event(None, log_header)
         for event in self.game_state.public_log:
             self.display_state_terminal(message=f"- {event}")
+            self.game_state.log_event(None, f"- {event}")
+
         if self.config.log_to_file_enabled:
             self.logger.close_log_files()
 
