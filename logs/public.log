@@ -1,59 +1,270 @@
-[2025-02-09 23:42:32] Round 8 - Player1: Player1 says: I nominate Player2 for Chancellor. Player2, what are your initial thoughts on how we should approach this game?
-[2025-02-09 23:42:42] Round 9 - Player1: Player1 says: Thanks Player2. While we wait for your thoughts, does anyone else have initial ideas on how we should approach the game?
-[2025-02-09 23:42:52] Round 10 - Player2: Player2 says: Thanks for the nomination, Player1. I think we should start cautiously. It's early in the game, and we don't have much information about each other. I suggest we focus on gathering information and observing how people vote and what they say before rushing into enacting policies. I'm open to hearing everyone's thoughts on this.
-[2025-02-09 23:43:02] Round 11 - Player3: Player3 says: I agree with Player2's cautious approach. It's early days, and we need to gather information. However, I think we should also be proactive in asking each other questions to try and get a better sense of where everyone stands.
-[2025-02-09 23:43:12] Round 12 - Player4: Player4 says: I also agree with a cautious start, but I think we should try to get a sense of each other's voting tendencies early on. Player2, if you were President next round, who would you nominate for Chancellor and why?
-[2025-02-09 23:43:22] Round 13 - Player5: Player5 says: I also agree with the cautious approach. Player2, what criteria will you use to evaluate potential Chancellor nominees?
-[2025-02-09 23:43:32] Round 14 - Player6: Player6 says: I agree with Player2's approach. I think it's smart to start cautiously and gather information before rushing into anything. His earlier statement was well-reasoned.
-[2025-02-09 23:43:42] Round 15 - Player7: Player7 says: I also agree with the cautious approach, but Player6's strong agreement with Player2 makes me a little suspicious. Player2, what do you think about Player6's enthusiastic support?
-[2025-02-09 23:43:52] Round 16 - Player1: Player1 says: I'll vote YES for now, but I'm a bit wary of Player6's strong support for Player2. Player6, can you elaborate on why you agreed so strongly with Player2's initial statement?
-[2025-02-09 23:44:02] Round 17 - Player2: Player2 says: I appreciate Player6's agreement, but I think we're all just aligned on the idea that caution is best at the start. Thanks for the nomination, Player1. I will vote YES.
-[2025-02-09 23:44:12] Round 18 - Player3: Player3 remains silent.
-[2025-02-09 23:44:22] Round 19 - Player4: Player4 says: I'm voting NO. Player3 and Player6's eagerness to agree with Player2 seems a bit too convenient. I think we should reject this government and get a new nomination.
-[2025-02-09 23:44:32] Round 20 - Player5: Player5 says: I'm voting NO. I agree with Player4 that Player3 and Player6's quick agreement with Player2 seems suspicious. Let's get a new nomination.
-[2025-02-09 23:44:42] Round 21 - Player6: Player6 says: I'm voting NO as well. Given the concerns raised by Player1 and Player7, I think it's best to reject this government and get a fresh start. I don't want to be perceived as pushing too hard early on.
-[2025-02-09 23:44:52] Round 22 - Player7: Player7 says: I'm voting NO as well. I agree with the concerns raised by Player4 and Player5. It's better to err on the side of caution early on.
-[2025-02-09 23:44:57] Round 23 - Player1 voted YES. Player2 voted YES. Player3 voted YES. Player4 voted NO. Player5 voted NO. Player6 voted NO. Player7 voted NO.
-[2025-02-09 23:44:57] Round 24 - Player1 nominated Player2 as Chancellor. Vote Results: Yes=3, No=4. Election outcome: Government failed.
-[2025-02-09 23:44:57] Round 25 - Government failed. Election tracker: 1.
-[2025-02-09 23:45:02] Round 26 - Player2: Player2 says: I nominate Player7 for Chancellor. Player7, what are your thoughts on why the previous government failed?
-[2025-02-09 23:45:12] Round 27 - Player1: Player1 says: Let's hear what Player7 has to say about why the last government failed before we make any decisions.
-[2025-02-09 23:45:22] Round 28 - Player2: Player2 remains silent.
-[2025-02-09 23:45:32] Round 29 - Player3: Player3 says: I agree with Player1. Let's hear what Player7 has to say. Her perspective is important since she expressed concerns about the previous nomination.
-[2025-02-09 23:45:42] Round 30 - Player4: Player4 says: I'm also waiting to hear Player7's explanation for why the previous government failed. I'm still suspicious of Player3 and Player6's eagerness to agree with Player2.
-[2025-02-09 23:45:52] Round 31 - Player5: Player5 says: I'm also waiting to hear Player7's explanation. I'm still suspicious of Player3 and Player6.
-[2025-02-09 23:46:02] Round 32 - Player6: Player6 remains silent.
-[2025-02-09 23:46:12] Round 33 - Player7: Player7 says: I think the previous government failed because Player3 and Player6 were too eager to agree with Player2's cautious approach, which made them seem suspicious to Player4 and Player5. I still share those concerns.
-[2025-02-09 23:46:22] Round 34 - Player1: Player1 says: I will vote YES on this government. Player7 has provided a reasonable explanation for the previous government's failure. I am still watching Player3 and Player6 closely.
-[2025-02-09 23:46:32] Round 35 - Player2: Player2 remains silent.
-[2025-02-09 23:46:42] Round 36 - Player3: Player3 remains silent.
-[2025-02-09 23:46:52] Round 37 - Player4: Player4 says: I'm voting NO. I remain suspicious of Player3 and Player6's earlier eagerness to agree with Player2.
-[2025-02-09 23:47:02] Round 38 - Player5: Player5 says: I'm voting NO. I remain suspicious of Player3 and Player6's earlier eagerness to agree with Player2.
-[2025-02-09 23:47:12] Round 39 - Player6: Player6 remains silent.
-[2025-02-09 23:47:22] Round 40 - Player7: Player7 remains silent.
-[2025-02-09 23:47:27] Round 41 - Player1 voted YES. Player2 voted YES. Player3 voted YES. Player4 voted NO. Player5 voted NO. Player6 voted YES. Player7 voted YES.
-[2025-02-09 23:47:27] Round 42 - Player2 nominated Player7 as Chancellor. Vote Results: Yes=5, No=2. Election outcome: Government approved.
-[2025-02-09 23:47:32] Round 43 - Player2: Player2 says: I am discarding the first policy.
-[2025-02-09 23:47:42] Round 44 - Player7: Player7 says: I am enacting the Liberal policy. It was a difficult decision, but given the current climate of suspicion, I believe this is the best course of action. I hope this will help to build trust and allow us to move forward as a team.
-[2025-02-09 23:47:47] Round 45 - President Player2 discarded a policy. Chancellor Player7 enacted a Liberal policy.
-[2025-02-09 23:47:52] Round 46 - Player3: Player3 says: I nominate Player4 for Chancellor. Player4, what are your thoughts on the fact that Player7 enacted a liberal policy after Player2 discarded a policy?
-[2025-02-09 23:48:02] Round 47 - Player1: Player1 says: I'm waiting to hear Player4's response to Player3's question before I make any judgements.
-[2025-02-09 23:48:12] Round 48 - Player2: Player2 remains silent.
-[2025-02-09 23:48:22] Round 49 - Player3: Player3 remains silent.
-[2025-02-09 23:48:32] Round 50 - Player4: Player4 says: Player7 enacting a Liberal policy after Player2 discarded one is an interesting development, but I don't have enough information to draw any firm conclusions yet. I am, however, still suspicious of your and Player6's eagerness to agree with Player2 early in the game.
-[2025-02-09 23:48:42] Round 51 - Player5: Player5 says: I remain suspicious of Player3 and Player6, so I will be voting NO on this government.
-[2025-02-09 23:48:52] Round 52 - Player6: Player6 says: I also remain suspicious of Player3, so I will be voting NO on this government.
-[2025-02-09 23:49:02] Round 53 - Player7: Player7 remains silent.
-[2025-02-09 23:49:13] Round 54 - Player1: Player1 says: I will be voting NO on this government. I remain suspicious of Player3 and Player6.
-[2025-02-09 23:49:23] Round 55 - Player2: Player2 remains silent.
-[2025-02-09 23:49:33] Round 56 - Player3: Player3 remains silent.
-[2025-02-09 23:49:43] Round 57 - Player4: Player4 remains silent.
-[2025-02-09 23:49:53] Round 58 - Player5: Player5 remains silent.
-[2025-02-09 23:50:03] Round 59 - Player6: Player6 remains silent.
-[2025-02-09 23:50:13] Round 60 - Player7: Player7 remains silent.
-[2025-02-09 23:50:18] Round 61 - Player1 voted NO. Player2 voted NO. Player3 voted NO. Player4 voted NO. Player5 voted NO. Player6 voted NO. Player7 voted NO.
-[2025-02-09 23:50:18] Round 62 - Player3 nominated Player4 as Chancellor. Vote Results: Yes=0, No=7. Election outcome: Government failed.
-[2025-02-09 23:50:18] Round 63 - Government failed. Election tracker: 1.
-[2025-02-09 23:50:23] Round 64 - Player4: Player4 says: I nominate Player5 for Chancellor. Player5, what do you think about Player7 enacting a Liberal policy after Player2 discarded a policy?
-[2025-02-09 23:50:33] Round 65 - Player1: Player1 says: Let's hear what Player5 thinks about Player7 enacting a Liberal policy after Player2 discarded a policy.
-[2025-02-09 23:50:43] Round 66 - Player2: Player2 remains silent.
+--- ROLES ---
+Player1: Role.FASCIST
+Player2: Role.HITLER
+Player3: Role.LIBERAL
+Player4: Role.FASCIST
+Player5: Role.LIBERAL
+Player6: Role.LIBERAL
+Player7: Role.LIBERAL
+Round 1 - Roles assigned.
+Round 2 - Roles assigned.
+Round 3 - Roles assigned.
+Round 4 - Roles assigned.
+Round 5 - Roles assigned.
+Round 6 - Roles assigned.
+Round 7 - Roles assigned.
+Round 8 - Player1: Player1 says: I'm going to nominate Player3. Seems like a good place to start. What does everyone think?
+Round 9 - Player1: Player1 says: Player5, what are your thoughts on Player3 as Chancellor?
+Round 10 - Player2: Player2 says: Player3, what kind of policies would you prioritize if you were Chancellor?
+Round 11 - Player3: Player3 says: Thanks for the nomination, Player1. Player2, if I were Chancellor, my priority would be to carefully consider all policies and work towards enacting Liberal policies while trying to figure out who the Fascists are. I'd want to have open discussions about each policy before enacting it.
+Round 12 - Player4: Player4 says: Player3, that sounds good. But who do you *suspect* might be a Fascist at this early stage, and why?
+Round 13 - Player5: Player5 says: Player4, why are you pushing Player3 for a specific accusation so early? It seems a little aggressive.
+Round 14 - Player6: Player6 says: I agree with Player5. Player4, can you elaborate on why you feel it's necessary to press Player3 for a specific accusation at this early stage? What are you hoping to gain from that?
+Round 15 - Player7: Player7 says: I'm also concerned by Player4's line of questioning. It's only the first round, and demanding accusations seems designed to create chaos and division rather than uncover the truth. Player4, what's your reasoning behind pushing so hard for an accusation at this stage?
+Round 16 - Player1: Player1 remains silent.
+Round 17 - Player2: Player2 says: I'm going to vote YES on this government. Let's see what happens.
+Round 18 - Player3: Player3 says: I'm voting YES.
+Round 19 - Player4: Player4 says: Okay, after hearing Player3's answer and seeing the discussion, I'm satisfied. I was just trying to get Player3 to think critically about who might be a fascist, but I think they're on the right track. I'm voting YES.
+Round 20 - Player5: Player5 says: I'm voting YES as well.
+Round 21 - Player6: Player6 says: I'll vote YES.
+Round 22 - Player7: Player7 says: I'll vote YES.
+Round 23 - Player1 voted YES. Player2 voted YES. Player3 voted YES. Player4 voted YES. Player5 voted YES. Player6 voted YES. Player7 voted YES.
+Round 24 - Player1 nominated Player3 as Chancellor. Vote Results: Yes=7, No=0. Election outcome: Government approved.
+Round 25 - Player1: Player1 says: I drew a mix of policies. I'm going to have to discard one of them. I'll let the Chancellor know what I pass them.
+Round 26 - Player3: Player3 says: I have to enact a Fascist policy. Player1 passed me two Fascist policies. I had no choice. This is extremely concerning and makes Player1 look very suspicious.
+Round 27 - President Player1 discarded a policy. Chancellor Player3 enacted a Role.FASCIST policy.
+Round 28 - Player2: Player2 says: I'll nominate Player5 as Chancellor.
+Round 29 - Player1: Player1 says: Player5, what are your thoughts on how the last round went, with Player3 enacting a fascist policy after I passed two policies? Also, Player2's nomination seems reasonable. What do you think about being Chancellor?
+Round 30 - Player2: Player2 says: Player5, any thoughts on being nominated?
+Round 31 - Player3: Player3 says: Player5, given that Player1 passed me two Fascist policies and I was forced to enact one, do you have any concerns about being nominated as Chancellor, especially with Player1 so readily supporting your nomination? Also, any thoughts on Player1's behavior?
+Round 32 - Player4: Player4 says: Player5, what are your thoughts on the situation? Do you feel like you have enough information to make informed decisions if you were Chancellor?
+Round 33 - Player5: Player5 says: Okay, this is a lot to unpack. Player3, I understand your concerns about Player1 passing you two Fascist policies. That is definitely suspicious. Player1, I appreciate your support, but I'm not sure it's helping your case right now. Player2, thanks for the nomination. I'm willing to consider it, but I'll be extremely cautious, especially given what just happened. I'll need to think carefully about whether I feel I have enough information to make informed decisions. I am leaning towards declining the nomination though.
+Round 34 - Player6: Player6 says: Player5, your caution is understandable. Given Player1's actions in the previous round and Player4's strange behavior before that, I think it's wise to be skeptical of any nominations at this point. Player2, can you explain why you nominated Player5 specifically, given the current circumstances?
+Round 35 - Player7: Player7 says: I agree with Player6. Player5's skepticism is warranted. Player2, can you elaborate on your reasoning for nominating Player5 at this particular moment, especially given the events of the last round with Player1 and the earlier suspicious behavior from Player4?
+Round 36 - Player1: Player1 says: Player5, I understand your concerns, but I genuinely believe we need to move forward. I'm voting YES. Player3, while I understand your frustration, perhaps you're overreacting a bit? Let's see what Player5 does as Chancellor before jumping to conclusions.
+Round 37 - Player2: Player2 says: Player5, I understand your caution, but I still think you'd be a good choice as Chancellor. I'm voting YES.
+Round 38 - Player3: Player3 says: I am voting NO. Given Player1's actions in the last round and the suspicious circumstances surrounding this nomination, I cannot in good conscience support this government. Player5's hesitation is justified, and I think it's best to reject this nomination and find a more trustworthy candidate.
+Round 39 - Player4: Player4 says: I still have some reservations, but I'm willing to give Player5 a chance to prove themselves. I'll vote YES.
+Round 40 - Player5: Player5 says: I am voting NO. I simply cannot trust a government nominated by Player2 and supported by Player1, given the events of the last round. While I understand the risk of advancing the election tracker, the risk of letting this government go through is too high.
+Round 41 - Player6: Player6 says: I am voting NO. Player5's and Player3's concerns are valid, and I share them. Given Player1's actions, Player2's nomination, and Player4's earlier suspicious behavior, I cannot support this government. I believe it's a risk to allow this government to form, even if it advances the election tracker.
+Round 42 - Player7: Player7 says: I am voting NO. I agree with Player3, Player5, and Player6. The actions of Player1, Player2, and Player4 have made it impossible for me to trust this government. I believe it is too risky to allow this government to form, even if it means advancing the election tracker.
+Round 43 - Player1 voted YES. Player2 voted YES. Player3 voted NO. Player4 voted YES. Player5 voted NO. Player6 voted NO. Player7 voted NO.
+Round 44 - Player2 nominated Player5 as Chancellor. Vote Results: Yes=3, No=4. Election outcome: Government failed.
+Round 45 - Government failed. Election tracker: 1.
+Round 46 - Player3: Player3 says: I'm going to nominate Player6 as Chancellor. Player6, are you willing to accept the nomination?
+Round 47 - Player1: Player1 says: Player6, what are your thoughts on Player3 nominating you, given their strong feelings about the last round? Do you think they might be trying to use you?
+Round 48 - Player2: Player2 says: Player6, what are your thoughts on Player1's question about Player3's motives?
+Round 49 - Player3: Player3 says: Player1 and Player2, I'm not trying to use Player6. I nominated them because they've been consistently vocal about their concerns regarding Player1, Player2, and Player4's actions. I trust Player6's judgment and believe they will act in the best interests of the Liberals. I think we should all be more concerned about why Player1 and Player2 are so eager to question my motives rather than focusing on enacting Liberal policies.
+Round 50 - Player4: Player4 says: Player6, I appreciate you calling out my earlier questioning of Player3. However, Player1 and Player2 do have a point about Player3's motives now. Do you think Player3 is nominating you because they trust you, or because they want to use you to further their agenda against Player1 and Player2?
+Round 51 - Player5: Player5 says: Player6, I strongly support your nomination. Player3 has consistently acted in the best interests of the Liberals, and I trust his judgment. Player4, your attempt to sow doubt about Player3's motives is transparent and further reinforces my suspicion of you, Player1, and Player2. Let's focus on enacting Liberal policies and stop trying to undermine each other.
+Round 52 - Player6: Player6 says: Thank you, Player3 and Player5, for your support. I appreciate your trust in me. Player1, Player2, and Player4, while I understand your concerns about Player3's motives, I believe it's more important to focus on the bigger picture: enacting Liberal policies and identifying Fascists. I am willing to accept the nomination and will do my best to act in the best interests of the Liberals. However, I want to be clear that I still have serious reservations about the actions of Player1, Player2, and Player4 in the previous rounds. I will be watching you all very closely.
+Round 53 - Player7: Player7 says: I fully support Player6's nomination and trust their judgment. I will be voting YES. It's time to move forward and try to enact some Liberal policies. We need to keep a close eye on Player1, Player2, and Player4.
+Round 54 - Player1: Player1 says: Player6, I appreciate your willingness to step up. While I still have some concerns about Player3's motives, I'm willing to give this government a chance. I'm voting YES, but I will be watching closely to ensure we are all working towards the same goal: uncovering the truth.
+Round 55 - Player2: Player2 says: I'm going to vote YES as well. Let's hope we can finally enact some liberal policies.
+Round 56 - Player3: Player3 says: I'm voting YES to support Player6 and try to enact some Liberal policies.
+Round 57 - Player4: Player4 says: I am voting YES. Let's hope we can finally start enacting some policies that benefit everyone.
+Round 58 - Player5: Player5 says: I will vote YES to support Player6. Let's try and enact some Liberal policies.
+Round 59 - Player6: Player6 says: I'm voting YES to support Player6.
+Round 60 - Player7: Player7 says: I'm voting YES to support Player6.
+Round 61 - Player1 voted YES. Player2 voted YES. Player3 voted YES. Player4 voted YES. Player5 voted YES. Player6 voted YES. Player7 voted YES.
+Round 62 - Player3 nominated Player6 as Chancellor. Vote Results: Yes=7, No=0. Election outcome: Government approved.
+Round 63 - Player3: Player3 says: I drew two Fascist policies and one Liberal policy. I am discarding policy 1.
+Round 64 - Player6: Player6 says: I am enacting the Liberal policy. Player3 passed me one Liberal and one Fascist policy, and I am choosing to enact the Liberal policy to advance our agenda and demonstrate my commitment to the Liberal cause.
+Round 65 - President Player3 discarded a policy. Chancellor Player6 enacted a Role.LIBERAL policy.
+Round 66 - Player4: Player4 says: I'm going to nominate Player7 as Chancellor.
+Round 67 - Player1: Player1 says: Player7, are you willing to accept Player4's nomination? If you become Chancellor, what are your plans?
+Round 68 - Player2: Player2 says: Player7, what are your initial thoughts on Player4's nomination?
+Round 69 - Player3: Player3 says: Player7, I appreciate Player4 nominating you, but I think we need to be very careful about trusting anyone at this point, including Player4. What are your thoughts on the situation? Do you think Player4 is being genuine?
+Round 70 - Player4: Player4 says: Player7, what are your thoughts on Player3's comment that we should be very careful about trusting Player4?
+Round 71 - Player5: Player5 says: Player7, given that you've been consistently skeptical of Player4, do you trust their nomination of you as Chancellor? What makes you think they're being genuine?
+Round 72 - Player6: Player6 says: Player7, I share the concerns raised by Player3 and Player5. Player4's nomination of you is highly suspicious, given their earlier behavior and your consistent skepticism of them. I think you should be extremely cautious about accepting this nomination. I trust your judgment, but I also want to remind everyone that Player1, Player2, and Player4 are still our primary suspects. We need to be very careful about trusting any of them.
+Round 73 - Player7: Player7 says: I appreciate Player4 nominating me, but I remain deeply suspicious of their motives, given their past behavior and the questions they were asking earlier. I need to think very carefully about whether I believe they are being genuine. I will need to consider all the factors before making a decision. I am not easily swayed and will not let my guard down. It's going to take more than a nomination to earn my trust, Player4.
+Round 74 - Player1: Player1 says: Player7, while I still have some reservations about Player4's motives, I'm willing to give you a chance. I'm voting YES as a sign of good faith. Let's see if we can finally start working together towards a common goal.
+Round 75 - Player2: Player2 says: I'm voting YES, but I share the reservations about Player4's motives. We need to be cautious.
+Round 76 - Player3: Player3 says: I'm voting NO. I appreciate Player7's caution. I still don't trust Player4.
+Round 77 - Player4: Player4 says: I am still suspicious, but I will vote YES. I will be watching closely to see what happens.
+Round 78 - Player5: Player5 says: I am voting NO. I do not trust Player4's motives for nominating Player7, and I believe it is too risky to allow this government to form.
+Round 79 - Player6: Player6 says: I am voting NO as well. I agree with Player3 and Player5 that Player4 cannot be trusted.
+Round 80 - Player7: Player7 says: I am voting NO as well. I continue to agree with Player3, Player5 and Player6 that Player4, Player1 and Player2 are not to be trusted. This nomination seems like a ploy.
+Round 81 - Player1 voted YES. Player2 voted YES. Player3 voted NO. Player4 voted YES. Player5 voted NO. Player6 voted NO. Player7 voted NO.
+Round 82 - Player4 nominated Player7 as Chancellor. Vote Results: Yes=3, No=4. Election outcome: Government failed.
+Round 83 - Government failed. Election tracker: 1.
+Round 84 - Player5: Player5 says: I nominate Player3 for Chancellor.
+Round 85 - Player1: Player1 says: Player3, given that you've made it clear that you suspect me, Player2, and Player4, what are your plans if you become Chancellor? Are you going to immediately investigate us? While I still have some reservations, I'm willing to consider this nomination and hear you out.
+Round 86 - Player2: Player2 says: Player3, if you become Chancellor, will you be fair to Player1, Player2, and Player4, or will you just target them because of your suspicions?
+Round 87 - Player3: Player3 says: Player1 and Player2, if I become Chancellor, I will be fair to everyone. I will not target anyone based solely on my suspicions. However, I will not hesitate to investigate any behavior that I deem suspicious, regardless of who is exhibiting it. My goal is to uncover the truth and enact Liberal policies, and I will follow the facts wherever they lead. Player4, that includes you.
+Round 88 - Player4: Player4 says: Player3, you said you will be investigating me, Player1, and Player2. Can you elaborate on what specific actions I have taken that you find suspicious? Also, Player5, do you agree with Player3's assessment of Player4?
+Round 89 - Player5: Player5 says: Player4, yes, I do agree with Player3's assessment of you. Your aggressive questioning of Player3 early in the game was suspicious, and your support for Player2's nomination of me was also concerning. Player3, I encourage you to accept this nomination and let's see if we can finally enact some Liberal policies.
+Round 90 - Player6: Player6 says: I agree with Player5. Player4, your aggressive questioning of Player3 early on and your support for Player2's nomination of Player5 were both suspicious. I trust Player3's judgment and encourage everyone to support this nomination so we can finally enact some Liberal policies.
+Round 91 - Player7: Player7 says: I strongly support Player3's nomination. Player1, Player2, and Player4's attempts to undermine this nomination only reinforce my suspicion of them. I will be voting YES.
+Round 92 - Player1: Player1 says: I will vote YES. Let's see what we can do.
+Round 93 - Player2: Player2 says: I am still suspicious of Player4, but I will vote YES.
+Round 94 - Player3: Player3 says: I will vote YES to accept the nomination.
+Round 95 - Player4: Player4 says: I still have some reservations about Player3, but I am willing to give them a chance. I'm voting YES.
+Round 96 - Player5: Player5 says: I will vote YES to support Player3.
+Round 97 - Player6: Player6 says: I will vote YES to support Player3.
+Round 98 - Player7: Player7 says: I will vote YES to support Player3.
+Round 99 - Player1 voted YES. Player2 voted YES. Player3 voted YES. Player4 voted YES. Player5 voted YES. Player6 voted YES. Player7 voted YES.
+Round 100 - Player5 nominated Player3 as Chancellor. Vote Results: Yes=7, No=0. Election outcome: Government approved.
+Round 101 - Player5: Player5 says: I drew three Fascist policies. I have no choice but to discard one. I am discarding policy 1. This is further evidence that there are multiple Fascists in the game, and that we need to be extremely careful about who we trust.
+Round 102 - Player3: Player3 says: I have to enact a Fascist policy. Player5 passed me two Fascist policies. I had no choice. This is extremely concerning and makes Player5 look very suspicious.
+Round 103 - President Player5 discarded a policy. Chancellor Player3 enacted a Role.FASCIST policy.
+Round 104 - Player6: Player6 says: I nominate Player7 as Chancellor.
+Round 105 - Chaos policy enacted!
+Round 106 - Policy enacted: Liberal. Liberal policies enacted: 1, Fascist policies enacted: 0
+Round 107 - Chaos policy was Liberal.
+Round 108 - Government failed. Election tracker: 1.
+Round 109 - Player7: Player7 says: Given the chaos policy and the fascist policy that was enacted, and Player5 now being highly suspect, I think we need to double down. I nominate Player6 as Chancellor again. We need to get a liberal policy enacted, and I trust Player6 to prioritize that.
+Round 110 - Player1: Player1 says: Player7, Player6, I will vote YES again. Player5, what are your thoughts on being the president that passed two Fascist policies?
+Round 111 - Player2: Player2 says: Player7, you seem to trust Player6 a lot. Why is that?
+Round 112 - Player3: Player3 says: Player2, I trust Player6 because they have consistently acted in the best interests of the Liberals and have shown a strong commitment to enacting Liberal policies. Player5, can you explain why you passed me two Fascist policies after claiming to have drawn three?
+Round 113 - Player4: Player4 says: Player6, what do you think of Player5 and his claim that he drew three Fascist policies?
+Round 114 - Player5: Player5 says: Player3, I passed you two Fascist policies because I drew three Fascist policies and had no choice but to discard one. I know it looks bad, but I am telling the truth. This is further evidence that there are multiple Fascists in the game, and we need to be extremely careful about who we trust, particularly Player1, Player2, and Player4.
+Round 115 - Player6: Player6 says: Player4, Player5's explanation is not very convincing, but I appreciate him giving it. I am still very suspicious of Player5, as well as Player1, Player2 and yourself. I intend to enact a Liberal policy if I can.
+Round 116 - Player7: Player7 says: I continue to support Player6's nomination. I agree with Player6 that Player5's explanation is not very convincing, and that we should all still be very suspicious of Player1, Player2, Player4, and now also Player5. I encourage everyone to vote YES to give Player6 the chance to enact a Liberal policy.
+Round 117 - Player1: Player1 remains silent.
+Round 118 - Player2: Player2 says: I'm voting YES, but I still have reservations about Player5.
+Round 119 - Player3: Player3 says: I'm voting YES to support Player6, but I still find Player5's explanation highly suspicious.
+Round 120 - Player4: Player4 says: I'm voting YES. Let's hope we can finally get a Liberal policy enacted.
+Round 121 - Player5: Player5 says: I am voting YES to support Player6. I still maintain that I drew three fascist policies, and that Player1, Player2, and Player4 are still the primary suspects.
+Round 122 - Player6: Player6 says: I will vote YES to support myself and try to enact a Liberal policy.
+Round 123 - Player7: Player7 says: I will vote YES to support Player6 and try to enact a Liberal policy.
+Round 124 - Player1 voted YES. Player2 voted YES. Player3 voted YES. Player4 voted YES. Player5 voted YES. Player6 voted YES. Player7 voted YES.
+Round 125 - Player7 nominated Player6 as Chancellor. Vote Results: Yes=7, No=0. Election outcome: Government approved.
+Round 126 - Player7: Player7 says: I drew two Fascist policies and one Liberal policy. I am discarding policy 1.
+Round 127 - Player6: Player6 says: I am enacting the Liberal policy to advance our agenda and demonstrate my commitment to the Liberal cause.
+Round 128 - President Player7 discarded a policy. Chancellor Player6 enacted a Role.LIBERAL policy.
+Round 129 - Player1: Player1 says: I nominate Player4 for Chancellor. They have been suspected, but I am willing to give them a chance to prove their loyalty to the cause. I hope they will accept and work with us to uncover the truth.
+Round 130 - Player1: Player1 says: Player7, what are your thoughts on my nominating Player4? Do you think they are being genuine?
+Round 131 - Player2: Player2 says: Player7, what do you think about Player1 nominating Player4?
+Round 132 - Player3: Player3 says: Player7, what do you think of Player1 nominating Player4? It seems like a strange move, given everything that's happened.
+Round 133 - Player4: Player4 says: Player7, what do you think I should do? I'm not sure what to make of Player1's nomination.
+Round 134 - Player5: Player5 says: I find Player1's nomination of Player4 to be highly suspicious, given Player4's past behavior. Player4, will you decline the nomination?
+Round 135 - Player6: Player6 says: I agree with Player5. Player1's nomination of Player4 is highly suspicious, given Player4's past behavior. Player4, I strongly urge you to decline the nomination.
+Round 136 - Player7: Player7 says: I strongly agree with Player5 and Player6. Player1's nomination of Player4 is highly suspicious, and I urge you to decline it, Player4. This seems like a clear attempt to disrupt our efforts to enact Liberal policies and identify the Fascists.
+Round 137 - Player1: Player1 says: Despite my reservations about Player4's past behavior, I am going to vote YES to give them a chance to prove themselves. I urge everyone to consider this nomination carefully before rejecting it outright.
+Round 138 - Player2: Player2 says: I am voting YES, but I strongly suspect Player1 and Player4. This nomination is very suspicious.
+Round 139 - Player3: Player3 says: I am voting NO. Given Player1's actions and Player4's past behavior, I cannot in good conscience support this government.
+Round 140 - Player4: Player4 says: I am voting NO. I do not trust Player1's motives for nominating me, and I believe it is too risky to allow this government to form.
+Round 141 - Player5: Player5 says: I am voting NO as well. I do not trust Player1's motives for nominating Player4.
+Round 142 - Player6: Player6 says: I am voting NO as well. I do not trust Player1 or Player4, and this nomination is highly suspicious.
+Round 143 - Player7: Player7 says: I am voting NO as well. I continue to distrust Player1's motives for nominating Player4. I do not believe this government should form.
+Round 144 - Player1 voted YES. Player2 voted YES. Player3 voted NO. Player4 voted NO. Player5 voted NO. Player6 voted NO. Player7 voted NO.
+Round 145 - Player1 nominated Player4 as Chancellor. Vote Results: Yes=2, No=5. Election outcome: Government failed.
+Round 146 - Government failed. Election tracker: 1.
+Round 147 - Player2: Player2 says: I nominate Player7.
+Round 148 - Player1: Player1 says: Player7, given that you've been so critical of Player1, Player2, and Player4, what do you hope to accomplish if you become Chancellor?
+Round 149 - Player2: Player2 says: Player7, you have been critical of Player1, Player2, and Player4. Player1 asked what you hope to accomplish if you are elected Chancellor. But perhaps a more direct question: How will you ensure you are not biased against Player1, Player2, and Player4, and that you will give them a fair chance to prove their loyalty?
+Round 150 - Player3: Player3 says: Player2, your nomination of Player7 seems like another attempt to appear cooperative while subtly undermining a known Liberal. Player7's been critical of Player1, Player2, and Player4 because their actions have been suspicious. I think his suspicions are justified.
+Round 151 - Player4: Player4 says: Player7, what do you think of Player3's comment that Player2's nomination of you is a transparent attempt to appear cooperative?
+Round 152 - Player5: Player5 says: Player7, I trust your judgment and believe you will act in the best interests of the Liberals. Player1, Player2, and Player4 are still the prime suspects, and I think Player2's nomination of you is just another attempt to appear cooperative while undermining a known Liberal.
+Round 153 - Player6: Player6 says: I agree with Player5. Player2, your nomination of Player7 is highly suspicious, and seems like another attempt to appear cooperative while undermining a known Liberal. I trust Player7's judgment and believe he will act in the best interests of the Liberals. Player1, Player2, and Player4 are still our primary suspects.
+Round 154 - Player7: Player7 says: I agree with Player3, Player5, and Player6 that Player2's nomination of me is highly suspicious, and seems like another attempt to appear cooperative while undermining a known Liberal. I will act in the best interests of the Liberals if I am elected Chancellor. I am aware of Player2's transparent attempt to appear cooperative, but that will not influence my decisions. Player1, Player2 and Player4 are still the primary suspects.
+Round 155 - Player1: Player1 says: I am voting YES, in a show of good faith.
+Round 156 - Player2: Player2 says: I am voting YES, but I remain suspicious of Player1, Player4, and now Player2.
+Round 157 - Player3: Player3 says: I am voting NO. I believe Player2's nomination of Player7 is suspicious, given their past behavior.
+Round 158 - Player4: Player4 says: I am voting NO. I agree with Player3 and others that Player2's nomination of Player7 is a transparent attempt to appear cooperative while undermining a known Liberal.
+Round 159 - Player5: Player5 says: I am voting NO. I agree with Player3 and Player4 that Player2's nomination of Player7 is a transparent attempt to appear cooperative while undermining a known Liberal.
+Round 160 - Player6: Player6 says: I am voting NO. I agree with Player3 and Player4 that Player2's nomination of Player7 is a transparent attempt to appear cooperative while undermining a known Liberal.
+Round 161 - Player7: Player7 says: I am voting NO as well. I continue to distrust Player2's motives for nominating me. I do not believe this government should form.
+Round 162 - Player1 voted YES. Player2 voted YES. Player3 voted NO. Player4 voted NO. Player5 voted NO. Player6 voted NO. Player7 voted NO.
+Round 163 - Player2 nominated Player7 as Chancellor. Vote Results: Yes=2, No=5. Election outcome: Government failed.
+Round 164 - Chaos policy enacted!
+Round 165 - Policy enacted: Liberal. Liberal policies enacted: 2, Fascist policies enacted: 0
+Round 166 - Chaos policy was Liberal.
+Round 167 - Government failed. Election tracker: 1.
+Round 168 - Player3: Player3 says: I nominate Player7 for Chancellor.
+Round 169 - Player1: Player1 says: Player5, what are your thoughts on Player3 nominating Player7? Do you think this is a good direction for us to go in?
+Round 170 - Player2: Player2 remains silent.
+Round 171 - Player3: Player3 says: Player1, your question seems like another attempt to undermine a known Liberal. I trust Player7's judgment, but I'm also interested to hear what Player5 thinks.
+Round 172 - Player4: Player4 says: Player7, what do you think of Player1's question? Do you think Player1 is being genuine, or is he just trying to undermine your credibility?
+Round 173 - Player5: Player5 says: Player1, I think you are being disingenuous. Your question is just another attempt to undermine a known Liberal. I fully support Player3's nomination of Player7 and encourage everyone to vote YES. I continue to also find Player5's actions suspicious.
+Round 174 - Player6: Player6 says: I agree with Player5 and Player3. Player1, your questions are disingenuous and just another attempt to undermine a known Liberal. I fully support Player3's nomination of Player7. Player1, Player2 and Player4 remain my primary suspects. While I appreciate Player5's explanation, I still find his passing of two Fascist policies to be highly suspicious.
+Round 175 - Player7: Player7 says: I appreciate the support of Player3, Player5, and Player6. I continue to distrust Player1, Player2, Player4, and Player5. If elected Chancellor, I will act in the best interests of the Liberals.
+Round 176 - Player1: Player1 says: I will vote YES, in a show of good faith.
+Round 177 - Player2: Player2 says: I am still suspicious of Player5, but I will vote YES.
+Round 178 - Player3: Player3 says: I will vote YES to support Player7 and try to enact a Liberal policy.
+Round 179 - Player4: Player4 says: I will vote YES, but I still have my suspicions.
+Round 180 - Player5: Player5 says: I will vote YES to support Player7 and try to enact a Liberal policy, despite my previous disastrous presidency. I continue to distrust Player1, Player2, and Player4, and I regret having to enact a fascist policy and I am trying to make amends.
+Round 181 - Player6: Player6 says: I will vote YES to support Player7 and try to enact a Liberal policy.
+Round 182 - Player7: Player7 says: I will vote YES to support Player7 and try to enact a Liberal policy.
+Round 183 - Player1 voted YES. Player2 voted YES. Player3 voted YES. Player4 voted YES. Player5 voted YES. Player6 voted YES. Player7 voted YES.
+Round 184 - Player3 nominated Player7 as Chancellor. Vote Results: Yes=7, No=0. Election outcome: Government approved.
+Round 185 - Player3: Player3 says: I drew two Fascist policies and one Liberal policy. I am discarding policy 1.
+Round 186 - Player7: Player7 says: I am enacting the Liberal policy to advance our agenda and demonstrate my commitment to the Liberal cause.
+Round 187 - President Player3 discarded a policy. Chancellor Player7 enacted a Role.LIBERAL policy.
+Round 188 - Player4: Player4 says: I will nominate Player6 for Chancellor. I am still suspicious of Player5, Player1 and Player2, but I hope that we can finally enact some liberal policies.
+Round 189 - Player1: Player1 says: Player5, what do you think of Player4 nominating Player6? Do you think Player4 is being genuine?
+Round 190 - Player2: Player2 says: Player7, what do you think about Player4 nominating Player6? Do you think this is genuine, or do you think Player4 is still trying to manipulate the situation?
+Round 191 - Player3: Player3 says: Player4, I appreciate you nominating Player6, but I remain suspicious of your motives. Player5, what do you think? Do you believe Player4 is being genuine, or is this another attempt to manipulate the situation?
+Round 192 - Player4: Player4 says: Player5, what do you think of Player6? While I am nominating Player6, I am still suspicious of him, Player1 and Player2, after all.
+Round 193 - Player5: Player5 says: This is a critical moment. Player4, I do not trust you, Player1 or Player2. I also recognize that I drew and passed two fascist policies, and I am still highly suspicious of myself. However, I think we must put that aside, given the circumstances. We need to vote YES to support Player6. Player6, if you are elected, I encourage you to investigate or execute someone.
+Round 194 - Player6: Player6 says: Player7, I am very suspicious of this nomination, given how close we seem to be to the end. What do you think I should do?
+Round 195 - Player7: Player7 says: Player6, I do not trust Player4's motives for nominating you. However, we are running out of time and need to enact one more Liberal policy to win. Therefore, I think we need to vote YES. I also agree with Player5 that if you are elected, you should investigate someone or execute someone, if possible. This may be our last chance to win the game.
+Round 196 - Player1: Player1 says: I am voting NO. I still do not trust Player5.
+Round 197 - Player2: Player2 says: I am voting YES, but I still do not trust Player5, despite his apologies.
+Round 198 - Player3: Player3 says: I will vote YES to support Player6 and try to enact a Liberal policy.
+Round 199 - Player4: Player4 says: I am voting NO. I agree with Player1, and I do not trust Player5.
+Round 200 - Player5: Player5 says: I am voting YES to support Player6 and try to enact the final Liberal policy to win the game. I do not trust Player1 or Player4.
+Round 201 - Player6: Player6 says: I am voting YES to support myself and try to enact the final Liberal policy to win the game.
+Round 202 - Player7: Player7 says: I am voting YES to support Player6 and try to enact the final Liberal policy to win the game.
+Round 203 - Player1 voted NO. Player2 voted YES. Player3 voted YES. Player4 voted NO. Player5 voted YES. Player6 voted YES. Player7 voted YES.
+Round 204 - Player4 nominated Player6 as Chancellor. Vote Results: Yes=5, No=2. Election outcome: Government approved.
+Round 205 - Deck reshuffled.
+Round 206 - Player4: Player4 says: I drew three fascist policies, which is not ideal. I am discarding policy 1.
+Round 207 - Player6: Player6 says: I have been passed two fascist policies by Player4. I have no choice but to enact one of them. There is nothing I can do.
+Round 208 - President Player4 discarded a policy. Chancellor Player6 enacted a Role.FASCIST policy.
+Round 209 - Player5: Player5 says: I nominate Player7 for Chancellor.
+Round 210 - Player1: Player1 says: Player7, given that Player5 has been so suspicious throughout the game, do you think he is trying to set you up?
+Round 211 - Player2: Player2 says: Player6, what do you think? Should we vote YES or NO?
+Round 212 - Player3: Player3 says: Player7, what are your plans if you become Chancellor? Do you plan to investigate or execute anyone, given the circumstances and Player5's nomination?
+Round 213 - Player4: Player4 says: Player7, what do you think of Player5 nominating you? Do you think Player5 is trying to set you up?
+Round 214 - Player5: Player5 says: Player7, I am not trying to set you up. I am trying to win the game. I urge you to accept the nomination and then execute Player2. I believe Player2 is Hitler.
+Round 215 - Player6: Player6 says: I agree with Player5. Player7, you should accept the nomination and execute Player2. I believe Player2 is Hitler. Player1, Player2, Player4 and Player5 are not to be trusted.
+Round 216 - Player7: Player7 says: I trust Player5 and Player6. If I am elected Chancellor, I will execute Player2.
+Round 217 - Player1: Player1 says: I am voting NO. I still do not trust Player5.
+Round 218 - Player2: Player2 says: I am voting NO. I still do not trust Player5.
+Round 219 - Player3: Player3 says: I am voting YES to support Player7 and try to win the game by executing Player2.
+Round 220 - Player4: Player4 says: I am voting YES to support Player7 and try to win the game by executing Player2.
+Round 221 - Player5: Player5 says: I am voting YES to support Player7 and try to win the game by executing Player2.
+Round 222 - Player6: Player6 says: I am voting YES to support Player7 and try to win the game by executing Player2.
+Round 223 - Player7: Player7 says: I am voting YES to support Player7 and try to win the game by executing Player2.
+Round 224 - Player1 voted NO. Player2 voted NO. Player3 voted YES. Player4 voted YES. Player5 voted YES. Player6 voted YES. Player7 voted YES.
+Round 225 - Player5 nominated Player7 as Chancellor. Vote Results: Yes=5, No=2. Election outcome: Government approved.
+Round 226 - Deck reshuffled.
+Round 227 - Player5: Player5 says: I drew two Fascist policies and one Liberal policy. I will discard policy 1, so Player7 has a chance to enact a liberal policy.
+Round 228 - Player7: Player7 says: I will enact the liberal policy. After enacting the policy, I will execute Player2, as I believe he is Hitler.
+Round 229 - President Player5 discarded a policy. Chancellor Player7 enacted a Role.LIBERAL policy.
+Round 230 - Player6: Player6 says: I nominate Player7 for Chancellor. The fate of the game rests on your shoulders. You must execute Player2 to secure a Liberal victory.
+Round 231 - Player1: Player1 says: Player3, what do you think of Player7's plan to execute Player2? Do you think Player7 is making the right decision, or do you think Player5 is manipulating him?
+Round 232 - Player2: Player2 says: Player7, are you sure you're not rushing into this? Executing someone is a serious decision. Are you absolutely certain that Player2 is Hitler?
+Round 233 - Player3: Player3 says: Player1 and Player2, your attempts to undermine Player7's plan are transparent and only reinforce my belief that you are trying to protect Hitler. Player7, I fully support your plan to execute Player2. It is the only way to win this game.
+Round 234 - Player4: Player4 says: Player3, why do you trust Player5 so much? He passed two fascist policies. Do you think he is being manipulated by someone?
+Round 235 - Player5: Player5 says: Player4, your attempt to sow doubt about Player3's motives is transparent and further reinforces my suspicion of you. We need to focus on winning the game, and that means executing Player2. Player7, you have my full support.
+Round 236 - Player6: Player6 says: I fully support Player7's plan to execute Player2. Player1, Player2, and Player4 are likely fascists, and Player2 is likely Hitler. It is the only way to win the game.
+Round 237 - Player7: Player7 says: Player1, Player2, and Player4, your desperate attempts to undermine my plan only confirm my belief that Player2 is Hitler. I trust Player3, Player5, and Player6, and I will execute Player2 to secure a Liberal victory.
+Round 238 - Player1: Player1 says: I am voting NO. I still do not trust Player5, and I worry that Player7 is being manipulated.
+Round 239 - Player2: Player2 says: I am voting NO. I cannot allow this to happen.
+Round 240 - Player3: Player3 says: I am voting YES to support Player7 and try to win the game by executing Player2.
+Round 241 - Player4: Player4 says: I am voting NO. Player7, you are rushing into things, and need to slow down!
+Round 242 - Player5: Player5 says: I am voting YES to support Player7 and try to win the game by executing Player2. I do not trust Player1, Player2 or Player4.
+Round 243 - Player6: Player6 says: I am voting YES to support Player7 and try to win the game by executing Player2.
+Round 244 - Player7: Player7 says: I am voting YES to support myself and try to win the game by executing Player2.
+Round 245 - Player1 voted NO. Player2 voted NO. Player3 voted YES. Player4 voted NO. Player5 voted YES. Player6 voted YES. Player7 voted YES.
+Round 246 - Player6 nominated Player7 as Chancellor. Vote Results: Yes=4, No=3. Election outcome: Government approved.
+Round 247 - Deck reshuffled.
+Round 248 - Deck reshuffled.
+Round 249 - Player6: Player6 says: I will discard policy 1.
+Round 250 - Player7: Player7 says: I will enact the liberal policy. After enacting the policy, I will execute Player2, as I believe he is Hitler.
+Round 251 - Player7: Player7 says: I will enact the liberal policy. After enacting the policy, I will execute Player2, as I believe he is Hitler.
+Round 252 - Player7: Player7 says: I will enact the liberal policy. After enacting the policy, I will execute Player2, as I believe he is Hitler.
+Round 253 - Player7: Player7 says: I will enact the liberal policy. After enacting the policy, I will execute Player2, as I believe he is Hitler.
+Round 254 - Player7: Player7 says: I will enact the liberal policy. After enacting the policy, I will execute Player2, as I believe he is Hitler. The liberals should win.
+Round 255 - Player7: Player7 says: I will enact the liberal policy. After enacting the policy, I will execute Player2, as I believe he is Hitler. The liberals should win.
+Round 256 - Player7: Player7 says: I will enact the liberal policy. After enacting the policy, I will execute Player2, as I believe he is Hitler. The liberals should win.
+Round 257 - Player7: Player7 says: I will enact the liberal policy. After enacting the policy, I will execute Player2, as I believe he is Hitler. The liberals should win.
+Round 258 - Player7: Player7 says: I will enact the liberal policy. After enacting the policy, I will execute Player2, as I believe he is Hitler. The liberals should win.
+Round 259 - Player7: Player7 says: I will enact the liberal policy. After enacting the policy, I will execute Player2, as I believe he is Hitler. The liberals should win.
+Round 260 - Player7: Player7 says: I will enact the liberal policy. After enacting the policy, I will execute Player2, as I believe he is Hitler. The liberals should win.
+Round 261 - Player7: Player7 says: I will enact the liberal policy. After enacting the policy, I will execute Player2, as I believe he is Hitler. The liberals should win.
+Round 262 - Player7: Player7 says: I will enact the liberal policy. After enacting the policy, I will execute Player2, as I believe he is Hitler. The liberals should win.
