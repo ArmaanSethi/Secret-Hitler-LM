@@ -9,48 +9,90 @@ import random
 class GameLogger:
     def __init__(self, log_to_file_enabled):
         self.log_to_file_enabled = log_to_file_enabled
-        self.game_log_file = None
-        self.player_log_files = {}
-        self.public_log_file = None  # New file for public log
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.DEBUG)
+
+        if self.log_to_file_enabled:
+            log_dir = "logs"
+            os.makedirs(log_dir, exist_ok=True)
+
+            game_log_filepath = os.path.join(log_dir, "game.log")
+            public_log_filepath = os.path.join(log_dir, "public.log")
+
+            game_formatter = logging.Formatter(
+                '%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+            game_file_handler = logging.FileHandler(
+                game_log_filepath, mode='w')
+            game_file_handler.setFormatter(game_formatter)
+            self.logger.addHandler(game_file_handler)
+            self.game_file_handler = game_file_handler
+
+            public_logger = logging.getLogger('public')
+            public_logger.setLevel(logging.INFO)
+            public_formatter = logging.Formatter('%(message)s')
+            public_file_handler = logging.FileHandler(
+                public_log_filepath, mode='w')
+            public_file_handler.setFormatter(public_formatter)
+            public_logger.addHandler(public_file_handler)
+            self.public_log_file_handler = public_file_handler
+            self.public_logger = public_logger
+
+            self.player_loggers = {}
+            self.player_file_handlers = {}
 
     def setup_logging(self, player_names):
         if not self.log_to_file_enabled:
             return
-
-        log_dir = "logs"
-        os.makedirs(log_dir, exist_ok=True)
-
-        self.game_log_file = open(os.path.join(log_dir, "game.log"), "w")
-        self.public_log_file = open(os.path.join(log_dir, "public.log"), "w")  # Create public log file
+        if self.log_to_file_enabled and self.public_log_file_handler:
+            self.public_log_file_handler.stream.truncate(0)
+            self.public_log_file_handler.stream.seek(0)
 
         for player_name in player_names:
-            player_log_filepath = os.path.join(log_dir, f"{player_name}.log")
-            self.player_log_files[player_name] = open(player_log_filepath, "w")
+            player_log_filepath = os.path.join("logs", f"{player_name}.log")
+            player_file_handler = logging.FileHandler(
+                player_log_filepath, mode='w')
+            formatter = logging.Formatter('%(message)s')
+            player_file_handler.setFormatter(formatter)
+            player_logger = logging.getLogger(player_name)
+            player_logger.addHandler(player_file_handler)
+            player_logger.setLevel(logging.INFO)
+            self.player_loggers[player_name] = player_logger
+            self.player_file_handlers[player_name] = player_file_handler
 
     def log_public_event(self, event):
-        if self.log_to_file_enabled and self.public_log_file:
-            timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
-            self.public_log_file.write(f"[{timestamp}] {event}\n")
-            self.public_log_file.flush()
+        if self.log_to_file_enabled and self.public_logger:
+            self.public_logger.info(event)
+            self.public_log_file_handler.flush()
 
     def close_log_files(self):
-        if self.game_log_file:
-            self.game_log_file.close()
-        if self.public_log_file:
-            self.public_log_file.close()
-        for log_file in self.player_log_files.values():
-            log_file.close()
+        if self.game_file_handler:
+            self.game_file_handler.close()
+        if self.public_log_file_handler:
+            self.public_log_file_handler.close()
+        for handler in self.player_file_handlers.values():
+            handler.close()
+
+        handlers = self.logger.handlers[:]
+        for handler in handlers:
+            self.logger.removeHandler(handler)
+        for player_logger in self.player_loggers.values():
+            handlers = player_logger.handlers[:]
+            for handler in handlers:
+                player_logger.removeHandler(handler)
 
     def log_to_debug_file(self, player_name, message):
         if self.log_to_file_enabled:
-            if self.game_log_file:
-                timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
-                self.game_log_file.write(f"[{timestamp}] {message}\n")
-                self.game_log_file.flush()
-
-            if player_name and player_name in self.player_log_files:
-                self.player_log_files[player_name].write(f"{message}\n")
-                self.player_log_files[player_name].flush()
+            self.logger.debug(message)
+            if self.game_file_handler:
+                self.game_file_handler.flush()
+            if player_name:
+                player_logger = self.player_loggers.get(player_name)
+                if player_logger:
+                    player_logger.info(message)
+                    player_file_handler = self.player_file_handlers.get(
+                        player_name)
+                    if player_file_handler:
+                        player_file_handler.flush()
 
 
 class LLMPlayerInterface:
@@ -136,8 +178,9 @@ class LLMPlayerInterface:
         self.slowdown_timer = slowdown_timer
 
     def get_llm_response(self, game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info=None):
-        max_retries = 5
-        initial_delay = 2
+        return self._llm_call_with_retry(game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info)
+
+    def _llm_call_with_retry(self, game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info, max_retries=5, initial_delay=2):
         retry_delay = initial_delay
 
         for attempt in range(max_retries):
@@ -163,7 +206,7 @@ class LLMPlayerInterface:
                     self.player_name, f"\n--- LLM RESPONSE ---\n{llm_response}\n--- END RESPONSE ---")
 
                 action = self._extract_action(
-                    llm_response, allowed_responses, game_phase)
+                    llm_response, allowed_responses)
                 elapsed_time = time.time() - start_time
                 remaining_time = max(0, self.slowdown_timer - elapsed_time)
 
@@ -214,8 +257,6 @@ class LLMPlayerInterface:
 
         prompt += "\n===== GAME STATE =====\n" + \
             game_state.get_state_string() + "\n===== END GAME STATE =====\n"
-        prompt += "\n===== PUBLIC LOG =====\n" + game_state.get_public_log_string() + \
-            "\n===== END PUBLIC LOG =====\n"
         prompt += "\n===== PRIVATE LOG =====\n" + \
             game_state.get_private_log_string(
                 self.player_name) + "\n===== END PRIVATE LOG =====\n"
@@ -246,7 +287,7 @@ class LLMPlayerInterface:
 
         return prompt
 
-    def _extract_action(self, llm_response, allowed_responses, game_phase):
+    def _extract_json_field(self, llm_response, field_name):
         llm_response = llm_response.strip()
         if llm_response.startswith("```json"):
             llm_response = llm_response[len("```json"):].strip()
@@ -255,41 +296,26 @@ class LLMPlayerInterface:
 
         try:
             response_json = json.loads(llm_response)
-            action_text = response_json.get("action")
-            if action_text and (not allowed_responses or action_text in allowed_responses):
-                return action_text
-            else:
-                self.game_logger.log_to_debug_file(
-                    self.player_name, f"WARNING: Invalid or missing 'action' in JSON response or action not in allowed responses. Defaulting to 'pass'. Response: '{llm_response}', Allowed Actions: {allowed_responses}")
-                return "pass"
+            return response_json.get(field_name, None)
         except json.JSONDecodeError:
             self.game_logger.log_to_debug_file(
-                self.player_name, f"WARNING: Invalid JSON response from LLM. Defaulting to 'pass'. Response: '{llm_response}'")
+                self.player_name, f"WARNING: Invalid JSON response from LLM. Response: '{llm_response}'")
+            return None
+
+    def _extract_action(self, llm_response, allowed_responses):
+        action_text = self._extract_json_field(llm_response, "action")
+        if action_text and (not allowed_responses or action_text in allowed_responses):
+            return action_text
+        else:
+            self.game_logger.log_to_debug_file(
+                self.player_name, f"WARNING: Invalid or missing 'action' in JSON response or action not in allowed responses. Defaulting to 'pass'. Response: '{llm_response}', Allowed Actions: {allowed_responses}")
             return "pass"
 
     def extract_thought(self, llm_response):
-        llm_response = llm_response.strip()
-        if llm_response.startswith("```json"):
-            llm_response = llm_response[len("```json"):].strip()
-        if llm_response.endswith("```"):
-            llm_response = llm_response[:-len("```")].strip()
-        try:
-            response_json = json.loads(llm_response)
-            return response_json.get("thoughts", None)
-        except json.JSONDecodeError:
-            return None
+        return self._extract_json_field(llm_response, "thoughts")
 
     def extract_public_statement(self, llm_response):
-        llm_response = llm_response.strip()
-        if llm_response.startswith("```json"):
-            llm_response = llm_response[len("```json"):].strip()
-        if llm_response.endswith("```"):
-            llm_response = llm_response[:-len("```")].strip()
-        try:
-            response_json = json.loads(llm_response)
-            return response_json.get("say", None)
-        except json.JSONDecodeError:
-            return None
+        return self._extract_json_field(llm_response, "say")
 
     def add_thought_to_log(self, game_state, thought):
         game_state.log_event(
