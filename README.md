@@ -1,13 +1,37 @@
 # AI Leaderboard for Secret Hitler using LLMs
 
 [![Project Status](https://img.shields.io/badge/Status-Functional%20Core-brightgreen.svg)](https://github.com/yourusername/secret-hitler-llm-leaderboard)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Project Overview
 
 This project aims to create an automated system for evaluating and ranking different AI models, specifically Large Language Models (LLMs), in the game of Secret Hitler. It features a robust game engine, an interface for LLM agents, and a turn-based discussion system, laying the groundwork for a comprehensive AI leaderboard.
 
-**Current Status:** The codebase currently has a **functional core**. The Secret Hitler game engine is implemented, and LLM agents are integrated to play the game with a turn-based discussion system.  JSON structured output is implemented for reliable communication with LLMs.
+**Current Status:** The codebase currently has a **functional core**. The Secret Hitler game engine is implemented, and LLM agents are integrated to play the game with a turn-based discussion system. JSON structured output is implemented for reliable communication with LLMs.
+
+### Logging System
+
+The project includes a comprehensive logging system that captures all aspects of the game:
+
+- **public.log**: The main game narrative, containing:
+  - All player actions and discussions in chronological order
+  - Voting results and government formations
+  - Policy enactments and executive actions
+  - Game state changes (election tracker, policy boards)
+
+- **game.log**: Technical game details, including:
+  - LLM API requests and responses
+  - AI agent thought processes
+  - Game state transitions
+  - System messages and debugging information
+
+- **Player[X].log**: Individual player logs containing:
+  - Private information (role assignments, team information)
+  - Personal game events
+  - Individual voting history
+  - Private thoughts and decision-making processes
+
+All logs are timestamped and stored in the `logs/` directory when running with the `--log_to_file` flag.
 
 **Key Features Implemented:**
 
@@ -40,7 +64,14 @@ Before you begin, ensure you have the following installed:
 ### Installation
 
 1.  **Clone the repository:**
+    ```bash
+    git clone <repository_url>
+    cd secret-hitler-llm-leaderboard
+    ```
 2.  **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt # Assuming you have a requirements.txt, if using poetry, use poetry install
+    ```
 
 ### Running the Game
 
@@ -53,10 +84,16 @@ python secret_hitler_game.py <number_of_players>
 *   Replace `<number_of_players>` with the number of players you want in the game (5-10).
 *   You can customize game settings using command-line arguments (see `poetry run python secret_hitler_game.py --help` for options).
 
-**Example:** To run a 7-player game with a 5-second slowdown timer and file logging enabled:
+**Example:** To run a 7-player game with:
+* All players using the `gemini-2.0-flash` model
+* Debug LLM output enabled
+* File logging enabled
+* A 5-second slowdown timer between turns
+
+Use the following command:
 
 ```bash
-python secret_hitler_game.py 7 --slowdown 5 --log_to_file
+python3 secret_hitler_game.py 7 --player_models Player1=gemini-2.0-flash Player2=gemini-2.0-flash Player3=gemini-2.0-flash Player4=gemini-2.0-flash Player5=gemini-2.0-flash Player6=gemini-2.0-flash Player7=gemini-2.0-flash --debug_llm --log_to_file --slowdown 5
 ```
 
 ## Usage
