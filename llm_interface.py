@@ -180,7 +180,7 @@ class LLMPlayerInterface:
     def get_llm_response(self, game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info=None):
         return self._llm_call_with_retry(game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info)
 
-    def _llm_call_with_retry(self, game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info, max_retries=5, initial_delay=2):
+    def _llm_call_with_retry(self, game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info, max_retries=3, initial_delay=2):
         retry_delay = initial_delay
 
         for attempt in range(max_retries):
@@ -236,11 +236,20 @@ class LLMPlayerInterface:
                     retry_delay *= 2
                 else:
                     print(
-                        f"Max retries reached or non-retryable error. Using default response for {self.player_name}.")
-                    default_response_msg = f"LLM failed after {max_retries} attempts. Using default 'pass' action."
+                        f"Max retries reached for {self.player_name}. Choosing default action.")
                     self.game_logger.log_to_debug_file(
-                        self.player_name, default_response_msg)
-                    return default_response_msg, "pass"
+                        self.player_name, f"LLM failed after {max_retries} attempts. Choosing default action from allowed responses.")
+                    if allowed_responses:
+                        default_action = allowed_responses[0]
+                        self.game_logger.log_to_debug_file(
+                            self.player_name, f"Default action chosen: {default_action}. Allowed actions were: {allowed_responses}")
+                        default_response_msg = f"LLM failed after {max_retries} attempts. Default action '{default_action}' chosen."
+                        return default_response_msg, default_action
+                    else:
+                        default_response_msg = f"LLM failed after {max_retries} attempts and no allowed responses to choose from. Defaulting to 'pass' action."
+                        self.game_logger.log_to_debug_file(
+                            self.player_name, f"LLM failed after {max_retries} attempts and no allowed responses to choose from. Defaulting to 'pass' action.")
+                        return default_response_msg, "pass"
 
     def _construct_prompt(self, game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info):
         player_role = game_state.get_player_role(self.player_name)
