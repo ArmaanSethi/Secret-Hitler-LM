@@ -4,6 +4,8 @@ import logging
 import os
 import json
 import random
+from prompt_strings import PromptStrings
+from llm_clients import GeminiClient, OpenRouterClient
 
 
 class GameLogger:
@@ -96,91 +98,46 @@ class GameLogger:
 
 
 class LLMPlayerInterface:
-    def __init__(self, player_name, model_name, api_key, game_logger, llm_debug_enabled=False, slowdown_timer=0):
+    def __init__(self, player_name, model_name, api_key, game_logger, llm_debug_enabled=False, slowdown_timer=0, provider_name="gemini"):
         self.player_name = player_name
         self.model_name = model_name
-        self.client = OpenAI(
-            api_key=api_key, base_url="https://generativelanguage.googleapis.com/v1beta/openai/")
-        self.game_rules = """
-        **Secret Hitler Game Rules (Enhanced for Human-like LLM Play with Strategic Discussion):**
-
-        **Game Objective:**
-        - **Liberals:** Enact 5 Liberal policies OR assassinate Hitler after 3 Fascist policies.
-        - **Fascists:** Enact 6 Fascist policies OR elect Hitler as Chancellor after 3 Fascist policies.
-
-        **Roles:**
-        - **Liberal:** Majority, aim to enact Liberal policies and identify/eliminate Fascists. *Act like a concerned citizen, be observant, ask questions, share your reasoning, and try to build trust with other Liberals.*
-        - **Fascist:** Minority (including Hitler), aim to enact Fascist policies and deceive Liberals. *Act like a Liberal, sow confusion, deflect suspicion, strategically lie, and coordinate with other Fascists in discussions to advance the Fascist agenda.*
-        - **Hitler:** Fascist.  If elected Chancellor after 3 Fascist policies, Fascists win. *If the game has 5-6 players, act clueless and try to appear Liberal. If 7-10 players, be more cautious, as other Fascists will try to help you. In discussions, carefully reveal information to Fascists while deceiving Liberals.*
-
-        **Gameplay (with enhanced Discussion and Human-like Strategies):**
-
-        1.  **Nomination Phase:** President nominates a Chancellor.
-            *   **Human-like Strategy:**
-                *   **Liberals:** Nominate players you *trust*. Be *vocal* about your reasoning.  *Question* other players' nominations during discussion.
-                *   **Fascists/Hitler:** Nominate players who you think are *also Fascist*, or, early in the game, players you can *blame* later. Use discussion to gauge reactions to nominations.
-
-        2.  **Election Phase:** Players vote YES or NO.
-            *   **Human-like Strategy:**
-                *   **Liberals:** Vote YES on governments you *trust*.  Be *very suspicious*.  *Explain your vote in discussions*. **Crucially, Liberals must avoid letting the Election Tracker reach 3!** Three failed elections automatically enact a policy at random from the deck. **This "chaos policy" is very likely to be a Fascist policy. Use discussion to persuade others to vote correctly.**
-                *   **Fascists/Hitler:**  Vote YES on governments that include other Fascists.  Sometimes vote YES on a Liberal government to *gain trust* or to *frame* them later. Strategically cause failed elections via NO votes if beneficial, but be aware of chaos policy risk. **Use discussion to coordinate votes and mislead Liberals.**
-
-        3.  **Legislative Session:**
-            *   President draws 3 policies, discards 1, passes 2 to Chancellor.
-            *   Chancellor receives 2 policies, enacts 1.
-            *   **Human-like Strategy:**
-                *   **Liberals:**
-                    *   **President:** If you draw mostly Fascist policies, *discuss this*. Be transparent in discussion.
-                    *   **Chancellor:**  Enact a Liberal policy if possible and explain why in discussion. If you *must* enact a Fascist policy, *have a very good explanation ready for discussion*.
-                *   **Fascists/Hitler:**
-                    *   **President:**  Use policy draw to your advantage, and be ready to lie in discussion about what you drew.
-                    *   **Chancellor:** Enact a Fascist policy if you can. If forced to play a Liberal card, blame the president convincingly in discussion.
-
-        4.  **Executive Action (Presidential Powers):**  Triggered after certain Fascist policies.
-            *   Investigate Loyalty, Special Election, Policy Peek, Execution.
-            *   **Human-like Strategy:**
-                *   **Liberals:** Use these powers to *gather information* and *eliminate threats*. *Discuss your intentions and findings*.
-                *   **Fascists/Hitler:** Use these powers to *mislead*, *target Liberals*, or *protect Fascists*. Use discussion to justify your actions and sow misinformation.
-
-        **Discussion is Paramount:**
-
-        *   **Engage Actively:** *Talk in every discussion phase*. Share your thoughts, observations, suspicions, and plans.
-        *   **Strategic Communication:** Use discussion to achieve your objectives: Liberals to identify Fascists, Fascists to deceive and coordinate.
-        *   **Information Gathering:** Ask questions, probe for inconsistencies, and pay attention to how others speak and vote.
-        *   **Form Coalitions (Cautiously):**  Attempt to identify and build alliances with players you believe are on your team, using discussion to test their loyalty.
-        *   **Deception and Misdirection (If Fascist):**  Use discussion to lie convincingly, blame others, create false narratives, and protect your fellow Fascists and Hitler.
-        *   **Silence is a Choice:** You are not obligated to speak in every turn, but prolonged silence might be suspicious, especially for Liberals who need to be proactive. Choose silence strategically.
-
-        **Response Format:**
-
-        Respond with a JSON object in the following format. You MUST ALWAYS include your private thoughts and action, and OPTIONALLY include a public statement to say to the other players.
-
-        ```json
-        {
-          "thoughts": "Your internal reasoning...",
-          "say": "What you choose to say publicly (optional, can be empty string)",
-          "action": "Your action from the list of allowed actions below"
-        }
-        ```
-
-        Example of a response:
-
-        ```json
-        {
-          "thoughts": "I am still unsure about Player2...",
-          "say": "Player2, can you explain why you voted yes...",
-          "action": "pass"
-        }
-        ```
-        """
+        self.game_rules = PromptStrings.get_game_rules()
         self.game_logger = game_logger
         self.llm_debug_enabled = llm_debug_enabled
         self.slowdown_timer = slowdown_timer
+        self.provider_name = provider_name
 
-    def get_llm_response(self, game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info=None):
-        return self._llm_call_with_retry(game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info)
+        if provider_name == "gemini":
+            self.llm_client = GeminiClient(api_key=api_key)
+        elif provider_name == "openrouter":
+            self.llm_client = OpenRouterClient(api_key=api_key)
+        else:
+            raise ValueError(f"Unsupported provider: {provider_name}")
 
-    def _llm_call_with_retry(self, game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info, max_retries=3, initial_delay=2):
+    def get_llm_response(
+            self,
+            game_state,
+            prompt_text,
+            allowed_responses,
+            game_phase,
+            additional_prompt_info=None):
+        return self._llm_call_with_retry(
+            game_state,
+            prompt_text,
+            allowed_responses,
+            game_phase,
+            additional_prompt_info
+        )
+
+    def _llm_call_with_retry(
+            self,
+            game_state,
+            prompt_text,
+            allowed_responses,
+            game_phase,
+            additional_prompt_info,
+            max_retries=3,
+            initial_delay=2):
         retry_delay = initial_delay
 
         for attempt in range(max_retries):
@@ -191,10 +148,14 @@ class LLMPlayerInterface:
                     game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info)
 
                 self.game_logger.log_to_debug_file(
-                    self.player_name, f"\n=== NEW REQUEST ===\nPhase: {game_phase}\n")
+                    self.player_name,
+                    f"\n=== NEW REQUEST ===\n"
+                    f"Provider: {self.provider_name}, Model: {self.model_name}\n"
+                    f"Phase: {game_phase}\n"
+                )
 
-                response = self.client.chat.completions.create(
-                    model=self.model_name,
+                response = self.llm_client.chat_completion(
+                    model_name=self.model_name,
                     messages=[{"role": "user", "content": full_prompt}],
                     n=1,
                     temperature=0.7,
@@ -203,7 +164,11 @@ class LLMPlayerInterface:
                 llm_response = response.choices[0].message.content.strip()
 
                 self.game_logger.log_to_debug_file(
-                    self.player_name, f"\n--- LLM RESPONSE ---\n{llm_response}\n--- END RESPONSE ---")
+                    self.player_name,
+                    f"\n--- LLM RESPONSE ---\n"
+                    f"{llm_response}\n"
+                    f"--- END RESPONSE ---"
+                )
 
                 action = self._extract_action(
                     llm_response, allowed_responses)
@@ -219,10 +184,17 @@ class LLMPlayerInterface:
                 is_retryable_error = False
                 error_message = str(e)
 
-                if "rate limit" in error_message.lower() or "timeout" in error_message.lower() or "APIError" in error_message:
+                error_msg = error_message.lower()
+                if ("rate limit" in error_msg or
+                    "timeout" in error_msg or
+                        "APIError" in error_message):
                     is_retryable_error = True
 
-                error_log_msg = f"Error calling LLM for {self.player_name} (attempt {attempt + 1}/{max_retries}): {e}"
+                error_log_msg = (
+                    f"Error calling LLM for {self.player_name} "
+                    f"(attempt {attempt + 1}/{max_retries}): {e}"
+                    f"Provider: {self.provider_name}, Model: {self.model_name}, Error: {e}"
+                )
                 print(f"ERROR: {error_log_msg}")
                 self.game_logger.log_to_debug_file(
                     self.player_name, error_log_msg)
@@ -238,12 +210,20 @@ class LLMPlayerInterface:
                     print(
                         f"Max retries reached for {self.player_name}. Choosing default action.")
                     self.game_logger.log_to_debug_file(
-                        self.player_name, f"LLM failed after {max_retries} attempts. Choosing default action from allowed responses.")
+                        self.player_name,
+                        f"LLM failed after {max_retries} attempts. "
+                        f"Choosing default action from allowed responses.")
                     if allowed_responses:
                         default_action = allowed_responses[0]
                         self.game_logger.log_to_debug_file(
-                            self.player_name, f"Default action chosen: {default_action}. Allowed actions were: {allowed_responses}")
-                        default_response_msg = f"LLM failed after {max_retries} attempts. Default action '{default_action}' chosen."
+                            self.player_name,
+                            f"Default action chosen: {default_action}. "
+                            f"Allowed actions were: {allowed_responses}"
+                        )
+                        default_response_msg = (
+                            f"LLM failed after {max_retries} attempts. "
+                            f"Default action '{default_action}' chosen."
+                        )
                         return default_response_msg, default_action
                     else:
                         default_response_msg = f"LLM failed after {max_retries} attempts and no allowed responses to choose from. Defaulting to 'pass' action."
@@ -251,48 +231,59 @@ class LLMPlayerInterface:
                             self.player_name, f"LLM failed after {max_retries} attempts and no allowed responses to choose from. Defaulting to 'pass' action.")
                         return default_response_msg, "pass"
 
-    def _construct_prompt(self, game_state, prompt_text, allowed_responses, game_phase, additional_prompt_info):
+    def _construct_prompt(
+            self,
+            game_state,
+            prompt_text,
+            allowed_responses,
+            game_phase,
+            additional_prompt_info):
         player_role = game_state.get_player_role(self.player_name)
-        prompt = f"**Secret Hitler Game**\n\nYou are {self.player_name}. Your role is {player_role}.\n\n{self.game_rules}\n\n"
+        prompt = PromptStrings.get_game_title_prefix() + \
+            PromptStrings.get_you_are_prefix() + self.player_name + \
+            PromptStrings.get_your_role_prefix() + str(player_role) + ".\n\n" + \
+            PromptStrings.get_game_rules() + "\n\n"
 
         if player_role in ("Fascist", "Hitler"):
             fascists = [name for name, r in game_state.roles.items() if r in (
                 "Fascist", "Hitler") and name != self.player_name]
-            prompt += f"Known fascists: {', '.join(fascists)}. "
+            prompt += PromptStrings.get_known_fascists_prefix() + ', '.join(fascists) + ". "
             if player_role == "Fascist" and game_state.num_players >= 7:
                 hitler = [name for name, r in game_state.roles.items()
                           if r == "Hitler"][0]
-                prompt += f"Hitler is: {hitler}. "
+                prompt += PromptStrings.get_hitler_is_prefix() + hitler + ". "
 
-        prompt += "\n===== GAME STATE =====\n" + \
-            game_state.get_state_string() + "\n===== END GAME STATE =====\n"
-        prompt += "\n===== PRIVATE LOG =====\n" + \
-            game_state.get_private_log_string(
-                self.player_name) + "\n===== END PRIVATE LOG =====\n"
+        prompt += PromptStrings.get_game_state_section_prefix() + \
+            game_state.get_state_string() + \
+            PromptStrings.get_game_state_section_suffix()
+        prompt += PromptStrings.get_private_log_section_prefix() + \
+            game_state.get_private_log_string(self.player_name) + \
+            PromptStrings.get_private_log_section_suffix()
         if game_state.discussion_history:
-            prompt += "\n===== CURRENT DISCUSSION =====\n" + \
-                game_state.get_discussion_string() + "\n===== END CURRENT DISCUSSION =====\n"
+            prompt += PromptStrings.get_discussion_history_section_prefix() + \
+                game_state.get_discussion_string() + \
+                PromptStrings.get_discussion_history_section_suffix()
         if additional_prompt_info:
-            prompt += f"\n===== ADDITIONAL INFO =====\n{additional_prompt_info}\n===== END ADDITIONAL INFO =====\n"
+            prompt += PromptStrings.get_additional_info_section_prefix() + \
+                additional_prompt_info + \
+                PromptStrings.get_additional_info_section_suffix()
         if game_phase:
-            prompt += f"\n===== CURRENT PHASE =====\n{game_phase}\n===== END CURRENT PHASE =====\n"
+            prompt += PromptStrings.get_current_phase_section_prefix() + \
+                game_phase + \
+                PromptStrings.get_current_phase_section_suffix()
 
-        prompt += f"\n--- Action Required ---\n{prompt_text}\n"
-        prompt += "\n**Respond with a JSON object in the following format (do not include ```json or ```):**\n"
-        prompt += "```\n"
-        prompt += "{\n"
-        prompt += '  "thoughts": "Your internal reasoning",\n'
-        prompt += '  "say": "What you choose to say publicly (optional, can be empty string)",\n'
-        prompt += '  "action": "Your action from the list of allowed actions below"\n'
-        prompt += "}\n"
-        prompt += "```\n"
+        prompt += PromptStrings.get_action_required_prefix() + prompt_text + "\n"
+        prompt += PromptStrings.get_response_format_instructions_prefix()
+        prompt += PromptStrings.get_json_block()
+
         if allowed_responses:
-            prompt += "\n**Allowed Actions:**\n"
+            prompt += PromptStrings.get_allowed_actions_prefix()
             for action in allowed_responses:
-                prompt += f"- \"{action}\"\n"
-            prompt += "\n**Choose ONE action from the 'Allowed Actions' list for the \"action\" field in your JSON response.  Do NOT include any other actions. Ensure your response is valid JSON and do NOT include ```json or ```.**\n"
+                prompt += PromptStrings.get_action_list_item_prefix() + action + \
+                    PromptStrings.get_action_list_item_suffix()
+            prompt += PromptStrings.get_allowed_actions_suffix()
         else:
-            prompt += "\n**For discussion turns where no direct action is required, you can set the \"action\" field to \"pass\" in your JSON response.**\n"
+            prompt += PromptStrings.get_no_action_required_instruction()
 
         return prompt
 
@@ -317,7 +308,13 @@ class LLMPlayerInterface:
             return action_text
         else:
             self.game_logger.log_to_debug_file(
-                self.player_name, f"WARNING: Invalid or missing 'action' in JSON response or action not in allowed responses. Defaulting to 'pass'. Response: '{llm_response}', Allowed Actions: {allowed_responses}")
+                self.player_name,
+                (f"WARNING: Invalid or missing 'action' in JSON response "
+                 f"or action not in allowed responses. "
+                 f"Defaulting to 'pass'. "
+                 f"Response: '{llm_response}', "
+                 f"Allowed Actions: {allowed_responses}")
+            )
             return "pass"
 
     def extract_thought(self, llm_response):

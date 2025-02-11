@@ -2,6 +2,7 @@ import argparse
 import os
 import sys
 import time
+import json
 
 from secret_hitler_engine import GameState, is_valid_chancellor_nominee, Role, PlayerStatus
 from llm_interface import LLMPlayerInterface, GameLogger
@@ -24,19 +25,41 @@ class GameConfig:
         self.press_enter_mode = config_args.press_enter
         self.debug_llm_enabled = config_args.debug_llm
         self.log_to_file_enabled = config_args.log_to_file
-        self.player_models = self._parse_player_models(
+        self.player_configs = self._parse_player_models(
+            # Store player configs, not just models
             config_args.player_models, config_args.num_players)
 
     def _parse_player_models(self, player_models_arg, num_players):
-        player_models = {}
+        player_configs = {}
         if player_models_arg:
-            for player_config in player_models_arg:
-                name, model = player_config.split("=", 1)
-                player_models[name] = model
-        else:
+            for player_config_str in player_models_arg:
+                try:
+                    player_name, config_json_str = player_config_str.split(
+                        "=", 1)
+                    config = json.loads(config_json_str)
+                    if not all(key in config for key in ["provider", "model", "api_key_env"]):
+                        raise ValueError(
+                            "Player config must include 'provider', 'model', and 'api_key_env'")
+                    player_configs[player_name] = config
+                except json.JSONDecodeError:
+                    raise ValueError(
+                        f"Invalid JSON in player config: {player_config_str}")
+                except ValueError as e:
+                    raise ValueError(
+                        f"Invalid player config format: {player_config_str}. Error: {e}")
+
+        else:  # Default to Gemini for all players if no config provided
+            default_model = "gemini-2.0-flash"
+            # Assuming default Gemini API key env var
+            default_api_key_env = "GEMINI_API_KEY"
             for i in range(num_players):
-                player_models[f"Player{i+1}"] = "gemini-2.0-flash"
-        return player_models
+                player_name = f"Player{i+1}"
+                player_configs[player_name] = {
+                    "provider": "gemini",
+                    "model": default_model,
+                    "api_key_env": default_api_key_env
+                }
+        return player_configs
 
 
 class GameRunner:
@@ -48,13 +71,22 @@ class GameRunner:
 
     def _setup_llm_interfaces(self):
         player_llm_configs = {}
-        default_api_key = os.environ.get("GEMINI_API_KEY")
-        if not default_api_key:
-            sys.exit("No API Key found.")
+        for player_name, player_config in self.config.player_configs.items():
+            api_key_env_var = player_config["api_key_env"]
+            api_key = os.environ.get(api_key_env_var)
+            if not api_key:
+                sys.exit(
+                    f"No API Key found in environment variable: {api_key_env_var} for player {player_name}.")
 
-        for player_name, model_name in self.config.player_models.items():
             player_llm_configs[player_name] = LLMPlayerInterface(
-                player_name, model_name, default_api_key, self.logger, self.config.debug_llm_enabled, self.config.slowdown_timer)
+                player_name=player_name,
+                model_name=player_config["model"],
+                api_key=api_key,
+                game_logger=self.logger,
+                llm_debug_enabled=self.config.debug_llm_enabled,
+                slowdown_timer=self.config.slowdown_timer,
+                provider_name=player_config["provider"]
+            )
         return player_llm_configs
 
     def setup_game(self):
@@ -304,9 +336,14 @@ class GameRunner:
             president_name, llm_interface_president, policies)
         if not discarded_policy:
             return None
-
-        enacted_policy = self._chancellor_enact_policy(
+        self.game_state.game_logger.log_to_debug_file(
+            "Game", f"DEBUG: Liberal policies enacted: {self.game_state.lib_policies}, Fascist policies enacted: {self.game_state.fasc_policies}")
+        enacted_policy = self._chancellor_choose_policy(
             chancellor_name, llm_interface_chancellor, policies)
+        self.game_state.enact_policy(enacted_policy)
+        policy_enacted_message = f"Policy enacted: {enacted_policy}. Liberal policies enacted: {self.game_state.lib_policies}, Fascist policies enacted: {self.game_state.fasc_policies}"
+        self.game_state.game_logger.log_to_debug_file(
+            "Game", f"DEBUG: {policy_enacted_message}.")
         if not enacted_policy:
             return None
 
@@ -341,7 +378,7 @@ class GameRunner:
             self.display_state_terminal(
                 error_message=f"Invalid choice from President: {discard_choice_action}. Please choose from: {', '.join(policy_choices_president)}")
 
-    def _chancellor_enact_policy(self, chancellor_name, llm_interface_chancellor, policies):
+    def _chancellor_choose_policy(self, chancellor_name, llm_interface_chancellor, policies):
         policy_choices_chancellor = [
             f"{ENACT_ACTION_PREFIX}{i+1}" for i in range(2)]
         enact_prompt = f"{chancellor_name}, enact one policy (1, 2): {policies}"
@@ -486,7 +523,7 @@ class GameRunner:
     def run_game(self):
         self.setup_game()
 
-        while not self.game_state.game_over:
+        while not self.game_state.check_game_over():
             gov_approved = self.election_phase()
 
             if gov_approved:
@@ -513,10 +550,11 @@ class GameRunner:
                     if self.game_state.game_over:
                         break
 
-            if not self.game_state.game_over:
+            if not self.game_state.check_game_over():
                 self.game_state.next_president()
                 self.display_state_terminal(message="\n--- Next Round ---")
-
+                self.game_state.game_logger.log_to_debug_file(
+                    "Game", "--- Next Round ---")
         self.game_over_screen()
 
 
@@ -534,7 +572,15 @@ if __name__ == "__main__":
     parser.add_argument("--log_to_file", action="store_true",
                         help="Enable logging detailed output to files in 'logs/' directory")
     parser.add_argument("--player_models", nargs="+",
-                        help="PlayerName=ModelName (e.g., PlayerName=ModelName Player2=gpt-4)")
+                        help="Player configurations as JSON strings. "
+                             "Format: PlayerName='{\"provider\": \"gemini\" or \"openrouter\", "
+                             "\"model\": \"model_name\", \"api_key_env\": \"ENV_VAR_NAME\"}'. "
+                             "Example: Player1='{\"provider\": \"openrouter\", "
+                             "\"model\": \"openai/gpt-4o\", "
+                             "\"api_key_env\": \"OPENROUTER_API_KEY\"}' "
+                             "Player2='{\"provider\": \"gemini\", "
+                             "\"model\": \"gemini-2.0-flash\", "
+                             "\"api_key_env\": \"GEMINI_API_KEY\"}'")
     args = parser.parse_args()
 
     if not 5 <= args.num_players <= 10:

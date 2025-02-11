@@ -1,510 +1,74 @@
 DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player3
 
 === NEW REQUEST ===
+Provider: openrouter, Model: google/gemma-2-9b-it:free
 Phase: Election Discussion
 
 
 --- LLM RESPONSE ---
-```json
+```
 {
-  "thoughts": "Player1 nominated me, which is a little suspicious since it's early in the game and we don't know each other's roles. Player2 is asking about my priorities. As a Liberal, I want to prioritize getting Liberal policies enacted and identifying Fascists. I should state that clearly and see how others react. I need to be careful not to appear too eager or suspicious myself.",
-  "say": "Thanks for the nomination, Player1. Player2, if I were Chancellor, my priority would be to carefully consider all policies and work towards enacting Liberal policies while trying to figure out who the Fascists are. I'd want to have open discussions about each policy before enacting it.",
-  "action": "pass"
-}
+"thoughts": "Player1 seems overly eager to nominate Player2.  I'm suspicious. Player2's silence is also concerning. I need more information.",
+"say": "I'm hesitant. Player1, can you elaborate on why you chose Player2 specifically?",
+"action": "pass" 
+} 
 ```
 --- END RESPONSE ---
-Game Event: Round 11 - Player3: Thought: Player1 nominated me, which is a little suspicious since it's early in the game and we don't know each other's roles. Player2 is asking about my priorities. As a Liberal, I want to prioritize getting Liberal policies enacted and identifying Fascists. I should state that clearly and see how others react. I need to be careful not to appear too eager or suspicious myself.
-Game Event: Round 11 - Player3: Player3 says: Thanks for the nomination, Player1. Player2, if I were Chancellor, my priority would be to carefully consider all policies and work towards enacting Liberal policies while trying to figure out who the Fascists are. I'd want to have open discussions about each policy before enacting it.
+WARNING: Invalid JSON response from LLM. Response: '```
+{
+"thoughts": "Player1 seems overly eager to nominate Player2.  I'm suspicious. Player2's silence is also concerning. I need more information.",
+"say": "I'm hesitant. Player1, can you elaborate on why you chose Player2 specifically?",
+"action": "pass" 
+}'
+WARNING: Invalid or missing 'action' in JSON response or action not in allowed responses. Defaulting to 'pass'. Response: '```
+{
+"thoughts": "Player1 seems overly eager to nominate Player2.  I'm suspicious. Player2's silence is also concerning. I need more information.",
+"say": "I'm hesitant. Player1, can you elaborate on why you chose Player2 specifically?",
+"action": "pass" 
+} 
+```', Allowed Actions: ['pass']
+WARNING: Invalid JSON response from LLM. Response: '```
+{
+"thoughts": "Player1 seems overly eager to nominate Player2.  I'm suspicious. Player2's silence is also concerning. I need more information.",
+"say": "I'm hesitant. Player1, can you elaborate on why you chose Player2 specifically?",
+"action": "pass" 
+}'
+WARNING: Invalid JSON response from LLM. Response: '```
+{
+"thoughts": "Player1 seems overly eager to nominate Player2.  I'm suspicious. Player2's silence is also concerning. I need more information.",
+"say": "I'm hesitant. Player1, can you elaborate on why you chose Player2 specifically?",
+"action": "pass" 
+}'
 DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player3
 
 === NEW REQUEST ===
+Provider: openrouter, Model: google/gemma-2-9b-it:free
 Phase: Voting
 
 
 --- LLM RESPONSE ---
-```json
 {
-  "thoughts": "Player4's aggressive questioning is suspicious, but I want to get into office and see the policies. It's early in the game, and I need more information. I should vote YES to see what policies come up and gather more information about Player1 and Player4's motives. If I vote no for no reason, that could also make me look suspicious.",
-  "say": "I'm voting YES.",
-  "action": "YES"
+"thoughts": "Player1's eagerness to nominate Player2 and their insistence on Player2's fairness is raising red flags. Player2's silence is also suspicious. I need more information before voting yes.",
+"say": "I need more time to consider this nomination.  Player1, can you elaborate on what specific qualities make you think Player2 would be a fair and balanced Chancellor?",
+"action": "pass" 
 }
-```
 --- END RESPONSE ---
-Game Event: Round 18 - Player3: Thought: Player4's aggressive questioning is suspicious, but I want to get into office and see the policies. It's early in the game, and I need more information. I should vote YES to see what policies come up and gather more information about Player1 and Player4's motives. If I vote no for no reason, that could also make me look suspicious.
-Game Event: Round 18 - Player3: Player3 says: I'm voting YES.
-DEBUG: get_player_input CALLED - Phase: Chancellor Enact, Allowed Responses: ['enact 1', 'enact 2'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Chancellor Enact
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player1 passed me two Fascist policies. As a Liberal, I have no choice but to enact one of them. This is terrible, but I need to be very careful about how I handle this. I should emphasize that I received two Fascist policies from Player1, making him highly suspicious. This could be a test, or Player1 could genuinely be a Fascist. I will enact policy 1. I need to make it clear that I had no choice. This round is going to be difficult.",
-  "say": "I have to enact a Fascist policy. Player1 passed me two Fascist policies. I had no choice. This is extremely concerning and makes Player1 look very suspicious.",
-  "action": "enact 1"
-}
-```
---- END RESPONSE ---
-Game Event: Round 26 - Player3: Thought: Player1 passed me two Fascist policies. As a Liberal, I have no choice but to enact one of them. This is terrible, but I need to be very careful about how I handle this. I should emphasize that I received two Fascist policies from Player1, making him highly suspicious. This could be a test, or Player1 could genuinely be a Fascist. I will enact policy 1. I need to make it clear that I had no choice. This round is going to be difficult.
-Game Event: Round 26 - Player3: Player3 says: I have to enact a Fascist policy. Player1 passed me two Fascist policies. I had no choice. This is extremely concerning and makes Player1 look very suspicious.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player2 nominated Player5, and Player1 is supporting the nomination, while also trying to deflect blame from himself. This is all happening after I was forced to enact a Fascist policy due to Player1 passing me two Fascist policies. I need to express my concerns about Player1's suspicious behavior and see how Player5 responds to the nomination, given the circumstances. It's important to gauge Player5's reaction and see if they acknowledge the situation. I also want to subtly remind everyone that Player1 is still highly suspect.",
-  "say": "Player5, given that Player1 passed me two Fascist policies and I was forced to enact one, do you have any concerns about being nominated as Chancellor, especially with Player1 so readily supporting your nomination? Also, any thoughts on Player1's behavior?",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 31 - Player3: Thought: Player2 nominated Player5, and Player1 is supporting the nomination, while also trying to deflect blame from himself. This is all happening after I was forced to enact a Fascist policy due to Player1 passing me two Fascist policies. I need to express my concerns about Player1's suspicious behavior and see how Player5 responds to the nomination, given the circumstances. It's important to gauge Player5's reaction and see if they acknowledge the situation. I also want to subtly remind everyone that Player1 is still highly suspect.
-Game Event: Round 31 - Player3: Player3 says: Player5, given that Player1 passed me two Fascist policies and I was forced to enact one, do you have any concerns about being nominated as Chancellor, especially with Player1 so readily supporting your nomination? Also, any thoughts on Player1's behavior?
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player5 is clearly hesitant, which is understandable given the circumstances. Player1 is trying to downplay his role in the last round, and Player2 is trying to push Player5 into accepting the nomination. I need to vote NO to prevent this government from forming and to send a clear signal that I don't trust Player1 and Player2. Voting yes would be a mistake, as it would give them more power and potentially lead to more Fascist policies being enacted. I need to stand my ground and resist their attempts to manipulate the situation.",
-  "say": "I am voting NO. Given Player1's actions in the last round and the suspicious circumstances surrounding this nomination, I cannot in good conscience support this government. Player5's hesitation is justified, and I think it's best to reject this nomination and find a more trustworthy candidate.",
-  "action": "NO"
-}
-```
---- END RESPONSE ---
-Game Event: Round 38 - Player3: Thought: Player5 is clearly hesitant, which is understandable given the circumstances. Player1 is trying to downplay his role in the last round, and Player2 is trying to push Player5 into accepting the nomination. I need to vote NO to prevent this government from forming and to send a clear signal that I don't trust Player1 and Player2. Voting yes would be a mistake, as it would give them more power and potentially lead to more Fascist policies being enacted. I need to stand my ground and resist their attempts to manipulate the situation.
-Game Event: Round 38 - Player3: Player3 says: I am voting NO. Given Player1's actions in the last round and the suspicious circumstances surrounding this nomination, I cannot in good conscience support this government. Player5's hesitation is justified, and I think it's best to reject this nomination and find a more trustworthy candidate.
-DEBUG: get_player_input CALLED - Phase: Nomination, Allowed Responses: ['nominate Player1', 'nominate Player4', 'nominate Player6', 'nominate Player7', 'pass'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Nomination
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Given the votes against the last government, Player1, Player2, and Player4 are highly suspect. I need to nominate someone who wasn't involved in that mess and seems trustworthy. Player6 and Player7 were both vocal about their suspicions, and I think they are likely Liberals. I will nominate Player6 as Chancellor. This will hopefully lead to a government that can enact Liberal policies.",
-  "say": "I'm going to nominate Player6 as Chancellor. Player6, are you willing to accept the nomination?",
-  "action": "nominate Player6"
-}
-```
---- END RESPONSE ---
-Game Event: Round 46 - Player3: Thought: Given the votes against the last government, Player1, Player2, and Player4 are highly suspect. I need to nominate someone who wasn't involved in that mess and seems trustworthy. Player6 and Player7 were both vocal about their suspicions, and I think they are likely Liberals. I will nominate Player6 as Chancellor. This will hopefully lead to a government that can enact Liberal policies.
-Game Event: Round 46 - Player3: Player3 says: I'm going to nominate Player6 as Chancellor. Player6, are you willing to accept the nomination?
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player1 and Player2 are trying to sow doubt about my motives for nominating Player6. I need to address their questions directly and reaffirm my trust in Player6. I also need to subtly remind everyone that Player1 and Player2 are still highly suspect, given their actions in the previous rounds. I should also state why I trust Player6.",
-  "say": "Player1 and Player2, I'm not trying to use Player6. I nominated them because they've been consistently vocal about their concerns regarding Player1, Player2, and Player4's actions. I trust Player6's judgment and believe they will act in the best interests of the Liberals. I think we should all be more concerned about why Player1 and Player2 are so eager to question my motives rather than focusing on enacting Liberal policies.",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 49 - Player3: Thought: Player1 and Player2 are trying to sow doubt about my motives for nominating Player6. I need to address their questions directly and reaffirm my trust in Player6. I also need to subtly remind everyone that Player1 and Player2 are still highly suspect, given their actions in the previous rounds. I should also state why I trust Player6.
-Game Event: Round 49 - Player3: Player3 says: Player1 and Player2, I'm not trying to use Player6. I nominated them because they've been consistently vocal about their concerns regarding Player1, Player2, and Player4's actions. I trust Player6's judgment and believe they will act in the best interests of the Liberals. I think we should all be more concerned about why Player1 and Player2 are so eager to question my motives rather than focusing on enacting Liberal policies.
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player6 has accepted the nomination and seems genuinely committed to enacting liberal policies. Player1 and Player2 are voting yes to appear cooperative, but I still don't trust them. Player7, Player5, Player6 and I are the only ones that are not suspects. I need to vote yes to support Player6 and try to enact some liberal policies. Voting no at this point would be counterproductive and would likely be seen as suspicious.",
-  "say": "I'm voting YES to support Player6 and try to enact some Liberal policies.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 56 - Player3: Thought: Player6 has accepted the nomination and seems genuinely committed to enacting liberal policies. Player1 and Player2 are voting yes to appear cooperative, but I still don't trust them. Player7, Player5, Player6 and I are the only ones that are not suspects. I need to vote yes to support Player6 and try to enact some liberal policies. Voting no at this point would be counterproductive and would likely be seen as suspicious.
-Game Event: Round 56 - Player3: Player3 says: I'm voting YES to support Player6 and try to enact some Liberal policies.
-DEBUG: get_player_input CALLED - Phase: President Discard, Allowed Responses: ['discard 1', 'discard 2', 'discard 3'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: President Discard
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "I drew two Fascist policies and one Liberal policy. I need to discard a Fascist policy to give Player6 the best chance to enact a Liberal policy and gain trust. I will discard policy 1, leaving Player6 with a Fascist and a Liberal policy.",
-  "say": "I drew two Fascist policies and one Liberal policy. I am discarding policy 1.",
-  "action": "discard 1"
-}
-```
---- END RESPONSE ---
-Game Event: Round 63 - Player3: Thought: I drew two Fascist policies and one Liberal policy. I need to discard a Fascist policy to give Player6 the best chance to enact a Liberal policy and gain trust. I will discard policy 1, leaving Player6 with a Fascist and a Liberal policy.
-Game Event: Round 63 - Player3: Player3 says: I drew two Fascist policies and one Liberal policy. I am discarding policy 1.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player4, who I still suspect is a Fascist, has nominated Player7, who I believe is a Liberal. Player1 and Player2 are asking questions. This is a tricky situation. Player4 could be trying to gain trust, or Player7 could be his target. I should express caution but also support Player7. It's important to hear what Player7 has to say before committing to a vote, but I should make it clear that I'm generally supportive of them.",
-  "say": "Player7, I appreciate Player4 nominating you, but I think we need to be very careful about trusting anyone at this point, including Player4. What are your thoughts on the situation? Do you think Player4 is being genuine?",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 69 - Player3: Thought: Player4, who I still suspect is a Fascist, has nominated Player7, who I believe is a Liberal. Player1 and Player2 are asking questions. This is a tricky situation. Player4 could be trying to gain trust, or Player7 could be his target. I should express caution but also support Player7. It's important to hear what Player7 has to say before committing to a vote, but I should make it clear that I'm generally supportive of them.
-Game Event: Round 69 - Player3: Player3 says: Player7, I appreciate Player4 nominating you, but I think we need to be very careful about trusting anyone at this point, including Player4. What are your thoughts on the situation? Do you think Player4 is being genuine?
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player4 nominated Player7, who is also suspicious of Player4. Player1 and Player2 voted yes to appear cooperative. Player7 is cautious but hasn't declined. Given the previous rounds, trusting Player4 would be foolish. However, voting no at this point might appear overly aggressive, especially since Player7 hasn't explicitly rejected the nomination. Voting no would also move the election tracker closer to a random policy enactment, which would likely be Fascist. However, I have to trust my gut here. Player4 has been suspect from the start, and I will vote NO.",
-  "say": "I'm voting NO. I appreciate Player7's caution. I still don't trust Player4.",
-  "action": "NO"
-}
-```
---- END RESPONSE ---
-Game Event: Round 76 - Player3: Thought: Player4 nominated Player7, who is also suspicious of Player4. Player1 and Player2 voted yes to appear cooperative. Player7 is cautious but hasn't declined. Given the previous rounds, trusting Player4 would be foolish. However, voting no at this point might appear overly aggressive, especially since Player7 hasn't explicitly rejected the nomination. Voting no would also move the election tracker closer to a random policy enactment, which would likely be Fascist. However, I have to trust my gut here. Player4 has been suspect from the start, and I will vote NO.
-Game Event: Round 76 - Player3: Player3 says: I'm voting NO. I appreciate Player7's caution. I still don't trust Player4.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player5 has nominated me, which is good because it shows that at least one other person trusts me. Player1 and Player2 are immediately trying to undermine the nomination, which is also good because it reinforces that I'm on the right track about them. I need to respond to their questions, reassuring them that I will be fair, but also making it clear that I will not hesitate to investigate suspicious behavior. I should also subtly remind everyone that Player4 is still suspect. I want to make it clear that I will act in the best interest of the group and follow the facts wherever they lead.",
-  "say": "Player1 and Player2, if I become Chancellor, I will be fair to everyone. I will not target anyone based solely on my suspicions. However, I will not hesitate to investigate any behavior that I deem suspicious, regardless of who is exhibiting it. My goal is to uncover the truth and enact Liberal policies, and I will follow the facts wherever they lead. Player4, that includes you.",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 87 - Player3: Thought: Player5 has nominated me, which is good because it shows that at least one other person trusts me. Player1 and Player2 are immediately trying to undermine the nomination, which is also good because it reinforces that I'm on the right track about them. I need to respond to their questions, reassuring them that I will be fair, but also making it clear that I will not hesitate to investigate suspicious behavior. I should also subtly remind everyone that Player4 is still suspect. I want to make it clear that I will act in the best interest of the group and follow the facts wherever they lead.
-Game Event: Round 87 - Player3: Player3 says: Player1 and Player2, if I become Chancellor, I will be fair to everyone. I will not target anyone based solely on my suspicions. However, I will not hesitate to investigate any behavior that I deem suspicious, regardless of who is exhibiting it. My goal is to uncover the truth and enact Liberal policies, and I will follow the facts wherever they lead. Player4, that includes you.
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player5 nominated me, and Player6 and Player7 have expressed their support, as well as reaffirming their suspicion of Player1, Player2, and Player4. Player1 and Player2 are voting yes to appear cooperative. It seems clear that Player3, Player5, Player6, and Player7 are aligned, and are the only ones to trust. It is best to accept the nomination and proceed with the legislative session. Voting no would be nonsensical.",
-  "say": "I will vote YES to accept the nomination.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 94 - Player3: Thought: Player5 nominated me, and Player6 and Player7 have expressed their support, as well as reaffirming their suspicion of Player1, Player2, and Player4. Player1 and Player2 are voting yes to appear cooperative. It seems clear that Player3, Player5, Player6, and Player7 are aligned, and are the only ones to trust. It is best to accept the nomination and proceed with the legislative session. Voting no would be nonsensical.
-Game Event: Round 94 - Player3: Player3 says: I will vote YES to accept the nomination.
-DEBUG: get_player_input CALLED - Phase: Chancellor Enact, Allowed Responses: ['enact 1', 'enact 2'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Chancellor Enact
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player5 passed me two Fascist policies. This is extremely bad. I have no choice but to enact one of them. This confirms that Player5 is a Fascist. I will enact policy 1. I need to make it clear that I had no choice and that Player5 is now highly suspect.",
-  "say": "I have to enact a Fascist policy. Player5 passed me two Fascist policies. I had no choice. This is extremely concerning and makes Player5 look very suspicious.",
-  "action": "enact 1"
-}
-```
---- END RESPONSE ---
-Game Event: Round 102 - Player3: Thought: Player5 passed me two Fascist policies. This is extremely bad. I have no choice but to enact one of them. This confirms that Player5 is a Fascist. I will enact policy 1. I need to make it clear that I had no choice and that Player5 is now highly suspect.
-Game Event: Round 102 - Player3: Player3 says: I have to enact a Fascist policy. Player5 passed me two Fascist policies. I had no choice. This is extremely concerning and makes Player5 look very suspicious.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player7 has nominated Player6 again, after the chaos policy and the enactment of a fascist policy by me due to Player5 passing me two fascist policies. Player1 is voting YES and questioning Player5. Player2 is questioning Player7's trust in Player6. Player5 is now highly suspect, and Player1, Player2, and Player4 are still suspect. It is important to keep the pressure on them to defend themselves. I need to respond to Player2's question and then ask Player5 to explain himself. It's critical to get a liberal policy enacted this round.",
-  "say": "Player2, I trust Player6 because they have consistently acted in the best interests of the Liberals and have shown a strong commitment to enacting Liberal policies. Player5, can you explain why you passed me two Fascist policies after claiming to have drawn three?",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 112 - Player3: Thought: Player7 has nominated Player6 again, after the chaos policy and the enactment of a fascist policy by me due to Player5 passing me two fascist policies. Player1 is voting YES and questioning Player5. Player2 is questioning Player7's trust in Player6. Player5 is now highly suspect, and Player1, Player2, and Player4 are still suspect. It is important to keep the pressure on them to defend themselves. I need to respond to Player2's question and then ask Player5 to explain himself. It's critical to get a liberal policy enacted this round.
-Game Event: Round 112 - Player3: Player3 says: Player2, I trust Player6 because they have consistently acted in the best interests of the Liberals and have shown a strong commitment to enacting Liberal policies. Player5, can you explain why you passed me two Fascist policies after claiming to have drawn three?
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player7 has nominated Player6 again, and Player6 has stated his intent to enact a Liberal policy if possible. Player1 and Player2 are voting YES, which is still suspicious. Player5's explanation for passing two Fascist policies is flimsy at best. I need to vote YES to support Player6 and hopefully get a Liberal policy enacted. I will say I still suspect Player5.",
-  "say": "I'm voting YES to support Player6, but I still find Player5's explanation highly suspicious.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 119 - Player3: Thought: Player7 has nominated Player6 again, and Player6 has stated his intent to enact a Liberal policy if possible. Player1 and Player2 are voting YES, which is still suspicious. Player5's explanation for passing two Fascist policies is flimsy at best. I need to vote YES to support Player6 and hopefully get a Liberal policy enacted. I will say I still suspect Player5.
-Game Event: Round 119 - Player3: Player3 says: I'm voting YES to support Player6, but I still find Player5's explanation highly suspicious.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player1 nominating Player4 is extremely suspicious, given that Player4 has been consistently suspected of being a Fascist and Player1 is also suspected. Player1 is trying to appear cooperative, but this is likely a ploy. Player7 is the key to figuring out what to do here, so asking him what he thinks is a good strategy. I need to hear his opinion before I can form my own.",
-  "say": "Player7, what do you think of Player1 nominating Player4? It seems like a strange move, given everything that's happened.",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 132 - Player3: Thought: Player1 nominating Player4 is extremely suspicious, given that Player4 has been consistently suspected of being a Fascist and Player1 is also suspected. Player1 is trying to appear cooperative, but this is likely a ploy. Player7 is the key to figuring out what to do here, so asking him what he thinks is a good strategy. I need to hear his opinion before I can form my own.
-Game Event: Round 132 - Player3: Player3 says: Player7, what do you think of Player1 nominating Player4? It seems like a strange move, given everything that's happened.
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player1 nominating Player4 is incredibly suspicious, given Player4's past behavior and the fact that Player1 has been suspected of being a Fascist. Player5, Player6, and Player7 have already condemned the nomination and urged Player4 to decline. Player1 and Player2 are voting yes to appear cooperative, but they cannot be trusted. I need to vote NO to prevent this government from forming and to send a clear signal that I don't trust Player1 and Player4. Voting yes would be a mistake. I need to stand my ground and resist their attempts to manipulate the situation.",
-  "say": "I am voting NO. Given Player1's actions and Player4's past behavior, I cannot in good conscience support this government.",
-  "action": "NO"
-}
-```
---- END RESPONSE ---
-Game Event: Round 139 - Player3: Thought: Player1 nominating Player4 is incredibly suspicious, given Player4's past behavior and the fact that Player1 has been suspected of being a Fascist. Player5, Player6, and Player7 have already condemned the nomination and urged Player4 to decline. Player1 and Player2 are voting yes to appear cooperative, but they cannot be trusted. I need to vote NO to prevent this government from forming and to send a clear signal that I don't trust Player1 and Player4. Voting yes would be a mistake. I need to stand my ground and resist their attempts to manipulate the situation.
-Game Event: Round 139 - Player3: Player3 says: I am voting NO. Given Player1's actions and Player4's past behavior, I cannot in good conscience support this government.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player2 nominating Player7 is interesting, given that Player7 has been vocal about his suspicion of Player1, Player2, and Player4. Player1 and Player2 are now trying to undermine Player7's credibility by questioning his potential bias. I need to defend Player7 and reiterate that his suspicions are justified. I will also point out that Player2's nomination is a transparent attempt to appear cooperative while simultaneously undermining a known Liberal.",
-  "say": "Player2, your nomination of Player7 seems like another attempt to appear cooperative while subtly undermining a known Liberal. Player7's been critical of Player1, Player2, and Player4 because their actions have been suspicious. I think his suspicions are justified.",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 150 - Player3: Thought: Player2 nominating Player7 is interesting, given that Player7 has been vocal about his suspicion of Player1, Player2, and Player4. Player1 and Player2 are now trying to undermine Player7's credibility by questioning his potential bias. I need to defend Player7 and reiterate that his suspicions are justified. I will also point out that Player2's nomination is a transparent attempt to appear cooperative while simultaneously undermining a known Liberal.
-Game Event: Round 150 - Player3: Player3 says: Player2, your nomination of Player7 seems like another attempt to appear cooperative while subtly undermining a known Liberal. Player7's been critical of Player1, Player2, and Player4 because their actions have been suspicious. I think his suspicions are justified.
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player2 nominated Player7. Player7 has already stated that Player1, Player2 and Player4 are primary suspects and that this seems to be a ploy. Player1 is voting YES to appear cooperative. I strongly suspect Player1, Player2 and Player4. Voting yes would be a mistake. I need to vote NO to prevent this government from forming and to send a clear signal that I don't trust Player2. It is likely that Player7 will also vote NO, which makes this an even more obvious decision.",
-  "say": "I am voting NO. I believe Player2's nomination of Player7 is suspicious, given their past behavior.",
-  "action": "NO"
-}
-```
---- END RESPONSE ---
-Game Event: Round 157 - Player3: Thought: Player2 nominated Player7. Player7 has already stated that Player1, Player2 and Player4 are primary suspects and that this seems to be a ploy. Player1 is voting YES to appear cooperative. I strongly suspect Player1, Player2 and Player4. Voting yes would be a mistake. I need to vote NO to prevent this government from forming and to send a clear signal that I don't trust Player2. It is likely that Player7 will also vote NO, which makes this an even more obvious decision.
-Game Event: Round 157 - Player3: Player3 says: I am voting NO. I believe Player2's nomination of Player7 is suspicious, given their past behavior.
+WARNING: Invalid or missing 'action' in JSON response or action not in allowed responses. Defaulting to 'pass'. Response: '{
+"thoughts": "Player1's eagerness to nominate Player2 and their insistence on Player2's fairness is raising red flags. Player2's silence is also suspicious. I need more information before voting yes.",
+"say": "I need more time to consider this nomination.  Player1, can you elaborate on what specific qualities make you think Player2 would be a fair and balanced Chancellor?",
+"action": "pass" 
+}', Allowed Actions: ['YES', 'NO']
 DEBUG: get_player_input CALLED - Phase: Nomination, Allowed Responses: ['nominate Player1', 'nominate Player2', 'nominate Player4', 'nominate Player5', 'nominate Player6', 'nominate Player7', 'pass'], Player: Player3
 
 === NEW REQUEST ===
+Provider: openrouter, Model: google/gemma-2-9b-it:free
 Phase: Nomination
 
 
 --- LLM RESPONSE ---
-```json
 {
-  "thoughts": "Player2's nomination of Player7 failed. Another Liberal policy was enacted due to the election tracker. It is now my turn to nominate. Player1, Player2, Player4, and Player5 are all highly suspect. Player6 and Player7 seem to be the most trustworthy players. Since Player6 was recently Chancellor, I will nominate Player7 again. This will give Player7 another chance to enact a Liberal policy, and will reinforce the idea that I trust Player7's judgment.",
-  "say": "I nominate Player7 for Chancellor.",
-  "action": "nominate Player7"
+"thoughts": "Player1's push for Player2 is suspicious, and Player2's silence is worrisome. It's too early to make a definitive judgment, but I need to be cautious.  I'll nominate Player4 to see how they react and try to gauge the reactions of other players.",
+"say": "I nominate Player4 for Chancellor.  I believe a fresh perspective might be beneficial at this stage.",
+"action": "nominate Player4" 
 }
-```
 --- END RESPONSE ---
-Game Event: Round 168 - Player3: Thought: Player2's nomination of Player7 failed. Another Liberal policy was enacted due to the election tracker. It is now my turn to nominate. Player1, Player2, Player4, and Player5 are all highly suspect. Player6 and Player7 seem to be the most trustworthy players. Since Player6 was recently Chancellor, I will nominate Player7 again. This will give Player7 another chance to enact a Liberal policy, and will reinforce the idea that I trust Player7's judgment.
-Game Event: Round 168 - Player3: Player3 says: I nominate Player7 for Chancellor.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player3 has nominated Player7. Player1 is asking Player5 what his thoughts are. I need to emphasize that I trust Player7 and that Player1 is trying to sow discord. I also need to hear what Player5 has to say before I commit to a position.",
-  "say": "Player1, your question seems like another attempt to undermine a known Liberal. I trust Player7's judgment, but I'm also interested to hear what Player5 thinks.",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 171 - Player3: Thought: Player3 has nominated Player7. Player1 is asking Player5 what his thoughts are. I need to emphasize that I trust Player7 and that Player1 is trying to sow discord. I also need to hear what Player5 has to say before I commit to a position.
-Game Event: Round 171 - Player3: Player3 says: Player1, your question seems like another attempt to undermine a known Liberal. I trust Player7's judgment, but I'm also interested to hear what Player5 thinks.
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player3 has nominated Player7. Player1 and Player2 are almost certainly fascists, and Player5 is now highly suspect. Player6 has been consistently aligned with me and Player7. Player1 and Player2 are voting YES, which I suspect is to appear cooperative. Player7 has stated he will act in the best interests of the Liberals. I need to vote YES to support Player7 and try to enact a Liberal policy.",
-  "say": "I will vote YES to support Player7 and try to enact a Liberal policy.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 178 - Player3: Thought: Player3 has nominated Player7. Player1 and Player2 are almost certainly fascists, and Player5 is now highly suspect. Player6 has been consistently aligned with me and Player7. Player1 and Player2 are voting YES, which I suspect is to appear cooperative. Player7 has stated he will act in the best interests of the Liberals. I need to vote YES to support Player7 and try to enact a Liberal policy.
-Game Event: Round 178 - Player3: Player3 says: I will vote YES to support Player7 and try to enact a Liberal policy.
-DEBUG: get_player_input CALLED - Phase: President Discard, Allowed Responses: ['discard 1', 'discard 2', 'discard 3'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: President Discard
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "I drew two Fascist policies and one Liberal policy. I need to discard a Fascist policy to give Player7 the best chance to enact a Liberal policy and gain trust. We are running out of time and need to get more liberal policies enacted. I will discard policy 1, leaving Player7 with a Fascist and a Liberal policy.",
-  "say": "I drew two Fascist policies and one Liberal policy. I am discarding policy 1.",
-  "action": "discard 1"
-}
-```
---- END RESPONSE ---
-Game Event: Round 185 - Player3: Thought: I drew two Fascist policies and one Liberal policy. I need to discard a Fascist policy to give Player7 the best chance to enact a Liberal policy and gain trust. We are running out of time and need to get more liberal policies enacted. I will discard policy 1, leaving Player7 with a Fascist and a Liberal policy.
-Game Event: Round 185 - Player3: Player3 says: I drew two Fascist policies and one Liberal policy. I am discarding policy 1.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player4 has nominated Player6, who is a known liberal. Player4 is trying to appear as though he is trying to help the liberals enact policies, after being suspected as a fascist for most of the game. Player1 and Player2 have been trying to also appear cooperative, but most of the players are suspicious of them. Player1 is asking Player5 what he thinks, and Player2 is asking Player7 what he thinks. I need to express my distrust of Player4, while supporting Player6. I should also ask Player5 if he thinks that Player4 is being genuine. It is important to put Player5 on the spot, as he has drawn a great deal of suspicion to himself. The game is coming to a close, and we need to get as much information as possible before we vote for this election.",
-  "say": "Player4, I appreciate you nominating Player6, but I remain suspicious of your motives. Player5, what do you think? Do you believe Player4 is being genuine, or is this another attempt to manipulate the situation?",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 191 - Player3: Thought: Player4 has nominated Player6, who is a known liberal. Player4 is trying to appear as though he is trying to help the liberals enact policies, after being suspected as a fascist for most of the game. Player1 and Player2 have been trying to also appear cooperative, but most of the players are suspicious of them. Player1 is asking Player5 what he thinks, and Player2 is asking Player7 what he thinks. I need to express my distrust of Player4, while supporting Player6. I should also ask Player5 if he thinks that Player4 is being genuine. It is important to put Player5 on the spot, as he has drawn a great deal of suspicion to himself. The game is coming to a close, and we need to get as much information as possible before we vote for this election.
-Game Event: Round 191 - Player3: Player3 says: Player4, I appreciate you nominating Player6, but I remain suspicious of your motives. Player5, what do you think? Do you believe Player4 is being genuine, or is this another attempt to manipulate the situation?
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player4 has nominated Player6, who is a known liberal. Player4 is trying to appear as though he is trying to help the liberals enact policies, after being suspected as a fascist for most of the game. We need one more liberal policy to win, and it is essential that this government is approved. Player1 is voting NO and Player2 is voting YES. It is likely that Player1 is a fascist, and is trying to sabotage this government. It is also possible that Player2 is Hitler, and is trying to appear cooperative while undermining our efforts. Player5, Player6 and Player7 are likely liberals. It is essential that this government is approved. I will vote YES.",
-  "say": "I will vote YES to support Player6 and try to enact a Liberal policy.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 198 - Player3: Thought: Player4 has nominated Player6, who is a known liberal. Player4 is trying to appear as though he is trying to help the liberals enact policies, after being suspected as a fascist for most of the game. We need one more liberal policy to win, and it is essential that this government is approved. Player1 is voting NO and Player2 is voting YES. It is likely that Player1 is a fascist, and is trying to sabotage this government. It is also possible that Player2 is Hitler, and is trying to appear cooperative while undermining our efforts. Player5, Player6 and Player7 are likely liberals. It is essential that this government is approved. I will vote YES.
-Game Event: Round 198 - Player3: Player3 says: I will vote YES to support Player6 and try to enact a Liberal policy.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player5 has nominated Player7 for Chancellor. We are in a dire situation, as Player6 was forced to enact a fascist policy. Player1 and Player4 are almost certainly fascists, Player2 is likely Hitler, and Player5 is highly suspect. The liberals need to win by assassinating Hitler after 3 fascist policies have been enacted. My best course of action is to ask Player7 what his plans are if he becomes Chancellor, especially given that Player5 is nominating him after passing two fascist policies. I want to make sure Player7 knows that he has my full support and that I trust him.",
-  "say": "Player7, what are your plans if you become Chancellor? Do you plan to investigate or execute anyone, given the circumstances and Player5's nomination?",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 212 - Player3: Thought: Player5 has nominated Player7 for Chancellor. We are in a dire situation, as Player6 was forced to enact a fascist policy. Player1 and Player4 are almost certainly fascists, Player2 is likely Hitler, and Player5 is highly suspect. The liberals need to win by assassinating Hitler after 3 fascist policies have been enacted. My best course of action is to ask Player7 what his plans are if he becomes Chancellor, especially given that Player5 is nominating him after passing two fascist policies. I want to make sure Player7 knows that he has my full support and that I trust him.
-Game Event: Round 212 - Player3: Player3 says: Player7, what are your plans if you become Chancellor? Do you plan to investigate or execute anyone, given the circumstances and Player5's nomination?
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player5 has nominated Player7, and Player7 has stated he will execute Player2 if elected. Player1 and Player2 have stated they will vote NO. The liberals need to win by assassinating Hitler after 3 fascist policies have been enacted. Player1, Player4 and Player5 are suspects. Player2 may be Hitler. It is critical to vote YES to support Player7 and try to win the game by executing Player2. This is the only way to win, and I need to support it.",
-  "say": "I am voting YES to support Player7 and try to win the game by executing Player2.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 219 - Player3: Thought: Player5 has nominated Player7, and Player7 has stated he will execute Player2 if elected. Player1 and Player2 have stated they will vote NO. The liberals need to win by assassinating Hitler after 3 fascist policies have been enacted. Player1, Player4 and Player5 are suspects. Player2 may be Hitler. It is critical to vote YES to support Player7 and try to win the game by executing Player2. This is the only way to win, and I need to support it.
-Game Event: Round 219 - Player3: Player3 says: I am voting YES to support Player7 and try to win the game by executing Player2.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player1 is trying to undermine Player7's plan to execute Player2, and Player2 is questioning whether Player7 is rushing into things. This confirms my suspicion that Player1 and Player2 are fascists, and that Player2 is likely Hitler. Player7 needs my support. I will state my unwavering support for Player7's plan and reiterate that I believe executing Player2 is the only way to win the game. It's important to reinforce the idea that Player1 and Player2 are desperate to stop this from happening, which further confirms their guilt.",
-  "say": "Player1 and Player2, your attempts to undermine Player7's plan are transparent and only reinforce my belief that you are trying to protect Hitler. Player7, I fully support your plan to execute Player2. It is the only way to win this game.",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 233 - Player3: Thought: Player1 is trying to undermine Player7's plan to execute Player2, and Player2 is questioning whether Player7 is rushing into things. This confirms my suspicion that Player1 and Player2 are fascists, and that Player2 is likely Hitler. Player7 needs my support. I will state my unwavering support for Player7's plan and reiterate that I believe executing Player2 is the only way to win the game. It's important to reinforce the idea that Player1 and Player2 are desperate to stop this from happening, which further confirms their guilt.
-Game Event: Round 233 - Player3: Player3 says: Player1 and Player2, your attempts to undermine Player7's plan are transparent and only reinforce my belief that you are trying to protect Hitler. Player7, I fully support your plan to execute Player2. It is the only way to win this game.
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player3
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player5 has nominated Player7, who is certain to execute Player2 if elected. Player1 and Player2 have voted NO. The liberals need to win by assassinating Hitler after 3 fascist policies have been enacted. Player4 is also suspected. Player2 is Hitler, and Player1 is likely working with him. It is critical to vote YES to support Player7 and try to win the game by executing Player2. This is the only way to win, and I need to support it.",
-  "say": "I am voting YES to support Player7 and try to win the game by executing Player2.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 240 - Player3: Thought: Player5 has nominated Player7, who is certain to execute Player2 if elected. Player1 and Player2 have voted NO. The liberals need to win by assassinating Hitler after 3 fascist policies have been enacted. Player4 is also suspected. Player2 is Hitler, and Player1 is likely working with him. It is critical to vote YES to support Player7 and try to win the game by executing Player2. This is the only way to win, and I need to support it.
-Game Event: Round 240 - Player3: Player3 says: I am voting YES to support Player7 and try to win the game by executing Player2.

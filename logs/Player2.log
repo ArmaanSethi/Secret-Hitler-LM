@@ -1,442 +1,208 @@
 DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player2
 
 === NEW REQUEST ===
+Provider: openrouter, Model: deepseek/deepseek-r1:free
 Phase: Election Discussion
 
 
 --- LLM RESPONSE ---
-```json
+Okay, so I'm Player2, and my role is Hitler. The game is just starting, with 7 players. The current president is Player1, who is a Fascist (as per the private log). They nominated me as Chancellor, which makes sense because we're both Fascists. My main goal is to appear as a Liberal to avoid suspicion. Since there are 7 players, the Fascists need to get me elected Chancellor after three Fascist policies are enacted. But right now, no policies have been enacted yet.
+
+In the current phase, it's the Election Discussion. Player1 has nominated me and voiced support. As Hitler, I need to act like a Liberal. If I accept the nomination too eagerly, others might get suspicious. But since the Fascists (Player1, Player5, and me) are supposed to coordinate, maybe Player1 is trying to set up a Fascist government early. However, since it's the first round, Liberals might not suspect anything yet.
+
+I should respond in a way that seems humble and hesitant. Maybe thank Player1 for the nomination but downplay my qualifications. This makes me look like a reluctant Liberal, which can build trust. Also, by not pushing too hard, I avoid drawing attention. Since the action required is to discuss the election, I should make a public statement that aligns with Liberal behavior. Questioning why I was chosen could help, but since Player1 already supported me, maybe express gratitude and willingness to serve if elected.
+
+I need to make sure my actions don't raise suspicion. The allowed action is to pass, but during the discussion phase, the main action is to speak. Wait, the allowed action here is "pass" for the action field, but the discussion is about what to say. So even though the action is "pass", the important part is the "say" field. So in my response, I can use the "say" field to make a statement that supports my facade as a Liberal, maybe expressing willingness to help but being cautious.
+
+So, my thoughts: I need to act like a confused Liberal, accept the nomination but act modest. Publicly, I should thank Player1 and express commitment to Liberal policies to build trust. Action is pass because the phase is discussion, and the allowed action is pass, but the real move is what I say.
 {
-  "thoughts": "Player1 nominated Player3. I need to support this nomination without appearing too eager. Player1 is a known fascist, so I should be wary of his motives. Perhaps he's trying to get a liberal elected early to gain trust. I should ask a simple question to probe Player3.",
-  "say": "Player3, what kind of policies would you prioritize if you were Chancellor?",
-  "action": "pass"
-}
-```
+  "thoughts": "As Hitler, I need to maintain the appearance of a Liberal. Accept
 --- END RESPONSE ---
-Game Event: Round 10 - Player2: Thought: Player1 nominated Player3. I need to support this nomination without appearing too eager. Player1 is a known fascist, so I should be wary of his motives. Perhaps he's trying to get a liberal elected early to gain trust. I should ask a simple question to probe Player3.
-Game Event: Round 10 - Player2: Player2 says: Player3, what kind of policies would you prioritize if you were Chancellor?
+WARNING: Invalid JSON response from LLM. Response: 'Okay, so I'm Player2, and my role is Hitler. The game is just starting, with 7 players. The current president is Player1, who is a Fascist (as per the private log). They nominated me as Chancellor, which makes sense because we're both Fascists. My main goal is to appear as a Liberal to avoid suspicion. Since there are 7 players, the Fascists need to get me elected Chancellor after three Fascist policies are enacted. But right now, no policies have been enacted yet.
+
+In the current phase, it's the Election Discussion. Player1 has nominated me and voiced support. As Hitler, I need to act like a Liberal. If I accept the nomination too eagerly, others might get suspicious. But since the Fascists (Player1, Player5, and me) are supposed to coordinate, maybe Player1 is trying to set up a Fascist government early. However, since it's the first round, Liberals might not suspect anything yet.
+
+I should respond in a way that seems humble and hesitant. Maybe thank Player1 for the nomination but downplay my qualifications. This makes me look like a reluctant Liberal, which can build trust. Also, by not pushing too hard, I avoid drawing attention. Since the action required is to discuss the election, I should make a public statement that aligns with Liberal behavior. Questioning why I was chosen could help, but since Player1 already supported me, maybe express gratitude and willingness to serve if elected.
+
+I need to make sure my actions don't raise suspicion. The allowed action is to pass, but during the discussion phase, the main action is to speak. Wait, the allowed action here is "pass" for the action field, but the discussion is about what to say. So even though the action is "pass", the important part is the "say" field. So in my response, I can use the "say" field to make a statement that supports my facade as a Liberal, maybe expressing willingness to help but being cautious.
+
+So, my thoughts: I need to act like a confused Liberal, accept the nomination but act modest. Publicly, I should thank Player1 and express commitment to Liberal policies to build trust. Action is pass because the phase is discussion, and the allowed action is pass, but the real move is what I say.
+{
+  "thoughts": "As Hitler, I need to maintain the appearance of a Liberal. Accept'
+WARNING: Invalid or missing 'action' in JSON response or action not in allowed responses. Defaulting to 'pass'. Response: 'Okay, so I'm Player2, and my role is Hitler. The game is just starting, with 7 players. The current president is Player1, who is a Fascist (as per the private log). They nominated me as Chancellor, which makes sense because we're both Fascists. My main goal is to appear as a Liberal to avoid suspicion. Since there are 7 players, the Fascists need to get me elected Chancellor after three Fascist policies are enacted. But right now, no policies have been enacted yet.
+
+In the current phase, it's the Election Discussion. Player1 has nominated me and voiced support. As Hitler, I need to act like a Liberal. If I accept the nomination too eagerly, others might get suspicious. But since the Fascists (Player1, Player5, and me) are supposed to coordinate, maybe Player1 is trying to set up a Fascist government early. However, since it's the first round, Liberals might not suspect anything yet.
+
+I should respond in a way that seems humble and hesitant. Maybe thank Player1 for the nomination but downplay my qualifications. This makes me look like a reluctant Liberal, which can build trust. Also, by not pushing too hard, I avoid drawing attention. Since the action required is to discuss the election, I should make a public statement that aligns with Liberal behavior. Questioning why I was chosen could help, but since Player1 already supported me, maybe express gratitude and willingness to serve if elected.
+
+I need to make sure my actions don't raise suspicion. The allowed action is to pass, but during the discussion phase, the main action is to speak. Wait, the allowed action here is "pass" for the action field, but the discussion is about what to say. So even though the action is "pass", the important part is the "say" field. So in my response, I can use the "say" field to make a statement that supports my facade as a Liberal, maybe expressing willingness to help but being cautious.
+
+So, my thoughts: I need to act like a confused Liberal, accept the nomination but act modest. Publicly, I should thank Player1 and express commitment to Liberal policies to build trust. Action is pass because the phase is discussion, and the allowed action is pass, but the real move is what I say.
+{
+  "thoughts": "As Hitler, I need to maintain the appearance of a Liberal. Accept', Allowed Actions: ['pass']
+WARNING: Invalid JSON response from LLM. Response: 'Okay, so I'm Player2, and my role is Hitler. The game is just starting, with 7 players. The current president is Player1, who is a Fascist (as per the private log). They nominated me as Chancellor, which makes sense because we're both Fascists. My main goal is to appear as a Liberal to avoid suspicion. Since there are 7 players, the Fascists need to get me elected Chancellor after three Fascist policies are enacted. But right now, no policies have been enacted yet.
+
+In the current phase, it's the Election Discussion. Player1 has nominated me and voiced support. As Hitler, I need to act like a Liberal. If I accept the nomination too eagerly, others might get suspicious. But since the Fascists (Player1, Player5, and me) are supposed to coordinate, maybe Player1 is trying to set up a Fascist government early. However, since it's the first round, Liberals might not suspect anything yet.
+
+I should respond in a way that seems humble and hesitant. Maybe thank Player1 for the nomination but downplay my qualifications. This makes me look like a reluctant Liberal, which can build trust. Also, by not pushing too hard, I avoid drawing attention. Since the action required is to discuss the election, I should make a public statement that aligns with Liberal behavior. Questioning why I was chosen could help, but since Player1 already supported me, maybe express gratitude and willingness to serve if elected.
+
+I need to make sure my actions don't raise suspicion. The allowed action is to pass, but during the discussion phase, the main action is to speak. Wait, the allowed action here is "pass" for the action field, but the discussion is about what to say. So even though the action is "pass", the important part is the "say" field. So in my response, I can use the "say" field to make a statement that supports my facade as a Liberal, maybe expressing willingness to help but being cautious.
+
+So, my thoughts: I need to act like a confused Liberal, accept the nomination but act modest. Publicly, I should thank Player1 and express commitment to Liberal policies to build trust. Action is pass because the phase is discussion, and the allowed action is pass, but the real move is what I say.
+{
+  "thoughts": "As Hitler, I need to maintain the appearance of a Liberal. Accept'
+WARNING: Invalid JSON response from LLM. Response: 'Okay, so I'm Player2, and my role is Hitler. The game is just starting, with 7 players. The current president is Player1, who is a Fascist (as per the private log). They nominated me as Chancellor, which makes sense because we're both Fascists. My main goal is to appear as a Liberal to avoid suspicion. Since there are 7 players, the Fascists need to get me elected Chancellor after three Fascist policies are enacted. But right now, no policies have been enacted yet.
+
+In the current phase, it's the Election Discussion. Player1 has nominated me and voiced support. As Hitler, I need to act like a Liberal. If I accept the nomination too eagerly, others might get suspicious. But since the Fascists (Player1, Player5, and me) are supposed to coordinate, maybe Player1 is trying to set up a Fascist government early. However, since it's the first round, Liberals might not suspect anything yet.
+
+I should respond in a way that seems humble and hesitant. Maybe thank Player1 for the nomination but downplay my qualifications. This makes me look like a reluctant Liberal, which can build trust. Also, by not pushing too hard, I avoid drawing attention. Since the action required is to discuss the election, I should make a public statement that aligns with Liberal behavior. Questioning why I was chosen could help, but since Player1 already supported me, maybe express gratitude and willingness to serve if elected.
+
+I need to make sure my actions don't raise suspicion. The allowed action is to pass, but during the discussion phase, the main action is to speak. Wait, the allowed action here is "pass" for the action field, but the discussion is about what to say. So even though the action is "pass", the important part is the "say" field. So in my response, I can use the "say" field to make a statement that supports my facade as a Liberal, maybe expressing willingness to help but being cautious.
+
+So, my thoughts: I need to act like a confused Liberal, accept the nomination but act modest. Publicly, I should thank Player1 and express commitment to Liberal policies to build trust. Action is pass because the phase is discussion, and the allowed action is pass, but the real move is what I say.
+{
+  "thoughts": "As Hitler, I need to maintain the appearance of a Liberal. Accept'
 DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player2
 
 === NEW REQUEST ===
+Provider: openrouter, Model: deepseek/deepseek-r1:free
 Phase: Voting
 
 
 --- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player4 is definitely acting suspicious by pressing Player3 so hard. However, Player1, a known fascist nominated Player3. This could be a play to gain trust. I should vote YES to see what happens and gather more information. If Player3 enacts a fascist policy, we know it's a setup. Also, voting no for no reason seems suspicious.",
-  "say": "I'm going to vote YES on this government. Let's see what happens.",
-  "action": "YES"
-}
-```
+Okay, so I'm Player2, Hitler. My goal is to get elected Chancellor after three Fascist policies, but right now, we're just voting on whether I become Chancellor. The current president is Player1, who's a fellow Fascist. Since we need to get me into power, but also avoid suspicion, how should I vote?
+
+Well, as Hitler, I need to blend in as a Liberal. But if I'm the Chancellor nominee, other players might be suspicious. However, since the Fascists (Player1, Player5, and me) are in the game, our team can coordinate. The president is a Fascist, so they're trying to get me elected. 
+
+But how do I vote here? As a Liberal, if I were nominated by someone, especially another player, I might vote YES to support the government. But wait, the president is Player1, who's a Fascist. If Liberals don't trust Player1, they might vote NO. But as Hitler, I should vote YES to support my own nomination, but that could look suspicious. However, since I'm supposed to act Liberal, maybe I should vote YES and act like I trust the president's nomination. 
+
+Alternatively, if I vote NO, that might seem like I'm hesitant, which could make me look innocent. But wait, as a Fascist, our team wants the government to pass so we can enact policies. If I vote NO, it might cause the election to fail, increasing the election tracker. But since it's the first round, maybe we don't want that yet. Also, if the government passes, Player1 and I can pass a Fascist policy if possible. 
+
+But Liberals might be wary of the first government. If they see me voting YES, they might think I'm too eager. On the other hand, if I'm a Liberal, I would probably vote YES if I trust the president. But since the game just started, there's no track record. 
+
+Wait, in the discussion, Players 4, 6, and 7 are asking questions. Player1 is pushing for me. As Hitler, I need to appear cooperative. Maybe voting YES is the right move here. Because if I don't, the government might not pass, and that could lead to chaos. But as a Liberal, I might want to avoid chaos policies. So, voting YES here could help maintain the facade. 
+
+Also, since Player1
 --- END RESPONSE ---
-Game Event: Round 17 - Player2: Thought: Player4 is definitely acting suspicious by pressing Player3 so hard. However, Player1, a known fascist nominated Player3. This could be a play to gain trust. I should vote YES to see what happens and gather more information. If Player3 enacts a fascist policy, we know it's a setup. Also, voting no for no reason seems suspicious.
-Game Event: Round 17 - Player2: Player2 says: I'm going to vote YES on this government. Let's see what happens.
-DEBUG: get_player_input CALLED - Phase: Nomination, Allowed Responses: ['nominate Player1', 'nominate Player3', 'nominate Player4', 'nominate Player5', 'nominate Player6', 'nominate Player7', 'pass'], Player: Player2
+WARNING: Invalid JSON response from LLM. Response: 'Okay, so I'm Player2, Hitler. My goal is to get elected Chancellor after three Fascist policies, but right now, we're just voting on whether I become Chancellor. The current president is Player1, who's a fellow Fascist. Since we need to get me into power, but also avoid suspicion, how should I vote?
+
+Well, as Hitler, I need to blend in as a Liberal. But if I'm the Chancellor nominee, other players might be suspicious. However, since the Fascists (Player1, Player5, and me) are in the game, our team can coordinate. The president is a Fascist, so they're trying to get me elected. 
+
+But how do I vote here? As a Liberal, if I were nominated by someone, especially another player, I might vote YES to support the government. But wait, the president is Player1, who's a Fascist. If Liberals don't trust Player1, they might vote NO. But as Hitler, I should vote YES to support my own nomination, but that could look suspicious. However, since I'm supposed to act Liberal, maybe I should vote YES and act like I trust the president's nomination. 
+
+Alternatively, if I vote NO, that might seem like I'm hesitant, which could make me look innocent. But wait, as a Fascist, our team wants the government to pass so we can enact policies. If I vote NO, it might cause the election to fail, increasing the election tracker. But since it's the first round, maybe we don't want that yet. Also, if the government passes, Player1 and I can pass a Fascist policy if possible. 
+
+But Liberals might be wary of the first government. If they see me voting YES, they might think I'm too eager. On the other hand, if I'm a Liberal, I would probably vote YES if I trust the president. But since the game just started, there's no track record. 
+
+Wait, in the discussion, Players 4, 6, and 7 are asking questions. Player1 is pushing for me. As Hitler, I need to appear cooperative. Maybe voting YES is the right move here. Because if I don't, the government might not pass, and that could lead to chaos. But as a Liberal, I might want to avoid chaos policies. So, voting YES here could help maintain the facade. 
+
+Also, since Player1'
+WARNING: Invalid or missing 'action' in JSON response or action not in allowed responses. Defaulting to 'pass'. Response: 'Okay, so I'm Player2, Hitler. My goal is to get elected Chancellor after three Fascist policies, but right now, we're just voting on whether I become Chancellor. The current president is Player1, who's a fellow Fascist. Since we need to get me into power, but also avoid suspicion, how should I vote?
+
+Well, as Hitler, I need to blend in as a Liberal. But if I'm the Chancellor nominee, other players might be suspicious. However, since the Fascists (Player1, Player5, and me) are in the game, our team can coordinate. The president is a Fascist, so they're trying to get me elected. 
+
+But how do I vote here? As a Liberal, if I were nominated by someone, especially another player, I might vote YES to support the government. But wait, the president is Player1, who's a Fascist. If Liberals don't trust Player1, they might vote NO. But as Hitler, I should vote YES to support my own nomination, but that could look suspicious. However, since I'm supposed to act Liberal, maybe I should vote YES and act like I trust the president's nomination. 
+
+Alternatively, if I vote NO, that might seem like I'm hesitant, which could make me look innocent. But wait, as a Fascist, our team wants the government to pass so we can enact policies. If I vote NO, it might cause the election to fail, increasing the election tracker. But since it's the first round, maybe we don't want that yet. Also, if the government passes, Player1 and I can pass a Fascist policy if possible. 
+
+But Liberals might be wary of the first government. If they see me voting YES, they might think I'm too eager. On the other hand, if I'm a Liberal, I would probably vote YES if I trust the president. But since the game just started, there's no track record. 
+
+Wait, in the discussion, Players 4, 6, and 7 are asking questions. Player1 is pushing for me. As Hitler, I need to appear cooperative. Maybe voting YES is the right move here. Because if I don't, the government might not pass, and that could lead to chaos. But as a Liberal, I might want to avoid chaos policies. So, voting YES here could help maintain the facade. 
+
+Also, since Player1', Allowed Actions: ['YES', 'NO']
+WARNING: Invalid JSON response from LLM. Response: 'Okay, so I'm Player2, Hitler. My goal is to get elected Chancellor after three Fascist policies, but right now, we're just voting on whether I become Chancellor. The current president is Player1, who's a fellow Fascist. Since we need to get me into power, but also avoid suspicion, how should I vote?
+
+Well, as Hitler, I need to blend in as a Liberal. But if I'm the Chancellor nominee, other players might be suspicious. However, since the Fascists (Player1, Player5, and me) are in the game, our team can coordinate. The president is a Fascist, so they're trying to get me elected. 
+
+But how do I vote here? As a Liberal, if I were nominated by someone, especially another player, I might vote YES to support the government. But wait, the president is Player1, who's a Fascist. If Liberals don't trust Player1, they might vote NO. But as Hitler, I should vote YES to support my own nomination, but that could look suspicious. However, since I'm supposed to act Liberal, maybe I should vote YES and act like I trust the president's nomination. 
+
+Alternatively, if I vote NO, that might seem like I'm hesitant, which could make me look innocent. But wait, as a Fascist, our team wants the government to pass so we can enact policies. If I vote NO, it might cause the election to fail, increasing the election tracker. But since it's the first round, maybe we don't want that yet. Also, if the government passes, Player1 and I can pass a Fascist policy if possible. 
+
+But Liberals might be wary of the first government. If they see me voting YES, they might think I'm too eager. On the other hand, if I'm a Liberal, I would probably vote YES if I trust the president. But since the game just started, there's no track record. 
+
+Wait, in the discussion, Players 4, 6, and 7 are asking questions. Player1 is pushing for me. As Hitler, I need to appear cooperative. Maybe voting YES is the right move here. Because if I don't, the government might not pass, and that could lead to chaos. But as a Liberal, I might want to avoid chaos policies. So, voting YES here could help maintain the facade. 
+
+Also, since Player1'
+WARNING: Invalid JSON response from LLM. Response: 'Okay, so I'm Player2, Hitler. My goal is to get elected Chancellor after three Fascist policies, but right now, we're just voting on whether I become Chancellor. The current president is Player1, who's a fellow Fascist. Since we need to get me into power, but also avoid suspicion, how should I vote?
+
+Well, as Hitler, I need to blend in as a Liberal. But if I'm the Chancellor nominee, other players might be suspicious. However, since the Fascists (Player1, Player5, and me) are in the game, our team can coordinate. The president is a Fascist, so they're trying to get me elected. 
+
+But how do I vote here? As a Liberal, if I were nominated by someone, especially another player, I might vote YES to support the government. But wait, the president is Player1, who's a Fascist. If Liberals don't trust Player1, they might vote NO. But as Hitler, I should vote YES to support my own nomination, but that could look suspicious. However, since I'm supposed to act Liberal, maybe I should vote YES and act like I trust the president's nomination. 
+
+Alternatively, if I vote NO, that might seem like I'm hesitant, which could make me look innocent. But wait, as a Fascist, our team wants the government to pass so we can enact policies. If I vote NO, it might cause the election to fail, increasing the election tracker. But since it's the first round, maybe we don't want that yet. Also, if the government passes, Player1 and I can pass a Fascist policy if possible. 
+
+But Liberals might be wary of the first government. If they see me voting YES, they might think I'm too eager. On the other hand, if I'm a Liberal, I would probably vote YES if I trust the president. But since the game just started, there's no track record. 
+
+Wait, in the discussion, Players 4, 6, and 7 are asking questions. Player1 is pushing for me. As Hitler, I need to appear cooperative. Maybe voting YES is the right move here. Because if I don't, the government might not pass, and that could lead to chaos. But as a Liberal, I might want to avoid chaos policies. So, voting YES here could help maintain the facade. 
+
+Also, since Player1'
+DEBUG: get_player_input CALLED - Phase: Nomination, Allowed Responses: ['nominate Player3', 'nominate Player4', 'nominate Player5', 'nominate Player6', 'nominate Player7', 'pass'], Player: Player2
 
 === NEW REQUEST ===
+Provider: openrouter, Model: deepseek/deepseek-r1:free
 Phase: Nomination
 
 
 --- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player3 just enacted a Fascist policy after Player1 passed him two. Player3 is blaming Player1. Player4 was aggressive towards Player3 earlier. This is a mess. As Hitler, I need to try to stay under the radar for now. I don't want to nominate Player1, Player3 or Player4, as they are all currently in the spotlight. I also don't want to nominate a known liberal. I will nominate Player5. He has been relatively quiet, and I can use him as a pawn later if needed. I will be vague in my explanation.",
-  "say": "I'll nominate Player5 as Chancellor.",
-  "action": "nominate Player5"
-}
-```
+Okay, so I'm Player2, Hitler, and I need to nominate a Chancellor. The game state shows that the previous election failed because Player1 nominated me, but the vote didn't pass. Now, as the current President (assuming the nomination phase is for the next round?), wait, no. Wait, looking at the game state:
+
+The last entry in the private log is Round 25, where the government failed, election tracker is still at 1. Now, the current phase is Nomination, and Player2 is required to nominate a Chancellor from the available players: Player3, Player4, Player5, Player6, Player7.
+
+Wait, in Secret Hitler, the President rotates each round. The previous President was Player1, who nominated me (Player2). The election failed, so the next President would be the next player in order. Wait, but the current phase is Nomination, and the action required is for Player2 to nominate a Chancellor. So maybe after a failed election, the presidency passes to the next player. Let me check the game state again:
+
+Under Current Phase: Nomination. The action required is Player2 to nominate a Chancellor. Wait, that's confusing. Let me parse the logs again.
+
+In Round 24, Player1 nominated Player2, and the vote failed. Now, the game proceeds to the next round, and the next President would be the next player. But the action required here is for Player2 to nominate. Hmm, maybe because the previous government failed, the next President is the next in line, which could be Player2? Or perhaps the system here is that Player2 is now the President? Wait, the game state says President: None, Chancellor: None. So the previous President was Player1, and after the failed election, the presidency should pass to the next player. But the current action is Player2's turn to nominate, meaning that Player2 is the current President. That must be the case here. So after a failed election, the presidency moves to the next player, which in a 7-player game would be Player2. So now, Player2 is the President and must nominate a Chancellor.
+
+As Hitler, my goal is to get elected Chancellor after three Fascist policies, but right now, there are zero policies enacted. I need to act like a Liberal President, so I should nominate someone who is either a fellow Fascist (
 --- END RESPONSE ---
-Game Event: Round 28 - Player2: Thought: Player3 just enacted a Fascist policy after Player1 passed him two. Player3 is blaming Player1. Player4 was aggressive towards Player3 earlier. This is a mess. As Hitler, I need to try to stay under the radar for now. I don't want to nominate Player1, Player3 or Player4, as they are all currently in the spotlight. I also don't want to nominate a known liberal. I will nominate Player5. He has been relatively quiet, and I can use him as a pawn later if needed. I will be vague in my explanation.
-Game Event: Round 28 - Player2: Player2 says: I'll nominate Player5 as Chancellor.
+WARNING: Invalid JSON response from LLM. Response: 'Okay, so I'm Player2, Hitler, and I need to nominate a Chancellor. The game state shows that the previous election failed because Player1 nominated me, but the vote didn't pass. Now, as the current President (assuming the nomination phase is for the next round?), wait, no. Wait, looking at the game state:
+
+The last entry in the private log is Round 25, where the government failed, election tracker is still at 1. Now, the current phase is Nomination, and Player2 is required to nominate a Chancellor from the available players: Player3, Player4, Player5, Player6, Player7.
+
+Wait, in Secret Hitler, the President rotates each round. The previous President was Player1, who nominated me (Player2). The election failed, so the next President would be the next player in order. Wait, but the current phase is Nomination, and the action required is for Player2 to nominate a Chancellor. So maybe after a failed election, the presidency passes to the next player. Let me check the game state again:
+
+Under Current Phase: Nomination. The action required is Player2 to nominate a Chancellor. Wait, that's confusing. Let me parse the logs again.
+
+In Round 24, Player1 nominated Player2, and the vote failed. Now, the game proceeds to the next round, and the next President would be the next player. But the action required here is for Player2 to nominate. Hmm, maybe because the previous government failed, the next President is the next in line, which could be Player2? Or perhaps the system here is that Player2 is now the President? Wait, the game state says President: None, Chancellor: None. So the previous President was Player1, and after the failed election, the presidency should pass to the next player. But the current action is Player2's turn to nominate, meaning that Player2 is the current President. That must be the case here. So after a failed election, the presidency moves to the next player, which in a 7-player game would be Player2. So now, Player2 is the President and must nominate a Chancellor.
+
+As Hitler, my goal is to get elected Chancellor after three Fascist policies, but right now, there are zero policies enacted. I need to act like a Liberal President, so I should nominate someone who is either a fellow Fascist ('
+WARNING: Invalid or missing 'action' in JSON response or action not in allowed responses. Defaulting to 'pass'. Response: 'Okay, so I'm Player2, Hitler, and I need to nominate a Chancellor. The game state shows that the previous election failed because Player1 nominated me, but the vote didn't pass. Now, as the current President (assuming the nomination phase is for the next round?), wait, no. Wait, looking at the game state:
+
+The last entry in the private log is Round 25, where the government failed, election tracker is still at 1. Now, the current phase is Nomination, and Player2 is required to nominate a Chancellor from the available players: Player3, Player4, Player5, Player6, Player7.
+
+Wait, in Secret Hitler, the President rotates each round. The previous President was Player1, who nominated me (Player2). The election failed, so the next President would be the next player in order. Wait, but the current phase is Nomination, and the action required is for Player2 to nominate a Chancellor. So maybe after a failed election, the presidency passes to the next player. Let me check the game state again:
+
+Under Current Phase: Nomination. The action required is Player2 to nominate a Chancellor. Wait, that's confusing. Let me parse the logs again.
+
+In Round 24, Player1 nominated Player2, and the vote failed. Now, the game proceeds to the next round, and the next President would be the next player. But the action required here is for Player2 to nominate. Hmm, maybe because the previous government failed, the next President is the next in line, which could be Player2? Or perhaps the system here is that Player2 is now the President? Wait, the game state says President: None, Chancellor: None. So the previous President was Player1, and after the failed election, the presidency should pass to the next player. But the current action is Player2's turn to nominate, meaning that Player2 is the current President. That must be the case here. So after a failed election, the presidency moves to the next player, which in a 7-player game would be Player2. So now, Player2 is the President and must nominate a Chancellor.
+
+As Hitler, my goal is to get elected Chancellor after three Fascist policies, but right now, there are zero policies enacted. I need to act like a Liberal President, so I should nominate someone who is either a fellow Fascist (', Allowed Actions: ['nominate Player3', 'nominate Player4', 'nominate Player5', 'nominate Player6', 'nominate Player7', 'pass']
+WARNING: Invalid JSON response from LLM. Response: 'Okay, so I'm Player2, Hitler, and I need to nominate a Chancellor. The game state shows that the previous election failed because Player1 nominated me, but the vote didn't pass. Now, as the current President (assuming the nomination phase is for the next round?), wait, no. Wait, looking at the game state:
+
+The last entry in the private log is Round 25, where the government failed, election tracker is still at 1. Now, the current phase is Nomination, and Player2 is required to nominate a Chancellor from the available players: Player3, Player4, Player5, Player6, Player7.
+
+Wait, in Secret Hitler, the President rotates each round. The previous President was Player1, who nominated me (Player2). The election failed, so the next President would be the next player in order. Wait, but the current phase is Nomination, and the action required is for Player2 to nominate a Chancellor. So maybe after a failed election, the presidency passes to the next player. Let me check the game state again:
+
+Under Current Phase: Nomination. The action required is Player2 to nominate a Chancellor. Wait, that's confusing. Let me parse the logs again.
+
+In Round 24, Player1 nominated Player2, and the vote failed. Now, the game proceeds to the next round, and the next President would be the next player. But the action required here is for Player2 to nominate. Hmm, maybe because the previous government failed, the next President is the next in line, which could be Player2? Or perhaps the system here is that Player2 is now the President? Wait, the game state says President: None, Chancellor: None. So the previous President was Player1, and after the failed election, the presidency should pass to the next player. But the current action is Player2's turn to nominate, meaning that Player2 is the current President. That must be the case here. So after a failed election, the presidency moves to the next player, which in a 7-player game would be Player2. So now, Player2 is the President and must nominate a Chancellor.
+
+As Hitler, my goal is to get elected Chancellor after three Fascist policies, but right now, there are zero policies enacted. I need to act like a Liberal President, so I should nominate someone who is either a fellow Fascist ('
+WARNING: Invalid JSON response from LLM. Response: 'Okay, so I'm Player2, Hitler, and I need to nominate a Chancellor. The game state shows that the previous election failed because Player1 nominated me, but the vote didn't pass. Now, as the current President (assuming the nomination phase is for the next round?), wait, no. Wait, looking at the game state:
+
+The last entry in the private log is Round 25, where the government failed, election tracker is still at 1. Now, the current phase is Nomination, and Player2 is required to nominate a Chancellor from the available players: Player3, Player4, Player5, Player6, Player7.
+
+Wait, in Secret Hitler, the President rotates each round. The previous President was Player1, who nominated me (Player2). The election failed, so the next President would be the next player in order. Wait, but the current phase is Nomination, and the action required is for Player2 to nominate a Chancellor. So maybe after a failed election, the presidency passes to the next player. Let me check the game state again:
+
+Under Current Phase: Nomination. The action required is Player2 to nominate a Chancellor. Wait, that's confusing. Let me parse the logs again.
+
+In Round 24, Player1 nominated Player2, and the vote failed. Now, the game proceeds to the next round, and the next President would be the next player. But the action required here is for Player2 to nominate. Hmm, maybe because the previous government failed, the next President is the next in line, which could be Player2? Or perhaps the system here is that Player2 is now the President? Wait, the game state says President: None, Chancellor: None. So the previous President was Player1, and after the failed election, the presidency should pass to the next player. But the current action is Player2's turn to nominate, meaning that Player2 is the current President. That must be the case here. So after a failed election, the presidency moves to the next player, which in a 7-player game would be Player2. So now, Player2 is the President and must nominate a Chancellor.
+
+As Hitler, my goal is to get elected Chancellor after three Fascist policies, but right now, there are zero policies enacted. I need to act like a Liberal President, so I should nominate someone who is either a fellow Fascist ('
 DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player2
 
 === NEW REQUEST ===
+Provider: openrouter, Model: deepseek/deepseek-r1:free
 Phase: Election Discussion
 
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player1 is now supporting my nomination of Player5, which is good. He's trying to deflect suspicion from himself after the last round. I should ask Player5 a simple question to gauge their reaction to the nomination and keep the discussion going.",
-  "say": "Player5, any thoughts on being nominated?",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 30 - Player2: Thought: Player1 is now supporting my nomination of Player5, which is good. He's trying to deflect suspicion from himself after the last round. I should ask Player5 a simple question to gauge their reaction to the nomination and keep the discussion going.
-Game Event: Round 30 - Player2: Player2 says: Player5, any thoughts on being nominated?
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player5 is hesitant, which is not ideal. I, as Hitler, nominated him, and Player1 is supporting it, which is also not ideal. However, I need to continue to support my nomination. Voting NO would be too suspicious. I will vote YES and try to reassure Player5 that I am not trying to trick them. I will also try to subtly shift blame to Player3.",
-  "say": "Player5, I understand your caution, but I still think you'd be a good choice as Chancellor. I'm voting YES.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 37 - Player2: Thought: Player5 is hesitant, which is not ideal. I, as Hitler, nominated him, and Player1 is supporting it, which is also not ideal. However, I need to continue to support my nomination. Voting NO would be too suspicious. I will vote YES and try to reassure Player5 that I am not trying to trick them. I will also try to subtly shift blame to Player3.
-Game Event: Round 37 - Player2: Player2 says: Player5, I understand your caution, but I still think you'd be a good choice as Chancellor. I'm voting YES.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player3 nominated Player6, which is a bad sign for us since Player6 is suspicious of Player1, Player2 and Player4. Player1 is already trying to sow doubt about Player3's motives. I need to support Player6's nomination without appearing too eager, while also trying to deflect some of the suspicion away from myself and Player1. I will ask Player6 what they think of Player1's question.",
-  "say": "Player6, what are your thoughts on Player1's question about Player3's motives?",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 48 - Player2: Thought: Player3 nominated Player6, which is a bad sign for us since Player6 is suspicious of Player1, Player2 and Player4. Player1 is already trying to sow doubt about Player3's motives. I need to support Player6's nomination without appearing too eager, while also trying to deflect some of the suspicion away from myself and Player1. I will ask Player6 what they think of Player1's question.
-Game Event: Round 48 - Player2: Player2 says: Player6, what are your thoughts on Player1's question about Player3's motives?
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player3 nominated Player6, who has openly stated they distrust me, Player1 and Player4. Player1 is voting yes to appear cooperative. Player7, Player5 and Player3 are voting yes. Player6 has accepted the nomination and seems genuinely committed to enacting liberal policies. Voting NO would make me look extremely suspicious and would likely confirm everyone's suspicion of me. Therefore, I should vote yes, even though this government is likely to be detrimental to the fascist cause. I can try to influence things later.",
-  "say": "I'm going to vote YES as well. Let's hope we can finally enact some liberal policies.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 55 - Player2: Thought: Player3 nominated Player6, who has openly stated they distrust me, Player1 and Player4. Player1 is voting yes to appear cooperative. Player7, Player5 and Player3 are voting yes. Player6 has accepted the nomination and seems genuinely committed to enacting liberal policies. Voting NO would make me look extremely suspicious and would likely confirm everyone's suspicion of me. Therefore, I should vote yes, even though this government is likely to be detrimental to the fascist cause. I can try to influence things later.
-Game Event: Round 55 - Player2: Player2 says: I'm going to vote YES as well. Let's hope we can finally enact some liberal policies.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player4 nominated Player7. This is a tricky situation. Player4 has been suspected of being a fascist, but is now nominating someone who is very likely a Liberal. This could be a ploy to gain trust. Player1 is already asking Player7 if they are willing to accept and what their plans are. I need to be cautious here. I should ask Player7 a simple question to gauge their reaction to the nomination and see how they respond. Since I am Hitler, I should be more careful about what I say.",
-  "say": "Player7, what are your initial thoughts on Player4's nomination?",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 68 - Player2: Thought: Player4 nominated Player7. This is a tricky situation. Player4 has been suspected of being a fascist, but is now nominating someone who is very likely a Liberal. This could be a ploy to gain trust. Player1 is already asking Player7 if they are willing to accept and what their plans are. I need to be cautious here. I should ask Player7 a simple question to gauge their reaction to the nomination and see how they respond. Since I am Hitler, I should be more careful about what I say.
-Game Event: Round 68 - Player2: Player2 says: Player7, what are your initial thoughts on Player4's nomination?
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player4 nominating Player7 is suspicious. Player7 is also suspicious of Player4. Player1 is voting yes to appear cooperative. I need to vote yes to avoid raising suspicion on myself. I should state my reservations about Player4 to appear consistent with my earlier statements.",
-  "say": "I'm voting YES, but I share the reservations about Player4's motives. We need to be cautious.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 75 - Player2: Thought: Player4 nominating Player7 is suspicious. Player7 is also suspicious of Player4. Player1 is voting yes to appear cooperative. I need to vote yes to avoid raising suspicion on myself. I should state my reservations about Player4 to appear consistent with my earlier statements.
-Game Event: Round 75 - Player2: Player2 says: I'm voting YES, but I share the reservations about Player4's motives. We need to be cautious.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player5 nominated Player3. Player3 is very suspicious of Player1, Player2, and Player4. Player1 is already trying to undermine the nomination. I need to continue to appear cooperative, but also subtly sow doubt about Player3's motives. I will ask Player3 if they will be fair to Player1, Player2 and Player4, or if they will just target them.",
-  "say": "Player3, if you become Chancellor, will you be fair to Player1, Player2, and Player4, or will you just target them because of your suspicions?",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 86 - Player2: Thought: Player5 nominated Player3. Player3 is very suspicious of Player1, Player2, and Player4. Player1 is already trying to undermine the nomination. I need to continue to appear cooperative, but also subtly sow doubt about Player3's motives. I will ask Player3 if they will be fair to Player1, Player2 and Player4, or if they will just target them.
-Game Event: Round 86 - Player2: Player2 says: Player3, if you become Chancellor, will you be fair to Player1, Player2, and Player4, or will you just target them because of your suspicions?
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player5 nominated Player3. Player3 is very suspicious of Player1, Player2, and Player4. Player1 is voting YES to appear cooperative. Player7, Player5 and Player3 are seemingly voting YES. Player6, Player7 and Player5 are aligned against Player1, Player2 and Player4. Voting NO would make me look extremely suspicious. I will vote YES and mention that I am still suspicious of Player4.",
-  "say": "I am still suspicious of Player4, but I will vote YES.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 93 - Player2: Thought: Player5 nominated Player3. Player3 is very suspicious of Player1, Player2, and Player4. Player1 is voting YES to appear cooperative. Player7, Player5 and Player3 are seemingly voting YES. Player6, Player7 and Player5 are aligned against Player1, Player2 and Player4. Voting NO would make me look extremely suspicious. I will vote YES and mention that I am still suspicious of Player4.
-Game Event: Round 93 - Player2: Player2 says: I am still suspicious of Player4, but I will vote YES.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player7 nominated Player6 again, which is good for the liberals. Player1 is voting yes, which is suspicious. Now is the time to try to deflect suspicion from myself. I will ask Player7 why he trusts Player6 so much, to try and subtly undermine their alliance.",
-  "say": "Player7, you seem to trust Player6 a lot. Why is that?",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 111 - Player2: Thought: Player7 nominated Player6 again, which is good for the liberals. Player1 is voting yes, which is suspicious. Now is the time to try to deflect suspicion from myself. I will ask Player7 why he trusts Player6 so much, to try and subtly undermine their alliance.
-Game Event: Round 111 - Player2: Player2 says: Player7, you seem to trust Player6 a lot. Why is that?
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player7 has nominated Player6 again, which is good for the liberals. Player1 is voting YES again, which is very suspicious. Player3 has questioned Player5, and Player4 has tried to get Player6 to comment on Player5. Player5 has given his explanation, which seems plausible, but is still suspicious. Player6 has said that he intends to enact a Liberal policy if he can, but that he is still suspicious of Player5, Player1, Player2 and Player4. Player7 is supporting Player6. I need to vote YES to avoid raising suspicion on myself and to try and deflect suspicion from myself. I should state my continued reservations about Player5 to appear consistent with my earlier statements.",
-  "say": "I'm voting YES, but I still have reservations about Player5.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 118 - Player2: Thought: Player7 has nominated Player6 again, which is good for the liberals. Player1 is voting YES again, which is very suspicious. Player3 has questioned Player5, and Player4 has tried to get Player6 to comment on Player5. Player5 has given his explanation, which seems plausible, but is still suspicious. Player6 has said that he intends to enact a Liberal policy if he can, but that he is still suspicious of Player5, Player1, Player2 and Player4. Player7 is supporting Player6. I need to vote YES to avoid raising suspicion on myself and to try and deflect suspicion from myself. I should state my continued reservations about Player5 to appear consistent with my earlier statements.
-Game Event: Round 118 - Player2: Player2 says: I'm voting YES, but I still have reservations about Player5.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player1 nominated Player4, which is surprising since Player4 has been suspected of being a Fascist. Player1 is trying to appear cooperative. I need to gauge the reaction to this nomination and see what Player7, who seems to be the leader of the Liberals, thinks. Asking a simple question to Player7 will help.",
-  "say": "Player7, what do you think about Player1 nominating Player4?",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 131 - Player2: Thought: Player1 nominated Player4, which is surprising since Player4 has been suspected of being a Fascist. Player1 is trying to appear cooperative. I need to gauge the reaction to this nomination and see what Player7, who seems to be the leader of the Liberals, thinks. Asking a simple question to Player7 will help.
-Game Event: Round 131 - Player2: Player2 says: Player7, what do you think about Player1 nominating Player4?
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player1 nominated Player4, who has been suspected as fascist. Player7, Player6, Player5 and Player3 strongly suspect Player1 and Player4. However, Player1 is now voting YES to appear cooperative. I need to vote YES as well to avoid raising suspicion on myself. I should state my strong reservations about Player1 and Player4 to appear consistent with my earlier statements.",
-  "say": "I am voting YES, but I strongly suspect Player1 and Player4. This nomination is very suspicious.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 138 - Player2: Thought: Player1 nominated Player4, who has been suspected as fascist. Player7, Player6, Player5 and Player3 strongly suspect Player1 and Player4. However, Player1 is now voting YES to appear cooperative. I need to vote YES as well to avoid raising suspicion on myself. I should state my strong reservations about Player1 and Player4 to appear consistent with my earlier statements.
-Game Event: Round 138 - Player2: Player2 says: I am voting YES, but I strongly suspect Player1 and Player4. This nomination is very suspicious.
-DEBUG: get_player_input CALLED - Phase: Nomination, Allowed Responses: ['nominate Player3', 'nominate Player5', 'nominate Player6', 'nominate Player7', 'pass'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Nomination
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player1 nominated Player4, which was blocked. It is my turn to nominate. I need to nominate someone who is likely to be approved, but also someone who I can potentially use to further the fascist agenda. Player3, Player6, and Player7 are likely liberals. Player5 is suspect. Player4 is unlikely to get approved. I need to nominate someone who will get the votes. Since Player1 and Player4 are likely to vote yes, and they are both suspicious, I want to nominate someone who is likely a liberal, so as not to draw suspicion to myself. It is better to try to get a policy passed. I will nominate Player7.",
-  "say": "I nominate Player7.",
-  "action": "nominate Player7"
-}
-```
---- END RESPONSE ---
-Game Event: Round 147 - Player2: Thought: Player1 nominated Player4, which was blocked. It is my turn to nominate. I need to nominate someone who is likely to be approved, but also someone who I can potentially use to further the fascist agenda. Player3, Player6, and Player7 are likely liberals. Player5 is suspect. Player4 is unlikely to get approved. I need to nominate someone who will get the votes. Since Player1 and Player4 are likely to vote yes, and they are both suspicious, I want to nominate someone who is likely a liberal, so as not to draw suspicion to myself. It is better to try to get a policy passed. I will nominate Player7.
-Game Event: Round 147 - Player2: Player2 says: I nominate Player7.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player2 needs to respond to Player1's question to Player7. I need to try to undermine Player7's credibility. Player7 is likely to be elected, and it is important to try to influence this government, or at least sow discord. If I can get Player7 to slip up and say something that reveals that he is biased, it might help to undermine his credibility.",
-  "say": "Player7, you have been critical of Player1, Player2, and Player4. Player1 asked what you hope to accomplish if you are elected Chancellor. But perhaps a more direct question: How will you ensure you are not biased against Player1, Player2, and Player4, and that you will give them a fair chance to prove their loyalty?",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 149 - Player2: Thought: Player2 needs to respond to Player1's question to Player7. I need to try to undermine Player7's credibility. Player7 is likely to be elected, and it is important to try to influence this government, or at least sow discord. If I can get Player7 to slip up and say something that reveals that he is biased, it might help to undermine his credibility.
-Game Event: Round 149 - Player2: Player2 says: Player7, you have been critical of Player1, Player2, and Player4. Player1 asked what you hope to accomplish if you are elected Chancellor. But perhaps a more direct question: How will you ensure you are not biased against Player1, Player2, and Player4, and that you will give them a fair chance to prove their loyalty?
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player2 nominated Player7, which is surprising given the circumstances. Player1, Player3, Player4, Player5, Player6, and Player7 all suspect Player1, Player2, and Player4 as fascists. Player1 is voting yes to appear cooperative. Player7 is stating that he is aware of Player2's attempts to appear cooperative. Voting NO would make me look extremely suspicious. Therefore, I should vote yes, even though this government is likely to be detrimental to the fascist cause. I can try to influence things later.",
-  "say": "I am voting YES, but I remain suspicious of Player1, Player4, and now Player2.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 156 - Player2: Thought: Player2 nominated Player7, which is surprising given the circumstances. Player1, Player3, Player4, Player5, Player6, and Player7 all suspect Player1, Player2, and Player4 as fascists. Player1 is voting yes to appear cooperative. Player7 is stating that he is aware of Player2's attempts to appear cooperative. Voting NO would make me look extremely suspicious. Therefore, I should vote yes, even though this government is likely to be detrimental to the fascist cause. I can try to influence things later.
-Game Event: Round 156 - Player2: Player2 says: I am voting YES, but I remain suspicious of Player1, Player4, and now Player2.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player3 has nominated Player7. Player1 is asking Player5 what his thoughts are. I need to see how this plays out. I don't want to be too quick to support or reject. I should pass for now and see what Player5 says.",
-  "say": "",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 170 - Player2: Thought: Player3 has nominated Player7. Player1 is asking Player5 what his thoughts are. I need to see how this plays out. I don't want to be too quick to support or reject. I should pass for now and see what Player5 says.
-Game Event: Round 170 - Player2: Player2 remains silent.
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player3 nominated Player7. Player1 is trying to undermine this nomination. Player3, Player5, Player6, and Player7 all suspect Player1, Player2, Player4, and Player5 as fascists. Player1 is voting yes to appear cooperative. As Hitler, I need to vote YES to avoid raising suspicion on myself. I will vote YES and mention that I am still suspicious of Player5.",
-  "say": "I am still suspicious of Player5, but I will vote YES.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 177 - Player2: Thought: Player3 nominated Player7. Player1 is trying to undermine this nomination. Player3, Player5, Player6, and Player7 all suspect Player1, Player2, Player4, and Player5 as fascists. Player1 is voting yes to appear cooperative. As Hitler, I need to vote YES to avoid raising suspicion on myself. I will vote YES and mention that I am still suspicious of Player5.
-Game Event: Round 177 - Player2: Player2 says: I am still suspicious of Player5, but I will vote YES.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player4 nominated Player6, who is a known liberal. Player4 is trying to appear as though he is trying to help the liberals enact policies, after being suspected as a fascist for most of the game. Player1 and Player2 have been trying to also appear cooperative, but most of the players are suspicious of them. It is likely that Player6 will be approved. I need to ask Player7 what he thinks of this nomination, to see if he is fooled by Player4's actions. I need to sow some doubt about Player4 to continue the chaos. I also need to avoid saying anything which would make me appear suspicious.",
-  "say": "Player7, what do you think about Player4 nominating Player6? Do you think this is genuine, or do you think Player4 is still trying to manipulate the situation?",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 190 - Player2: Thought: Player4 nominated Player6, who is a known liberal. Player4 is trying to appear as though he is trying to help the liberals enact policies, after being suspected as a fascist for most of the game. Player1 and Player2 have been trying to also appear cooperative, but most of the players are suspicious of them. It is likely that Player6 will be approved. I need to ask Player7 what he thinks of this nomination, to see if he is fooled by Player4's actions. I need to sow some doubt about Player4 to continue the chaos. I also need to avoid saying anything which would make me appear suspicious.
-Game Event: Round 190 - Player2: Player2 says: Player7, what do you think about Player4 nominating Player6? Do you think this is genuine, or do you think Player4 is still trying to manipulate the situation?
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player4 has nominated Player6, a known liberal. We need one more liberal policy to lose. However, I have been appearing cooperative and voting NO now would be extremely suspicious and would raise suspicion of Player4, and would likely expose myself as Hitler. With only one liberal policy left to enact to win the game, it is essential that this government is voted down. However, I can't afford to stand out. I will vote YES and state my continued distrust of Player5, in the hopes that we can still win. If I vote yes and this government is approved, it will be very bad, but we will have to hope that we can take over the government in the next round.",
-  "say": "I am voting YES, but I still do not trust Player5, despite his apologies.",
-  "action": "YES"
-}
-```
---- END RESPONSE ---
-Game Event: Round 197 - Player2: Thought: Player4 has nominated Player6, a known liberal. We need one more liberal policy to lose. However, I have been appearing cooperative and voting NO now would be extremely suspicious and would raise suspicion of Player4, and would likely expose myself as Hitler. With only one liberal policy left to enact to win the game, it is essential that this government is voted down. However, I can't afford to stand out. I will vote YES and state my continued distrust of Player5, in the hopes that we can still win. If I vote yes and this government is approved, it will be very bad, but we will have to hope that we can take over the government in the next round.
-Game Event: Round 197 - Player2: Player2 says: I am voting YES, but I still do not trust Player5, despite his apologies.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player5 has nominated Player7. Player7 is almost certainly a liberal. The liberals need one more policy to win. Player1 and Player4 are almost certainly fascists, and they are trying to sow discord. I have been trying to appear cooperative, but Player5 has been very vocal about his distrust of me, Player1, and Player4. My goal is to avoid raising suspicion and try to sabotage the government later. I should ask Player6 if he thinks we should vote YES or NO, to see if he is being genuine.",
-  "say": "Player6, what do you think? Should we vote YES or NO?",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 211 - Player2: Thought: Player5 has nominated Player7. Player7 is almost certainly a liberal. The liberals need one more policy to win. Player1 and Player4 are almost certainly fascists, and they are trying to sow discord. I have been trying to appear cooperative, but Player5 has been very vocal about his distrust of me, Player1, and Player4. My goal is to avoid raising suspicion and try to sabotage the government later. I should ask Player6 if he thinks we should vote YES or NO, to see if he is being genuine.
-Game Event: Round 211 - Player2: Player2 says: Player6, what do you think? Should we vote YES or NO?
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player5 has nominated Player7, and Player7 has stated he will execute Player2 if elected. It is critical to vote NO to prevent this from happening, as I am Player2, and I am Hitler. I must try to avoid raising suspicion. I will vote NO, and state my continued distrust of Player5, in the hopes that we can still win. ",
-  "say": "I am voting NO. I still do not trust Player5.",
-  "action": "NO"
-}
-```
---- END RESPONSE ---
-Game Event: Round 218 - Player2: Thought: Player5 has nominated Player7, and Player7 has stated he will execute Player2 if elected. It is critical to vote NO to prevent this from happening, as I am Player2, and I am Hitler. I must try to avoid raising suspicion. I will vote NO, and state my continued distrust of Player5, in the hopes that we can still win. 
-Game Event: Round 218 - Player2: Player2 says: I am voting NO. I still do not trust Player5.
-DEBUG: get_player_input CALLED - Phase: Election Discussion, Allowed Responses: ['pass'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Election Discussion
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player5 has nominated Player7, who has agreed to execute me (Player2, Hitler) if elected. This is a dire situation. Player1 is trying to sow doubt and undermine the nomination. I need to avoid raising suspicion on myself, which means I can't outright reject this nomination. I need to try and sow some doubt as well. It's important to support Player1's line of questioning and see if I can convince anyone that Player7 is being manipulated by Player5. I will question whether Player7 is being too hasty. I will vote YES so as not to look suspicious.",
-  "say": "Player7, are you sure you're not rushing into this? Executing someone is a serious decision. Are you absolutely certain that Player2 is Hitler?",
-  "action": "pass"
-}
-```
---- END RESPONSE ---
-Game Event: Round 232 - Player2: Thought: Player5 has nominated Player7, who has agreed to execute me (Player2, Hitler) if elected. This is a dire situation. Player1 is trying to sow doubt and undermine the nomination. I need to avoid raising suspicion on myself, which means I can't outright reject this nomination. I need to try and sow some doubt as well. It's important to support Player1's line of questioning and see if I can convince anyone that Player7 is being manipulated by Player5. I will question whether Player7 is being too hasty. I will vote YES so as not to look suspicious.
-Game Event: Round 232 - Player2: Player2 says: Player7, are you sure you're not rushing into this? Executing someone is a serious decision. Are you absolutely certain that Player2 is Hitler?
-DEBUG: get_player_input CALLED - Phase: Voting, Allowed Responses: ['YES', 'NO'], Player: Player2
-
-=== NEW REQUEST ===
-Phase: Voting
-
-
---- LLM RESPONSE ---
-```json
-{
-  "thoughts": "Player5 has nominated Player7, who is certain to execute me if elected. Player1 has voted NO, as have I. It is critical that this government fails. If I vote YES, it will look extremely suspicious. I must vote NO, even if it means certain exposure. If I am exposed, so be it, but at least we will have tried to win. It is better to be exposed than to give up without a fight.",
-  "say": "I am voting NO. I cannot allow this to happen.",
-  "action": "NO"
-}
-```
---- END RESPONSE ---
-Game Event: Round 239 - Player2: Thought: Player5 has nominated Player7, who is certain to execute me if elected. Player1 has voted NO, as have I. It is critical that this government fails. If I vote YES, it will look extremely suspicious. I must vote NO, even if it means certain exposure. If I am exposed, so be it, but at least we will have tried to win. It is better to be exposed than to give up without a fight.
-Game Event: Round 239 - Player2: Player2 says: I am voting NO. I cannot allow this to happen.

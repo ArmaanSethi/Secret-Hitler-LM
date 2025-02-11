@@ -108,12 +108,12 @@ class GameState:
             policy_type = "Fascist"
             if self.fasc_policies >= 5:
                 self.veto_power = True
-        self._check_game_over()
         self.log_event(
             None, f"Policy enacted: {policy_type}. Liberal policies enacted: {self.lib_policies}, Fascist policies enacted: {self.fasc_policies}")
+        self.check_game_over()
         return policy_type
 
-    def _check_game_over(self):
+    def check_game_over(self):
         game_end_conditions = [
             (self.lib_policies >= 5, Role.LIBERAL, "Liberals win by policies."),
             (self.fasc_policies >= 6, Role.FASCIST, "Fascists win by policies."),
@@ -125,7 +125,8 @@ class GameState:
                 self.game_over = True
                 self.winner = winner
                 self.log_event(None, message)
-                return
+                return True
+        return False
 
     def check_hitler_chancellor_win(self):
         return (self.fasc_policies >= 3 and self.gov.chancellor and self.roles[self.gov.chancellor] == Role.HITLER)
@@ -174,7 +175,7 @@ class GameState:
             else:
                 self.log_event(
                     None, f"Government failed. Election tracker: {self.election_tracker}.")
-            self._check_game_over()
+            self.check_game_over()
 
     def log_event(self, player, event_desc, private_info=None, private_only=False):
         log_entry = f"Round {len(self.public_log) + 1 if not self.game_over else 'End'} - "
@@ -198,10 +199,6 @@ class GameState:
             if private_info and p in private_info:
                 private_log_entry += f" (Private: {private_info[p]})"
             self.private_logs[p].append(private_log_entry)
-        if self.game_logger:
-            player_name = player if player else "Game"
-            self.game_logger.log_to_debug_file(
-                player_name, f"Game Event: {log_entry}")
 
     def get_player_role(self, player):
         return self.roles[player]
@@ -218,7 +215,7 @@ class GameState:
             self.game_over = True
             self.winner = "Liberals"
             self.log_event(None, "Liberals win: Hitler executed.")
-            self._check_game_over()
+            self.check_game_over()
         return True
 
     def investigate_player(self, president, target_player):
