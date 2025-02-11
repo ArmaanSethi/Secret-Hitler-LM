@@ -95,14 +95,14 @@ Use the following command:
 ```bash
 python3 secret_hitler_game.py 7 \
   --player_models \
-  Player1='{"provider":"openrouter","model":"mistralai/mistral-tiny:free","api_key_env":"OPENROUTER_API_KEY"}' \
-  Player2='{"provider":"openrouter","model":"deepseek/deepseek-r1:free","api_key_env":"OPENROUTER_API_KEY"}' \
-  Player3='{"provider":"openrouter","model":"google/gemma-2-9b-it:free","api_key_env":"OPENROUTER_API_KEY"}' \
-  Player4='{"provider":"openrouter","model":"mistralai/mistral-7b-instruct:free","api_key_env":"OPENROUTER_API_KEY"}' \
-  Player5='{"provider":"openrouter","model":"deepseek/deepseek-r1-distill-llama-70b:free","api_key_env":"OPENROUTER_API_KEY"}' \
-  Player6='{"provider":"openrouter","model":"google/gemini-2.0-flash-exp:free","api_key_env":"OPENROUTER_API_KEY"}' \
-  Player7='{"provider":"openrouter","model":"qwen/qwen-vl-plus:free","api_key_env":"OPENROUTER_API_KEY"}' \
-  --debug_llm --log_to_file --slowdown 10
+  Player1='{"provider":"openrouter","model":"deepseek/deepseek-r1:free","api_key_env":"OPENROUTER_API_KEY"}' \
+  Player2='{"provider":"openrouter","model":"deepseek/deepseek-r1-distill-llama-70b:free","api_key_env":"OPENROUTER_API_KEY"}' \
+  Player3='{"provider":"openrouter","model":"google/gemini-2.0-flash-lite-preview-02-05:free","api_key_env":"OPENROUTER_API_KEY"}' \
+  Player4='{"provider":"openrouter","model":"google/gemini-2.0-flash-exp:free","api_key_env":"OPENROUTER_API_KEY"}' \
+  Player5='{"provider":"openrouter","model":"nvidia/llama-3.1-nemotron-70b-instruct:free","api_key_env":"OPENROUTER_API_KEY"}' \
+  Player6='{"provider":"openrouter","model":"google/gemini-2.0-flash-thinking-exp-1219:free","api_key_env":"OPENROUTER_API_KEY"}' \
+  Player7='{"provider":"openrouter","model":"google/gemma-2-9b-it:free","api_key_env":"OPENROUTER_API_KEY"}' \
+  --debug_llm --log_to_file --slowdown 5
 ```
 
 ## Usage

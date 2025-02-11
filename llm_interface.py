@@ -14,6 +14,12 @@ class GameLogger:
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
 
+        self.game_file_handler = None
+        self.public_log_file_handler = None
+        self.player_file_handlers = {}
+        self.player_loggers = {}
+        self.public_logger = None
+
         if self.log_to_file_enabled:
             log_dir = "logs"
             os.makedirs(log_dir, exist_ok=True)
@@ -38,9 +44,6 @@ class GameLogger:
             public_logger.addHandler(public_file_handler)
             self.public_log_file_handler = public_file_handler
             self.public_logger = public_logger
-
-            self.player_loggers = {}
-            self.player_file_handlers = {}
 
     def setup_logging(self, player_names):
         if not self.log_to_file_enabled:
@@ -82,15 +85,26 @@ class GameLogger:
             for handler in handlers:
                 player_logger.removeHandler(handler)
 
-    def log_to_debug_file(self, player_name, message):
+    # Added full_prompt and raw_llm_response arguments
+    def log_to_debug_file(self, player_name, message, full_prompt=None, raw_llm_response=None):
         if self.log_to_file_enabled:
             self.logger.debug(message)
+            if full_prompt:  # Log full prompt if provided
+                self.logger.debug(
+                    f"\n--- FULL PROMPT ---\n{full_prompt}\n--- END PROMPT ---")
+            if raw_llm_response:  # Log raw LLM response if provided
+                self.logger.debug(
+                    f"\n--- RAW LLM RESPONSE ---\n{raw_llm_response}\n--- END RAW RESPONSE ---")
             if self.game_file_handler:
                 self.game_file_handler.flush()
             if player_name:
                 player_logger = self.player_loggers.get(player_name)
                 if player_logger:
                     player_logger.info(message)
+                    # Log raw LLM response to player log as well (INFO level)
+                    if raw_llm_response:
+                        player_logger.info(
+                            f"\n--- RAW LLM RESPONSE ---\n{raw_llm_response}\n--- END RAW RESPONSE ---")
                     player_file_handler = self.player_file_handlers.get(
                         player_name)
                     if player_file_handler:
@@ -159,9 +173,45 @@ class LLMPlayerInterface:
                     messages=[{"role": "user", "content": full_prompt}],
                     n=1,
                     temperature=0.7,
-                    max_tokens=500
+                    # max_tokens=500
                 )
                 llm_response = response.choices[0].message.content.strip()
+
+                if not llm_response:  # Check if llm_response is empty or just whitespace
+                    error_log_msg = (
+                        f"WARNING: LLM returned an empty response for {self.player_name} "
+                        f"(attempt {attempt + 1}/{max_retries}). "
+                        f"Provider: {self.provider_name}, Model: {self.model_name}"
+                    )
+                    print(f"WARNING: {error_log_msg}")
+                    self.game_logger.log_to_debug_file(
+                        self.player_name, error_log_msg)
+
+                    if attempt < max_retries - 1:  # Retry if possible
+                        jitter = random.uniform(-0.5, 0.5)
+                        delay = max(0, retry_delay + jitter)
+                        print(
+                            f"Empty response detected. Retrying in {delay:.2f} seconds...")
+                        time.sleep(delay)
+                        retry_delay *= 2
+                        continue  # Go to the next retry attempt
+                    else:  # Max retries reached for empty response
+                        print(
+                            f"Max retries reached for {self.player_name} after empty responses. Choosing default action.")
+                        self.game_logger.log_to_debug_file(
+                            self.player_name,
+                            f"LLM failed after {max_retries} attempts due to empty responses. "
+                            f"Choosing default action from allowed responses.")
+                        if allowed_responses:
+                            default_action = allowed_responses[0]
+                            default_response_msg = (
+                                f"LLM failed after {max_retries} attempts. "
+                                f"Default action '{default_action}' chosen."
+                            )
+                            return default_response_msg, default_action
+                        else:
+                            default_response_msg = f"LLM failed after {max_retries} attempts and no allowed responses to choose from. Defaulting to 'pass' action."
+                            return default_response_msg, "pass"
 
                 self.game_logger.log_to_debug_file(
                     self.player_name,
@@ -186,7 +236,7 @@ class LLMPlayerInterface:
 
                 error_msg = error_message.lower()
                 if ("rate limit" in error_msg or
-                    "timeout" in error_msg or
+                        "timeout" in error_msg or
                         "APIError" in error_message):
                     is_retryable_error = True
 
@@ -287,19 +337,56 @@ class LLMPlayerInterface:
 
         return prompt
 
+    def _extract_json_substring(self, text):
+        start_index = text.find('{')
+        end_index = text.rfind('}')  # rfind to get the *last* occurrence
+
+        if start_index != -1 and end_index != -1 and start_index < end_index:
+            json_substring = text[start_index:end_index + 1]
+            return json_substring
+        return None  # Or raise an exception if you prefer
+
     def _extract_json_field(self, llm_response, field_name):
-        llm_response = llm_response.strip()
-        if llm_response.startswith("```json"):
-            llm_response = llm_response[len("```json"):].strip()
-        if llm_response.endswith("```"):
-            llm_response = llm_response[:-len("```")].strip()
+        llm_response = llm_response.strip()  # Aggressively trim whitespace FIRST
+
+        json_payload = None
+        extracted_json_substring = None  # Initialize for logging
 
         try:
-            response_json = json.loads(llm_response)
-            return response_json.get(field_name, None)
-        except json.JSONDecodeError:
+            # Attempt 1: Extract JSON-like substring using curly braces
+            extracted_json_substring = self._extract_json_substring(
+                llm_response)
+            if extracted_json_substring:
+                try:
+                    json_payload = json.loads(extracted_json_substring)
+                    self.game_logger.log_to_debug_file(
+                        self.player_name, f"DEBUG: Successfully parsed JSON after curly brace extraction. Extracted JSON: '{extracted_json_substring}'")
+                except json.JSONDecodeError as e_sub_parse:
+                    self.game_logger.log_to_debug_file(
+                        self.player_name, f"WARNING: JSONDecodeError after curly brace extraction: {e_sub_parse}. Extracted JSON: '{extracted_json_substring}', Original Response: '{llm_response}'")
+                    json_payload = None  # Parsing failed even after extraction
+
+            if not json_payload:  # If extraction failed or parsing of extracted JSON failed, try original response
+                # Attempt 2: Parse original response as pure JSON (no extraction)
+                try:
+                    json_payload = json.loads(llm_response)
+                    self.game_logger.log_to_debug_file(
+                        self.player_name, f"DEBUG: Successfully parsed JSON directly (no extraction needed). Response: '{llm_response}'")
+                except json.JSONDecodeError as e_pure_parse:
+                    self.game_logger.log_to_debug_file(
+                        self.player_name, f"WARNING: JSONDecodeError (pure JSON parse failed): {e_pure_parse}. Response: '{llm_response}'")
+                    json_payload = None  # Pure JSON parsing failed
+
+            if json_payload:  # If JSON parsing was successful (either way)
+                return json_payload.get(field_name, None)
+            else:  # If both parsing attempts failed
+                self.game_logger.log_to_debug_file(
+                    self.player_name, f"WARNING: Failed to parse JSON even after extraction attempts. Response: '{llm_response}'")
+                return None
+
+        except Exception as general_e:  # Catch any other unexpected errors during parsing
             self.game_logger.log_to_debug_file(
-                self.player_name, f"WARNING: Invalid JSON response from LLM. Response: '{llm_response}'")
+                self.player_name, f"WARNING: General error during JSON processing: {general_e}. Response: '{llm_response}'")
             return None
 
     def _extract_action(self, llm_response, allowed_responses):
